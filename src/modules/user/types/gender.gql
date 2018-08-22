@@ -1,0 +1,4 @@
+type Gender {
+  id: ID!
+  name: String!
+}

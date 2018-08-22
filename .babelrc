@@ -1,0 +1,13 @@
+{
+  "presets": ["env"],
+  "plugins": [
+    "transform-class-properties",
+    "add-module-exports",
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-decorators-legacy",
+    ["module-resolver", {
+      "root": ["./src", "../"]
+    }]
+  ]
+}

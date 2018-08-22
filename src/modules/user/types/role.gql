@@ -1,0 +1,13 @@
+type Role {
+  id: ID!
+  userRoles: [UserRole!]
+
+  name: String!
+  createdAt: Date
+  updatedAt: Date
+}
+
+extend type Query {
+  role: Role
+  roles: [Role!]
+}

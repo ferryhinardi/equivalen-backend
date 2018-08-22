@@ -1,0 +1,11 @@
+type RegisterResponse {
+  user: User!
+  token: String!
+}
+
+input RegisterUserInput {
+  email: String!
+  username: String!
+  phoneNumber: String!
+  password: String!
+}

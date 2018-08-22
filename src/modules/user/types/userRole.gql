@@ -1,0 +1,11 @@
+type UserRole {
+  id: ID!
+  user: User
+  role: Role
+  status: String
+}
+
+extend type Query {
+  userRole: UserRole
+  userRoles: [UserRole!]
+}

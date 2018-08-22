@@ -1,0 +1,89 @@
+{
+  "name": "equivalent",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/.bin/jest --maxWorkers=2",
+    "start": "npm run build && npm run start:prod",
+    "start:prod": "npm run-script database:init && node ./dist/index.js",
+    "start:dev": "npm run-script database:init && nodemon -e js,gql --exec babel-node ./src/index.js",
+    "build": "npm run build:clean && npm run build:dist",
+    "build:clean": "rimraf dist/*",
+    "build:dist": "babel src --out-dir dist --copy-files --ignore *.test.js,__tests__,__mocks__",
+    "build:watch": "npm run build:dist -- -w",
+    "database:init": "mkdir -p dist/migrations src/migrations && npm run sequelize db:migrate",
+    "sequelize": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize $*"
+  },
+  "dependencies": {
+    "awesome-phonenumber": "^2.2.6",
+    "bcrypt": "^3.0.0",
+    "crypto-js": "^3.1.9-1",
+    "dataloader-sequelize": "^1.7.2",
+    "decamelize": "^2.0.0",
+    "dotenv": "^4.0.0",
+    "glob": "^7.1.2",
+    "graphql-relay": "^0.5.5",
+    "graphql-sequelize": "^9.0.1",
+    "graphql-yoga": "^1.16.1",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
+    "merge-graphql-schemas": "^1.5.3",
+    "moment": "^2.21.0",
+    "mysql2": "^1.5.1",
+    "rimraf": "^2.6.2",
+    "sequelize": "^4.38.0",
+    "sqlite3": "^3.1.8",
+    "superagent": "^3.8.3",
+    "supertest": "^3.0.0"
+  },
+  "devDependencies": {
+    "@playlyfe/gql": "^2.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.6",
+    "babel-jest": "^23.4.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-module-resolver": "^3.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-import-resolver-babel-module": "^4.0.0",
+    "eslint-plugin-jest": "^21.21.0",
+    "faker": "^4.1.0",
+    "jest": "^22.0.0",
+    "nodemon": "^1.18.3",
+    "sequelize-cli": "^4.0.0"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "import",
+      "jest"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "rules": {
+      "jest/no-focused-tests": 2,
+      "jest/no-identical-title": 2
+    }
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./jest/setup.js",
+    "testEnvironment": "node",
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": false
+  }
+}

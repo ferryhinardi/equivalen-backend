@@ -1,0 +1,19 @@
+type User {
+  id: ID!
+  userRoles: [UserRole!]
+  authProviders: [AuthProvider!]
+
+  gender: Gender
+  fullName: String
+  email: String
+  phoneNumber: String
+  birthDate: Date
+  photoUrl: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+extend type Query {
+  user: User
+  users: [User!]
+}

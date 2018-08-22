@@ -1,0 +1,6 @@
+
+{
+  schema: {
+    files: 'src/**/*.gql'
+  }
+}
