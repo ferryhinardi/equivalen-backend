@@ -7,8 +7,10 @@ import models from './models';
  */
 async function start() {
   // Start the GraphQL server
-  server.start(() => {
-    console.log('Server is running on localhost:4000');
+  models.sequelize.sync().then(() => {
+    server.start(() => {
+      console.log('Server is running on localhost:4000');
+    });
   });
 }
 
