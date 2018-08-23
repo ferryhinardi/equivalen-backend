@@ -9,9 +9,10 @@ beforeAll(async () => {
 
 afterAll(() => app.close());
 
-export default async function req(query, variables = {}) {
+export default async function req(query, variables = {}, headers = {}) {
   const result = await request(app)
     .post('/')
+    .set(headers)
     .send({
       query,
       variables,

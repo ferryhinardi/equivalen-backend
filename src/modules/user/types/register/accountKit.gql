@@ -1,6 +1,8 @@
 extend type Mutation {
-  loginViaAccountKit(
-    code: String!,
+  getTokenViaAccountKit(
+    code: String!
+  ): String
+  registerViaAccountKit(
     user: RegisterUserInput!
   ): RegisterResponse
 }

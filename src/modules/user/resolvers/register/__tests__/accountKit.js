@@ -1,14 +1,29 @@
 import request from 'modules/shared/libs/jest/request';
 
 import { User } from 'models';
+import {
+  verify
+} from 'modules/shared/libs/jwt';
 
 describe('test accountKit', () => {
 
   it('should register user with accountKit provider', async () => {
-      const query = `
+    let query = {};
+    query = `
+      mutation {
+        getTokenViaAccountKit (
+          code: "123"
+        )
+      }
+    `;
+    const resultGetToken = await request(query);
+    const token = resultGetToken.body.data.getTokenViaAccountKit;
+    const { phoneNumber } = verify(token);
+    expect(phoneNumber).toEqual('089536789121');
+
+    query = `
         mutation {
-          loginViaAccountKit (
-            code: "123",
+          registerViaAccountKit (
             user: {
               email: "jekiwijaya@hotmail.com"
               username: "jekiwijaya"
@@ -20,16 +35,13 @@ describe('test accountKit', () => {
               id
               email
             }
-            token
           }
         }
       `;
-    const result = await request(query);
-    const { user, token } = result.body.data.loginViaAccountKit;
+    const resultRegisterUser = await request(query, undefined, { Authorization: `Bearer ${token}`});
+    const { user } = resultRegisterUser.body.data.registerViaAccountKit;
     const users = await User.findAll();
-    const [ firstUser ] = users;
     expect(users.length).toEqual(1);
     expect(user.email).toEqual('jekiwijaya@hotmail.com');
-    expect(firstUser.isValidToken(token)).toBeTruthy();
   });
 });
