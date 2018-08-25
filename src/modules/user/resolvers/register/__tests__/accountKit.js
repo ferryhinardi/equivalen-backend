@@ -6,7 +6,6 @@ import {
 } from 'modules/shared/libs/jwt';
 
 describe('test accountKit', () => {
-
   it('should register user with accountKit provider', async () => {
     let query = {};
     query = `
