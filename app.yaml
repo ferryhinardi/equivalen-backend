@@ -13,7 +13,7 @@ automatic_scaling:
     target_utilization: 0.80
 env_variables:
   NODE_ENV: "production"
-  DB_USER: "root"
-  DB_PASSWORD: "6uYhzNA8>&e[$3Y/Sh"
-  DB_HOST: "35.240.204.115"
-  DB_DATABASE: "equivalent"
+  DB_USER: "${DB_USER}"
+  DB_PASSWORD: "${DB_PASSWORD}"
+  DB_HOST: "${DB_HOST}"
+  DB_DATABASE: "${DB_DATABASE}"

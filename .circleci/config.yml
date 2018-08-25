@@ -56,9 +56,10 @@ jobs:
           at: ~/workspace
       - setup_remote_docker
       - run: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
+      - run: envsub app.yaml app.yaml
       - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-      - run: gcloud app deploy
+      - run: gcloud app deploy -q
 
 workflows:
   version: 2
