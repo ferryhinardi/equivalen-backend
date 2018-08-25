@@ -1,0 +1,78 @@
+aliases:
+  - &restore-monorepo-cache
+    keys:
+      - dependencies-{{ checksum "yarn.lock" }}
+      - dependencies-
+
+  - &save-monorepo-cache
+    paths:
+      - node_modules
+    key: dependencies-{{ checksum "yarn.lock" }}
+
+defaults:
+  - &job-defaults
+      working_directory: ~/workspace
+      docker:
+        - image: circleci/node:8.11.2-jessie
+
+version: 2
+jobs:
+  build:
+    <<: *job-defaults
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: ~/workspace
+
+      - restore_cache: *restore-monorepo-cache
+
+      - run: yarn
+      - save_cache: *save-monorepo-cache
+
+      - persist_to_workspace:
+          root: .
+          paths: .
+
+  test:
+    working_directory: ~/workspace
+    docker:
+      - image: circleci/node:8.11.2-jessie
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - run: yarn test
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./coverage
+
+  deploy:
+    working_directory: ~/workspace
+    docker:
+      - image: lakoo/node-gcloud-docker
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - setup_remote_docker
+      - run: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
+      - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
+      - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run: gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+      - run: gcloud app deploy
+
+workflows:
+  version: 2
+  deploy-workflow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
