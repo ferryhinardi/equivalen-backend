@@ -11,11 +11,16 @@ import { AuthProvider, User } from 'models';
 
 export default {
   Mutation: {
-    getTokenViaAccountKit: async (_, { code }) => {
+    getPrefillViaAccountKit: async (_, { code }) => {
       const { access_token: accessToken } = await getAccessTokenFromCode(code);
       const userAuthProvider = await validateAccessToken(accessToken);
       const phoneNumber = userAuthProvider.phone.number;
-      return getToken({ phoneNumber, userAuthProvider });
+      return {
+        user: {
+          phoneNumber,
+        },
+        token: getToken({ phoneNumber, userAuthProvider }),
+      };
     },
     registerViaAccountKit: async (_, { user: userData }, { token }) => {
       const { phoneNumber, userAuthProvider } = verify(token);

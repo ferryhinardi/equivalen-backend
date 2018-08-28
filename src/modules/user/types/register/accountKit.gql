@@ -1,7 +1,7 @@
 extend type Mutation {
-  getTokenViaAccountKit(
+  getPrefillViaAccountKit(
     code: String!
-  ): String
+  ): PrefillResponse
   registerViaAccountKit(
     user: RegisterUserInput!
   ): RegisterResponse

@@ -1,3 +1,12 @@
+type UserPrefillResponse {
+  phoneNumber: String
+}
+
+type PrefillResponse {
+  user: UserPrefillResponse
+  token: String
+}
+
 type RegisterResponse {
   user: User!
   token: String!

@@ -10,13 +10,18 @@ describe('test accountKit', () => {
     let query = {};
     query = `
       mutation {
-        getTokenViaAccountKit (
+        getPrefillViaAccountKit (
           code: "123"
-        )
+        ) {
+          user {
+            phoneNumber
+          }
+          token
+        }
       }
     `;
     const resultGetToken = await request(query);
-    const token = resultGetToken.body.data.getTokenViaAccountKit;
+    const { token } = resultGetToken.body.data.getPrefillViaAccountKit;
     const { phoneNumber } = verify(token);
     expect(phoneNumber).toEqual('089536789121');
 
