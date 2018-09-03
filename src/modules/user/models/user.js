@@ -26,6 +26,14 @@ export default (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       field: 'photo_url',
     },
+    placeBod: {
+      type: Sequelize.STRING,
+      field: 'place_bod',
+    },
+    dateBod: {
+      field: 'date_bod',
+      type: Sequelize.DATE
+    },
     createdAt: {
       field: 'created_at',
       type: Sequelize.DATE

@@ -33,11 +33,15 @@ describe('test accountKit', () => {
               username: "jekiwijaya"
               phoneNumber: "089536789121"
               password: "test"
+              placeBod: "Jakarta"
+              dateBod: "1995-12-17"
             }
           ) {
             user {
               id
               email
+              placeBod
+              dateBod
             }
           }
         }
@@ -47,5 +51,7 @@ describe('test accountKit', () => {
     const users = await User.findAll();
     expect(users.length).toEqual(1);
     expect(user.email).toEqual('jekiwijaya@hotmail.com');
+    expect(user.placeBod).toEqual('Jakarta');
+    expect(user.dateBod).toBeTruthy();
   });
 });

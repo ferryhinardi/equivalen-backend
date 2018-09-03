@@ -14,6 +14,8 @@ export async function UserFactory(userData) {
     phoneNumber: faker.phone.phoneNumber(),
     photoUrl: faker.image.avatar(),
     birthDate: faker.date.past(),
+    placeBod: faker.address.city(),
+    dateBod: faker.date.past(),
     ...userData,
   };
   const user = await User.create(data);

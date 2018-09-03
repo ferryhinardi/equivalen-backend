@@ -9,6 +9,8 @@ type User {
   phoneNumber: String
   birthDate: Date
   photoUrl: String
+  placeBod: String
+  dateBod: Date
   createdAt: Date
   updatedAt: Date
 }

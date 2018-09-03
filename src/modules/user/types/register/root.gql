@@ -17,4 +17,6 @@ input RegisterUserInput {
   username: String!
   phoneNumber: String!
   password: String!
+  placeBod: String
+  dateBod: Date
 }
