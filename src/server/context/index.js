@@ -20,5 +20,6 @@ export default async function context(req) {
   return {
     [EXPECTED_OPTIONS_KEY]: dataloaderContext,
     token,
+    user,
   };
 }

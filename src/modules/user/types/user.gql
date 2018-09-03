@@ -1,7 +1,11 @@
 type User {
   id: ID!
-  userRoles: [UserRole!]
+  userStudent: UserStudent
   authProviders: [AuthProvider!]
+  userSchools: [UserSchool!]
+
+  isStudent: Boolean
+  token: String
 
   gender: Gender
   fullName: String

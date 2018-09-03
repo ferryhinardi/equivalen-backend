@@ -2,12 +2,14 @@ import { GraphQLServer } from 'graphql-yoga';
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import context from './context';
+import schemaDirectives from './directives';
 import cors from 'cors';
 
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context
+  context,
+  schemaDirectives
 });
 
 server.express.use(cors({

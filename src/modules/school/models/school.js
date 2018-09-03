@@ -1,11 +1,14 @@
 export default (sequelize, Sequelize) => {
-  const Gender = sequelize.define('Gender', {
+  const School = sequelize.define('School', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     name: Sequelize.STRING,
+    city: Sequelize.STRING,
+    district: Sequelize.STRING,
+    province: Sequelize.STRING,
     createdAt: {
       field: 'created_at',
       type: Sequelize.DATE
@@ -19,15 +22,14 @@ export default (sequelize, Sequelize) => {
       type: Sequelize.DATE
     },
   }, {
-    tableName   : 'genders',
-    deletedAt   : 'deleted_at',
-    paranoid    : true,
+    tableName: 'schools',
+    deletedAt: 'deleted_at',
+    paranoid: true,
   });
-  Gender.associate = (models) => {
-    models.Gender.hasMany(models.User, {
-      foreignKey: 'gender_id',
-      as: 'users',
+  School.associate = (models) => {
+    School.User = models.School.belongsToMany(models.User, {
+      through: models.UserSchool,
     });
   };
-  return Gender;
+  return School;
 };

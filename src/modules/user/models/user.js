@@ -7,6 +7,11 @@ import bcrypt from 'bcrypt';
 
 export default (sequelize, Sequelize) => {
   const User = sequelize.define('User', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     email: Sequelize.STRING,
     username: Sequelize.STRING,
     phoneNumber: {
@@ -94,13 +99,6 @@ export default (sequelize, Sequelize) => {
     },
   });
   User.associate = (models) => {
-    User.Role = models.User.belongsToMany(models.Role, {
-      through: models.UserRole,
-      foreignKey: 'user_id',
-    });
-    User.UserRole = models.User.hasMany(models.UserRole, {
-      foreignKey: 'user_id',
-    });
     User.Gender = models.User.belongsTo(models.Gender, {
       foreignKey: 'gender_id',
       as: 'gender',
@@ -113,6 +111,15 @@ export default (sequelize, Sequelize) => {
     User.UserAuthProvider = models.User.hasMany(models.UserAuthProvider, {
       foreignKey: 'user_id'
     });
+
+    User.UserStudent = models.User.hasOne(models.UserStudent, {
+      foreignKey: 'user_id',
+      as: 'student',
+    });
+
+    User.School = models.User.belongsToMany(models.School, {
+      through: models.UserSchool,
+    });
   };
   User.prototype.getToken = function () {
     return getToken({ id: this.id });
@@ -120,6 +127,11 @@ export default (sequelize, Sequelize) => {
   User.prototype.isValidToken = function (token) {
     const decoded = verify(token);
     return decoded.id === this.id;
+  }
+  User.prototype.isStudent = function () {
+    return this.getStudent().then((result) => {
+      return !!result;
+    });
   }
   return User;
 };

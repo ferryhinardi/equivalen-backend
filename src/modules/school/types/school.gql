@@ -1,0 +1,18 @@
+type School {
+  id: ID!
+  name: String!
+  city: String
+  province: String
+  district: String
+}
+
+input SchoolInput {
+  name: String!
+  city: String
+  province: String
+  district: String
+}
+
+extend type Mutation {
+  createSchool(school: SchoolInput): School
+}

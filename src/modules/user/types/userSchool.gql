@@ -1,0 +1,15 @@
+type UserSchool {
+  id: ID!
+  user: User!
+  school: School!
+  startYear: Int
+  endYear: Int
+}
+
+extend type Mutation {
+  createUserSchool (
+    startYear: String
+    endYear: String
+    school: SchoolInput!
+  ): UserSchool!
+}

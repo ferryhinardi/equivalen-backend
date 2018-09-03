@@ -1,11 +1,14 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { User, UserRole } from 'models';
+import { User } from 'models';
 
 export default {
   User: {
     gender: resolver(User.Gender),
-    userRoles: resolver(User.UserRole),
+    userStudent: resolver(User.UserStudent),
     authProviders: resolver(User.AuthProvider),
+    isStudent: (user) => user.isStudent(),
+    token: (user) => user.getToken(),
+    userSchools: resolver(User.UserSchool),
   },
   Query: {
     user: resolver(User),

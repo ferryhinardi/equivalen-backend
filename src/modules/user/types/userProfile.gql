@@ -1,0 +1,10 @@
+type UserProfile {
+  id: ID!
+  nikNumber: String
+}
+
+extend type Mutation {
+  createUserProfile(
+    nikNumber: String!
+  ): UserProfile!
+}

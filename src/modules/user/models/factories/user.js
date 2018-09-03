@@ -1,9 +1,9 @@
 import faker from 'faker';
-import { Gender, User, Role, AuthProvider } from 'models';
+import { User, AuthProvider } from 'models';
+import { GenderFactory } from './gender';
 
 export async function UserFactory(userData) {
-  const genders = await Gender.findAll();
-  const gender = faker.random.arrayElement(genders);
+  const gender = await GenderFactory();
 
   const data = {
     gender_id: gender.id,
@@ -24,16 +24,6 @@ export async function UserFactory(userData) {
   const authProvider = faker.random.arrayElement(authProviders);
 
   await user.addAuthProvider(authProvider, { through: { sourceId: faker.random.uuid() }});
-  return user;
-}
-
-export async function UserWithRoleFactory(userData) {
-  const roles = await Role.findAll();
-  const role = faker.random.arrayElement(roles);
-  const user = await UserFactory({
-    ...userData
-  });
-  await user.addRole(role);
   return user;
 }
 

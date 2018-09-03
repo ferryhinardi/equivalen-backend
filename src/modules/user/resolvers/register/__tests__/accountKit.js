@@ -1,11 +1,18 @@
 import request from 'modules/shared/libs/jest/request';
 
-import { User } from 'models';
+import { User, sequelize } from 'models';
 import {
   verify
 } from 'modules/shared/libs/jwt';
 
 describe('test accountKit', () => {
+  beforeAll(() => sequelize.sync({ force: true }));
+  beforeEach((done) => { // Before each test we empty the database
+    sequelize.truncate().then(() => {
+      done();
+    });
+  });
+
   it('should register user with accountKit provider', async () => {
     let query = {};
     query = `

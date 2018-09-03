@@ -1,0 +1,10 @@
+type UserStudent {
+  id: ID!
+  nisnNumber: String
+}
+
+extend type Mutation {
+  createUserStudent(
+    nisnNumber: String!
+  ): UserStudent!
+}
