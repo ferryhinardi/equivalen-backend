@@ -116,6 +116,10 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'user_id',
       as: 'student',
     });
+    User.UserProfile = models.User.hasOne(models.UserProfile, {
+      foreignKey: 'user_id',
+      as: 'profile',
+    });
 
     User.School = models.User.belongsToMany(models.School, {
       through: models.UserSchool,

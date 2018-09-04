@@ -16,13 +16,15 @@ describe('test userSchool', () => {
       let query = `
         mutation {
           createUserSchool (
-            startYear: "2012"
-            endYear: "2016"
-            school: {
-              name: "Bina Nusantara University"
-              province: "Jakarta"
-              city: "Jakarta Barat"
-              district: "Kebon Jeruk"
+            userSchool: {
+              startYear: "2012"
+              endYear: "2016"
+              school: {
+                name: "Bina Nusantara University"
+                province: "Jakarta"
+                city: "Jakarta Barat"
+                district: "Kebon Jeruk"
+              }
             }
           ) {
             startYear
@@ -45,7 +47,6 @@ describe('test userSchool', () => {
       expect(province).toEqual('Jakarta');
       expect(city).toEqual('Jakarta Barat');
       expect(district).toEqual('Kebon Jeruk');
-
     });
   })
 });

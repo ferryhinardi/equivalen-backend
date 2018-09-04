@@ -6,10 +6,14 @@ type UserSchool {
   endYear: Int
 }
 
+input UserSchoolInput {
+  startYear: String
+  endYear: String
+  school: SchoolInput!
+}
+
 extend type Mutation {
   createUserSchool (
-    startYear: String
-    endYear: String
-    school: SchoolInput!
+    userSchool: UserSchoolInput
   ): UserSchool!
 }

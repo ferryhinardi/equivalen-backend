@@ -3,8 +3,12 @@ type UserProfile {
   nikNumber: String
 }
 
+input UserProfileInput {
+  nikNumber: String!
+}
+
 extend type Mutation {
   createUserProfile(
-    nikNumber: String!
+    userProfile: UserProfileInput
   ): UserProfile!
 }

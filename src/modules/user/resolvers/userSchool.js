@@ -7,9 +7,18 @@ export default {
     user: resolver(UserSchool.User),
   },
   Mutation: {
-    createUserSchool: async (_, { startYear, endYear, school: schoolData }, { user }) => {
-      const [school] = await School.findOrCreate({ where: schoolData });
-      const [[userSchool]] = await user.addSchool(school, {through: { startYear, endYear }});
+    createUserSchool: async (_, { userSchool: { startYear, endYear, school: schoolData } }, { user, transaction }) => {
+      const [school] = await School.findOrCreate({
+        where: schoolData,
+        ...(transaction ? {transaction}: {}),
+      });
+      const [[userSchool]] = await user.addSchool(school, {
+        through: {
+          startYear,
+          endYear,
+        },
+        ...(transaction ? {transaction}: {}),
+      });
       return userSchool;
     }
   }

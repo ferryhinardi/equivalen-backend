@@ -3,8 +3,12 @@ type UserStudent {
   nisnNumber: String
 }
 
+input UserStudentInput {
+  nisnNumber: String!
+}
+
 extend type Mutation {
   createUserStudent(
-    nisnNumber: String!
+    userStudent: UserStudentInput
   ): UserStudent!
 }

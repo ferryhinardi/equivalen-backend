@@ -3,6 +3,7 @@ type User {
   userStudent: UserStudent
   authProviders: [AuthProvider!]
   userSchools: [UserSchool!]
+  userProfile: UserProfile
 
   isStudent: Boolean
   token: String
@@ -22,4 +23,12 @@ type User {
 extend type Query {
   user: User
   users: [User!]
+}
+
+extend type Mutation {
+  registerUserStudent(
+    userProfile: UserProfileInput
+    userSchool: UserSchoolInput
+    userStudent: UserStudentInput
+  ): User
 }
