@@ -16,3 +16,7 @@ input SchoolInput {
 extend type Mutation {
   createSchool(school: SchoolInput): School
 }
+
+extend type Query {
+  schools: [School!]
+}
