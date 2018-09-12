@@ -1,0 +1,31 @@
+type QuestionType {
+  id: ID!
+  name: String!
+}
+
+type Option {
+  id: ID!
+  name: String!
+}
+
+type Question {
+  id: ID!
+  content: String!
+  type: QuestionType!
+  options: [QuestionOption!]
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type QuestionOption {
+  id: ID!
+  content: String!
+  order: Int!
+  option: Option!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+extend type Query {
+  questions: [Question!]
+}

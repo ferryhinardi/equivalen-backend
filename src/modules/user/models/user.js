@@ -1,7 +1,7 @@
 import PhoneNumber from 'awesome-phonenumber';
 import {
   getToken,
-  verify
+  verify,
 } from 'modules/shared/libs/jwt';
 import bcrypt from 'bcrypt';
 
@@ -37,19 +37,19 @@ export default (sequelize, Sequelize) => {
     },
     dateBod: {
       field: 'date_bod',
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     createdAt: {
       field: 'created_at',
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       field: 'updated_at',
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     deletedAt: {
       field: 'deleted_at',
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
   }, {
     tableName: 'users',
@@ -106,10 +106,10 @@ export default (sequelize, Sequelize) => {
 
     User.AuthProvider = models.User.belongsToMany(models.AuthProvider, {
       through: models.UserAuthProvider,
-      foreignKey: 'user_id'
+      foreignKey: 'user_id',
     });
     User.UserAuthProvider = models.User.hasMany(models.UserAuthProvider, {
-      foreignKey: 'user_id'
+      foreignKey: 'user_id',
     });
 
     User.UserStudent = models.User.hasOne(models.UserStudent, {
@@ -131,11 +131,9 @@ export default (sequelize, Sequelize) => {
   User.prototype.isValidToken = function (token) {
     const decoded = verify(token);
     return decoded.id === this.id;
-  }
+  };
   User.prototype.isStudent = function () {
-    return this.getStudent().then((result) => {
-      return !!result;
-    });
-  }
+    return this.getStudent().then((result) => !!result);
+  };
   return User;
 };
