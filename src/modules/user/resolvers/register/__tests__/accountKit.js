@@ -1,13 +1,12 @@
 import request from 'modules/shared/libs/jest/request';
 
 import { User, sequelize } from 'models';
-import {
-  verify
-} from 'modules/shared/libs/jwt';
+import { verify } from 'modules/shared/libs/jwt';
 
 describe('test accountKit', () => {
   beforeAll(() => sequelize.sync({ force: true }));
-  beforeEach((done) => { // Before each test we empty the database
+  beforeEach(done => {
+    // Before each test we empty the database
     sequelize.truncate().then(() => {
       done();
     });
@@ -53,7 +52,9 @@ describe('test accountKit', () => {
           }
         }
       `;
-    const resultRegisterUser = await request(query, undefined, { Authorization: `Bearer ${token}`});
+    const resultRegisterUser = await request(query, undefined, {
+      Authorization: `Bearer ${token}`
+    });
     const { user } = resultRegisterUser.body.data.registerViaAccountKit;
     const users = await User.findAll();
     expect(users.length).toEqual(1);

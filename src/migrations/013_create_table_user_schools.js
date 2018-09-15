@@ -1,11 +1,11 @@
-export default ({
+export default {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('user_schools', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       user_id: {
         type: Sequelize.INTEGER,
@@ -13,8 +13,8 @@ export default ({
         allowNull: false,
         references: {
           model: 'users',
-          field: 'id',
-        },
+          field: 'id'
+        }
       },
       school_id: {
         type: Sequelize.INTEGER,
@@ -22,29 +22,29 @@ export default ({
         allowNull: false,
         references: {
           model: 'schools',
-          field: 'id',
-        },
+          field: 'id'
+        }
       },
       start_year: {
         allowNull: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       end_year: {
         allowNull: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       deleted_at: {
         allowNull: true,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     }),
-  down: queryInterface => queryInterface.dropTable('user_schools'),
-});
+  down: queryInterface => queryInterface.dropTable('user_schools')
+};

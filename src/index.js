@@ -9,9 +9,7 @@ const port = process.env.PORT || '4000';
 async function start() {
   // Start the GraphQL server
   models.sequelize.sync().then(() => {
-    server.start(({
-      port
-    }) => {
+    server.start(({ port }) => {
       console.log(`Server is running on localhost:${port}`);
     });
   });

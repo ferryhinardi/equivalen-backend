@@ -1,15 +1,15 @@
-export default ({
+export default {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('questions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       content: {
         allowNull: false,
-        type: Sequelize.TEXT('long'),
+        type: Sequelize.TEXT('long')
       },
       question_type_id: {
         type: Sequelize.INTEGER,
@@ -17,21 +17,21 @@ export default ({
         allowNull: true,
         references: {
           model: 'question_types',
-          field: 'id',
-        },
+          field: 'id'
+        }
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       deleted_at: {
         allowNull: true,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     }),
-  down: queryInterface => queryInterface.dropTable('questions'),
-});
+  down: queryInterface => queryInterface.dropTable('questions')
+};

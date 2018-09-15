@@ -3,6 +3,6 @@ import { School } from 'models';
 
 export default {
   Query: {
-    schools: resolver(School),
-  },
-}
+    schools: resolver(School)
+  }
+};

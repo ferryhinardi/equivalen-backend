@@ -1,16 +1,16 @@
-export default ({
+export default {
   up: (queryInterface, Sequelize) => {
     queryInterface.addColumn('users', 'place_bod', {
       type: Sequelize.STRING,
-      allowNull: true,
+      allowNull: true
     });
     queryInterface.addColumn('users', 'date_bod', {
       type: Sequelize.DATE,
-      allowNull: true,
+      allowNull: true
     });
   },
-  down: (queryInterface) => {
+  down: queryInterface => {
     queryInterface.removeColumn('users', 'place_bod');
     queryInterface.removeColumn('users', 'date_bod');
-  },
-});
+  }
+};

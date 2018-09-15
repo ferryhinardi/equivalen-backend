@@ -16,14 +16,14 @@ export async function UserFactory(userData) {
     birthDate: faker.date.past(),
     placeBod: faker.address.city(),
     dateBod: faker.date.past(),
-    ...userData,
+    ...userData
   };
   const user = await User.create(data);
 
   const authProviders = await AuthProvider.findAll();
   const authProvider = faker.random.arrayElement(authProviders);
 
-  await user.addAuthProvider(authProvider, { through: { sourceId: faker.random.uuid() }});
+  await user.addAuthProvider(authProvider, { through: { sourceId: faker.random.uuid() } });
   return user;
 }
 

@@ -6,14 +6,14 @@ module.exports = {
     storage: './db.development.sqlite',
     logging: true,
     operatorsAliases: false,
-    quoteIdentifiers: false, // set case-insensitive
+    quoteIdentifiers: false // set case-insensitive
   },
   test: {
     dialect: 'sqlite',
     storage: ':memory:',
     logging: false,
     operatorsAliases: false,
-    quoteIdentifiers: false, // set case-insensitive
+    quoteIdentifiers: false // set case-insensitive
   },
   production: {
     username: process.env.DB_USER || 'root',
@@ -23,6 +23,6 @@ module.exports = {
     dialect: 'mysql',
     logging: false,
     operatorsAliases: false,
-    quoteIdentifiers: false, // set case-insensitive
-  },
+    quoteIdentifiers: false // set case-insensitive
+  }
 };

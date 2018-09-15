@@ -1,4 +1,4 @@
-export default ({
+export default {
   up: queryInterface => queryInterface.dropTable('user_roles'),
   down: (queryInterface, Sequelize) =>
     queryInterface.createTable('user_roles', {
@@ -6,7 +6,7 @@ export default ({
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       user_id: {
         type: Sequelize.INTEGER,
@@ -14,8 +14,8 @@ export default ({
         allowNull: false,
         references: {
           model: 'users',
-          field: 'id',
-        },
+          field: 'id'
+        }
       },
       role_id: {
         type: Sequelize.INTEGER,
@@ -23,21 +23,20 @@ export default ({
         allowNull: false,
         references: {
           model: 'roles',
-          field: 'id',
-        },
+          field: 'id'
+        }
       },
       status: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
-    }),
-});
-
+        type: Sequelize.DATE
+      }
+    })
+};

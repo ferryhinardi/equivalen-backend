@@ -1,32 +1,36 @@
 export default (sequelize, Sequelize) => {
-  const Gender = sequelize.define('Gender', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+  const Gender = sequelize.define(
+    'Gender',
+    {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      name: Sequelize.STRING,
+      createdAt: {
+        field: 'created_at',
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        field: 'updated_at',
+        type: Sequelize.DATE
+      },
+      deletedAt: {
+        field: 'deleted_at',
+        type: Sequelize.DATE
+      }
     },
-    name: Sequelize.STRING,
-    createdAt: {
-      field: 'created_at',
-      type: Sequelize.DATE
-    },
-    updatedAt: {
-      field: 'updated_at',
-      type: Sequelize.DATE
-    },
-    deletedAt: {
-      field: 'deleted_at',
-      type: Sequelize.DATE
-    },
-  }, {
-    tableName   : 'genders',
-    deletedAt   : 'deleted_at',
-    paranoid    : true,
-  });
-  Gender.associate = (models) => {
+    {
+      tableName: 'genders',
+      deletedAt: 'deleted_at',
+      paranoid: true
+    }
+  );
+  Gender.associate = models => {
     models.Gender.hasMany(models.User, {
       foreignKey: 'gender_id',
-      as: 'users',
+      as: 'users'
     });
   };
   return Gender;

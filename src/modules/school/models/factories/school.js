@@ -7,7 +7,7 @@ export async function SchoolFactory(fData) {
     city: faker.address.city(),
     district: faker.address.cityPrefix(),
     province: faker.address.state(),
-    ...fData,
+    ...fData
   };
   const school = await School.create(data);
   return school;

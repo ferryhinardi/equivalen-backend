@@ -1,20 +1,18 @@
 module.exports = {
-  "extends": "airbnb-base",
-  "env": {
-      "node": true,
-      "mocha": true,
-      "jest/globals": true
+  extends: ['airbnb-base', 'prettier'],
+  env: {
+    node: true,
+    mocha: true,
+    'jest/globals': true
   },
-  "plugins": [
-      "jest"
-  ],
-  "parser": "babel-eslint",
-  "settings": {
-      "import/resolver": {
-          "babel-module": {}
-      }
+  plugins: ['jest'],
+  parser: 'babel-eslint',
+  settings: {
+    'import/resolver': {
+      'babel-module': {}
+    }
   },
-  "rules": {
-      "class-methods-use-this": 0,
+  rules: {
+    'class-methods-use-this': 0
   }
 };

@@ -4,7 +4,7 @@ import { Gender } from 'models';
 export async function GenderFactory(fData) {
   const data = {
     name: faker.random.word(),
-    ...fData,
+    ...fData
   };
   return Gender.create(data);
 }

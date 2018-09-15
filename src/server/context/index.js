@@ -1,9 +1,7 @@
 import models from 'models';
 import { createContext, EXPECTED_OPTIONS_KEY } from 'dataloader-sequelize';
 import { User } from 'models';
-import {
-  verify
-} from 'modules/shared/libs/jwt';
+import { verify } from 'modules/shared/libs/jwt';
 
 export default async function context(req) {
   const dataloaderContext = createContext(models.sequelize);
@@ -20,6 +18,6 @@ export default async function context(req) {
   return {
     [EXPECTED_OPTIONS_KEY]: dataloaderContext,
     token,
-    user,
+    user
   };
 }

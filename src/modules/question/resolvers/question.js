@@ -5,16 +5,16 @@ export default {
   Question: {
     type: resolver(Question.QuestionType),
     options: resolver(Question.QuestionOption, {
-      before: (findOptions) => {
+      before: findOptions => {
         findOptions.order = [['order', 'asc']];
         return findOptions;
-      },
-    }),
+      }
+    })
   },
   QuestionOption: {
-    option: resolver(QuestionOption.Option),
+    option: resolver(QuestionOption.Option)
   },
   Query: {
-    questions: resolver(Question),
-  },
+    questions: resolver(Question)
+  }
 };

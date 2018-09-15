@@ -1,11 +1,5 @@
-import {
-  getAccessTokenFromCode,
-  validateAccessToken
-} from 'modules/shared/libs/account-kit';
-import {
-  getToken,
-  verify
-} from 'modules/shared/libs/jwt';
+import { getAccessTokenFromCode, validateAccessToken } from 'modules/shared/libs/account-kit';
+import { getToken, verify } from 'modules/shared/libs/jwt';
 
 import { AuthProvider, User } from 'models';
 
@@ -17,32 +11,32 @@ export default {
       const phoneNumber = userAuthProvider.phone.number;
       return {
         user: {
-          phoneNumber,
+          phoneNumber
         },
-        token: getToken({ phoneNumber, userAuthProvider }),
+        token: getToken({ phoneNumber, userAuthProvider })
       };
     },
     registerViaAccountKit: async (_, { user: userData }, { token }) => {
       const { phoneNumber, userAuthProvider } = verify(token);
-      if ( userData.phoneNumber !== phoneNumber ) throw new Error('Phone number is invalid');
+      if (userData.phoneNumber !== phoneNumber) throw new Error('Phone number is invalid');
       const [[authProvider], user] = await Promise.all([
         AuthProvider.findOrCreate({
           where: {
-            name: 'Account Kit',
-          },
+            name: 'Account Kit'
+          }
         }),
-        User.create(userData),
+        User.create(userData)
       ]);
       await user.addAuthProvider(authProvider, {
         through: {
           sourceId: userAuthProvider.id,
-          payload: JSON.stringify(userAuthProvider),
+          payload: JSON.stringify(userAuthProvider)
         }
       });
       return {
         user,
-        token: user.getToken(),
+        token: user.getToken()
       };
     }
-  },
-}
+  }
+};

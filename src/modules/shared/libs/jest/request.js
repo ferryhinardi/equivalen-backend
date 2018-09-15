@@ -15,7 +15,7 @@ export default async function req(query, variables = {}, headers = {}) {
     .set(headers)
     .send({
       query,
-      variables,
+      variables
     });
 
   if (result.body.errors) {

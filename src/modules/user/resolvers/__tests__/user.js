@@ -1,10 +1,11 @@
 import request from 'modules/shared/libs/jest/request';
 import UserFactory from 'modules/user/models/factories/user';
-import { School, UserSchool, sequelize } from 'models';
+import { sequelize } from 'models';
 
 describe('test user', () => {
   beforeAll(() => sequelize.sync({ force: true }));
-  beforeEach((done) => { // Before each test we empty the database
+  beforeEach(done => {
+    // Before each test we empty the database
     sequelize.truncate().then(() => {
       done();
     });
@@ -13,7 +14,7 @@ describe('test user', () => {
   describe('mutation registerUserStudent', () => {
     it('should return 200', async () => {
       const user = await UserFactory();
-      let query = `
+      const query = `
         mutation {
           registerUserStudent (
             userStudent: {
@@ -40,13 +41,18 @@ describe('test user', () => {
             }
           }
         }
-      `
-      const result = await request(query, undefined, { Authorization: `Bearer ${user.getToken()}`});
-      const { isStudent, userStudent: { nisnNumber }, userProfile: { nikNumber } } = result.body.data.registerUserStudent;
+      `;
+      const result = await request(query, undefined, {
+        Authorization: `Bearer ${user.getToken()}`
+      });
+      const {
+        isStudent,
+        userStudent: { nisnNumber },
+        userProfile: { nikNumber }
+      } = result.body.data.registerUserStudent;
       expect(isStudent).toEqual(true);
-      expect(nisnNumber).toEqual("123");
-      expect(nikNumber).toEqual("321");
-
+      expect(nisnNumber).toEqual('123');
+      expect(nikNumber).toEqual('321');
     });
-  })
+  });
 });

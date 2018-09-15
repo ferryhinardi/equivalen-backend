@@ -4,7 +4,8 @@ import { School, UserSchool, sequelize } from 'models';
 
 describe('test userSchool', () => {
   beforeAll(() => sequelize.sync({ force: true }));
-  beforeEach((done) => { // Before each test we empty the database
+  beforeEach(done => {
+    // Before each test we empty the database
     sequelize.truncate().then(() => {
       done();
     });
@@ -38,9 +39,15 @@ describe('test userSchool', () => {
             }
           }
         }
-      `
-      const result = await request(query, undefined, { Authorization: `Bearer ${user.getToken()}`});
-      const { startYear, endYear, school: { name, province, city, district } } = result.body.data.createUserSchool;
+      `;
+      const result = await request(query, undefined, {
+        Authorization: `Bearer ${user.getToken()}`
+      });
+      const {
+        startYear,
+        endYear,
+        school: { name, province, city, district }
+      } = result.body.data.createUserSchool;
       expect(startYear).toEqual(2012);
       expect(endYear).toEqual(2016);
       expect(name).toEqual('Bina Nusantara University');
@@ -48,5 +55,5 @@ describe('test userSchool', () => {
       expect(city).toEqual('Jakarta Barat');
       expect(district).toEqual('Kebon Jeruk');
     });
-  })
+  });
 });

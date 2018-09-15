@@ -5,7 +5,7 @@ import * as production from './index.production';
 export const config = {
   test,
   development,
-  production,
+  production
 }[process.env.NODE_ENV || 'development'];
 
 export default config;

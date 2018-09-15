@@ -1,4 +1,4 @@
-export default ({
+export default {
   up: queryInterface => queryInterface.dropTable('roles'),
   down: (queryInterface, Sequelize) =>
     queryInterface.createTable('roles', {
@@ -6,23 +6,23 @@ export default ({
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       name: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       deleted_at: {
         allowNull: true,
-        type: Sequelize.DATE,
-      },
-    }),
-});
+        type: Sequelize.DATE
+      }
+    })
+};
