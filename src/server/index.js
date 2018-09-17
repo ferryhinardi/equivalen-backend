@@ -1,26 +1,32 @@
-import { GraphQLServer } from 'graphql-yoga';
+import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
+import cors from 'cors';
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import context from './context';
-import schemaDirectives from './directives';
-import cors from 'cors';
 
-const server = new GraphQLServer({
+const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context,
-  schemaDirectives
+  context
 });
 
-server.express.use(
+const app = express();
+
+app.use(
   cors({
     optionsSuccessStatus: 200
   })
 );
-server.express.use((req, res, next) => {
+app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
-export default server;
+server.applyMiddleware({
+  app,
+  path: '/'
+});
+
+export default app;

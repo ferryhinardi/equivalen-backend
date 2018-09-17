@@ -8,10 +8,6 @@ input UserStudentInput {
 }
 
 extend type Mutation {
-  createUserStudent(
-    userStudent: UserStudentInput @deprecated(reason: "use createOrUpdateUserStudent")
-  ): UserStudent!
-  createOrUpdateUserStudent(
-    userStudent: UserStudentInput
-  ): UserStudent!
+  createUserStudent(userStudent: UserStudentInput): UserStudent!
+  createOrUpdateUserStudent(userStudent: UserStudentInput): UserStudent!
 }
