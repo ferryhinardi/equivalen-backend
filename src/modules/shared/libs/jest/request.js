@@ -1,13 +1,5 @@
-import server from 'server';
+import app from 'server';
 import request from 'supertest';
-
-let app;
-
-beforeAll(async () => {
-  app = await server.start({ port: 4010 });
-});
-
-afterAll(() => app.close());
 
 export default async function req(query, variables = {}, headers = {}) {
   const result = await request(app)
