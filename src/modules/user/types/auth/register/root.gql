@@ -1,0 +1,17 @@
+type UserPrefillResponse {
+  phoneNumber: String
+}
+
+type PrefillResponse {
+  user: UserPrefillResponse
+  token: String
+}
+
+input RegisterUserInput {
+  email: String! @constraint(format: "email")
+  username: String!
+  phoneNumber: String!
+  password: String!
+  placeBod: String
+  dateBod: Date
+}

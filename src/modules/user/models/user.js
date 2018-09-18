@@ -2,6 +2,10 @@ import PhoneNumber from 'awesome-phonenumber';
 import { getToken, verify } from 'modules/shared/libs/jwt';
 import bcrypt from 'bcrypt';
 
+function getHashedPassword(password) {
+  return bcrypt.hashSync(password, 8);
+}
+
 export default (sequelize, Sequelize) => {
   const User = sequelize.define(
     'User',
@@ -69,7 +73,7 @@ export default (sequelize, Sequelize) => {
           }
           if (user.password) {
             try {
-              const hashedPassword = bcrypt.hashSync(user.password, 8);
+              const hashedPassword = getHashedPassword(user.password);
               user.password = hashedPassword;
             } catch (e) {
               console.error(e);
@@ -126,15 +130,58 @@ export default (sequelize, Sequelize) => {
       through: models.UserSchool
     });
   };
-  User.prototype.getToken = function() {
-    return getToken({ id: this.id });
+  User.prototype.getToken = function getUserToken() {
+    return getToken({
+      id: this.id
+    });
   };
-  User.prototype.isValidToken = function(token) {
+  User.prototype.isValidToken = function isValidToken(token) {
     const decoded = verify(token);
     return decoded.id === this.id;
   };
-  User.prototype.isStudent = function() {
+  User.prototype.isStudent = function isStudent() {
     return this.getStudent().then(result => !!result);
+  };
+  User.register = async function register(userData, userAuthProvider) {
+    const { AuthProvider } = require('models');
+    const { email, username } = userData;
+    const userWithEmail = await User.findOne({
+      where: {
+        email
+      }
+    });
+    if (userWithEmail) throw new Error('email already registered');
+    const userWithUsername = await User.findOne({
+      where: {
+        username
+      }
+    });
+    if (userWithUsername) throw new Error('username already registered');
+    const [[authProvider], user] = await Promise.all([
+      AuthProvider.findOrCreate({
+        where: {
+          name: 'Account Kit'
+        }
+      }),
+      User.create(userData)
+    ]);
+    await user.addAuthProvider(authProvider, {
+      through: {
+        sourceId: userAuthProvider.id,
+        payload: JSON.stringify(userAuthProvider)
+      }
+    });
+    return user;
+  };
+  User.findByAuth = async function findByAuth({ username, password }) {
+    const user = await User.findOne({
+      where: {
+        username
+      }
+    });
+    if (!user) throw new Error('User not found');
+    if (bcrypt.compareSync(password, user.password)) return user;
+    return null;
   };
   return User;
 };

@@ -1,0 +1,8 @@
+input LoginInput {
+  username: String
+  password: String
+}
+
+extend type Mutation {
+  login(auth: LoginInput): LoginResponse!
+}

@@ -5,7 +5,7 @@ const resolversArray = fileLoader(path.join(__dirname, '../../modules/**/resolve
   extensions: ['.js']
 });
 const resolversWithoutTest = fileLoader(
-  path.join(__dirname, '../../modules/**/resolvers/!(__tests__)/*.js'),
+  path.join(__dirname, '../../modules/**/resolvers/**/!(__tests__)/*.js'),
   { extensions: ['.js'] }
 );
 

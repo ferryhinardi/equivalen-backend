@@ -1,8 +1,0 @@
-extend type Mutation {
-  getPrefillViaAccountKit(
-    code: String!
-  ): PrefillResponse
-  registerViaAccountKit(
-    user: RegisterUserInput!
-  ): RegisterResponse
-}

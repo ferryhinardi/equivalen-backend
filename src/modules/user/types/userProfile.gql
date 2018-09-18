@@ -9,6 +9,5 @@ input UserProfileInput {
 
 extend type Mutation {
   createUserProfile(userProfile: UserProfileInput): UserProfile!
-
   createOrUpdateUserProfile(userProfile: UserProfileInput): UserProfile!
 }
