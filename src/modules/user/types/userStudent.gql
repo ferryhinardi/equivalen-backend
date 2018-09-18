@@ -8,6 +8,13 @@ input UserStudentInput {
 }
 
 extend type Mutation {
+  """
+  createUserStudent is deprecated. use createOrUpdateUserStudent!
+  """
   createUserStudent(userStudent: UserStudentInput): UserStudent!
+
+  """
+  Create or update Authenticated user student data.
+  """
   createOrUpdateUserStudent(userStudent: UserStudentInput): UserStudent!
 }

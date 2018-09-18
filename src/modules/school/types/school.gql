@@ -13,10 +13,9 @@ input SchoolInput {
   district: String
 }
 
-extend type Mutation {
-  createSchool(school: SchoolInput): School
-}
-
 extend type Query {
-  schools: [School!]
+  """
+  Get list of schools.
+  """
+  schools(keyword: String): [School!]
 }

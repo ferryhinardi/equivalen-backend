@@ -13,7 +13,8 @@ input UserSchoolInput {
 }
 
 extend type Mutation {
-  createUserSchool (
-    userSchool: UserSchoolInput
-  ): UserSchool!
+  """
+  Create School for authenticated User.
+  """
+  createUserSchool(userSchool: UserSchoolInput): UserSchool!
 }

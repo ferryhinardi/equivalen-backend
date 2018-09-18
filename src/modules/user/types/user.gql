@@ -21,11 +21,21 @@ type User {
 }
 
 extend type Query {
+  """
+  Get User
+  """
   user: User
+
+  """
+  Get list of users
+  """
   users: [User!]
 }
 
 extend type Mutation {
+  """
+  Create Authenticated user as a student.
+  """
   registerUserStudent(
     userProfile: UserProfileInput
     userSchool: UserSchoolInput

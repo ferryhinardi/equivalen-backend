@@ -8,6 +8,13 @@ input UserProfileInput {
 }
 
 extend type Mutation {
+  """
+  createUserProfile is deprecated. use createOrUpdateUserProfile!
+  """
   createUserProfile(userProfile: UserProfileInput): UserProfile!
+
+  """
+  Create or update authenticated user profile data.
+  """
   createOrUpdateUserProfile(userProfile: UserProfileInput): UserProfile!
 }

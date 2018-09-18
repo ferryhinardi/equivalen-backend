@@ -1,4 +1,11 @@
 extend type Mutation {
+  """
+  Get token to registerViaAccountKit!
+  """
   getPrefillViaAccountKit(code: String!): PrefillResponse
+
+  """
+  Register into as Equivalen User.
+  """
   registerViaAccountKit(user: RegisterUserInput!): LoginResponse
 }

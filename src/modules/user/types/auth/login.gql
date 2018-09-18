@@ -4,5 +4,8 @@ input LoginInput {
 }
 
 extend type Mutation {
+  """
+  Login into Equivalen app
+  """
   login(auth: LoginInput): LoginResponse!
 }
