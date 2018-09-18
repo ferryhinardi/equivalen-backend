@@ -10,7 +10,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context,
-  schemaDirectives
+  schemaDirectives,
+  introspection: true,
+  playground: true
 });
 
 const app = express();
