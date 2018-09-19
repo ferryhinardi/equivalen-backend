@@ -9,6 +9,7 @@ type User {
   token: String
 
   gender: Gender
+  username: String
   fullName: String
   email: String
   phoneNumber: String
