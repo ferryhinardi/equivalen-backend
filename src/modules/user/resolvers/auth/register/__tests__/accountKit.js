@@ -42,6 +42,7 @@ describe('test accountKit', () => {
           registerViaAccountKit (
             user: {
               email: "jekiwijaya@hotmail.com"
+              fullName: "Jacky Wijaya"
               username: "jekiwijaya"
               phoneNumber: "089536789121"
               password: "test"
@@ -80,6 +81,7 @@ describe('test accountKit', () => {
           registerViaAccountKit (
             user: {
               email: "admin@admin.com"
+              fullName: "Jacky Wijaya"
               username: "jekiwijaya"
               phoneNumber: "089536789121"
               password: "test"
@@ -118,6 +120,7 @@ describe('test accountKit', () => {
           registerViaAccountKit (
             user: {
               email: "admin@admin.com"
+              fullName: "Jacky Wijaya"
               username: "admin"
               phoneNumber: "089536789121"
               password: "test"
