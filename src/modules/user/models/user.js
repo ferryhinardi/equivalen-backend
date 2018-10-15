@@ -26,10 +26,6 @@ export default (sequelize, Sequelize) => {
         field: 'full_name'
       },
       password: Sequelize.STRING,
-      birthDate: {
-        type: Sequelize.DATE,
-        field: 'birth_date'
-      },
       photoUrl: {
         type: Sequelize.STRING,
         field: 'photo_url'

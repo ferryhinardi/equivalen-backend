@@ -13,7 +13,6 @@ type User {
   fullName: String
   email: String
   phoneNumber: String
-  birthDate: Date
   photoUrl: String
   placeBod: String
   dateBod: Date
