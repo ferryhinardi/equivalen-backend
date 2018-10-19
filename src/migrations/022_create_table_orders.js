@@ -34,9 +34,17 @@ export default {
           field: 'id'
         }
       },
+      email: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      phone_number: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       status: {
         allowNull: false,
-        defaultValue: 'Pending',
+        defaultValue: 'PENDING',
         type: Sequelize.STRING
       },
       total_price: {

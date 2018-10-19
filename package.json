@@ -48,6 +48,7 @@
     "rimraf": "^2.6.2",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.0.0",
+    "sequelize-fixtures": "^0.7.0",
     "sqlite3": "^3.1.8",
     "superagent": "^3.8.3",
     "supertest": "^3.0.0"

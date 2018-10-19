@@ -1,20 +1,27 @@
 export default {
   up: (queryInterface, Sequelize) =>
     /*
-     * Payment event types are things like 'Paid', 'Failed', 'Refunded'.
-     *
-     * These are effectively the transaction types.
+     * Product that is license type.
      */
-    queryInterface.createTable('payment_event_types', {
+    queryInterface.createTable('product_licenses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      product: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         allowNull: false,
-        type: Sequelize.STRING
+        references: {
+          model: 'products',
+          field: 'id'
+        }
+      },
+      time_in_day: {
+        allowNull: true,
+        type: Sequelize.INTEGER
       },
       created_at: {
         allowNull: false,
@@ -29,5 +36,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('payment_event_types')
+  down: queryInterface => queryInterface.dropTable('product_licenses')
 };

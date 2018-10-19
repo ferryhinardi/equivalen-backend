@@ -1,3 +1,5 @@
+import sequelizeFixtures from 'sequelize-fixtures';
+import fixtures from './fixtures';
 import server from './server';
 import models from './models';
 
@@ -7,16 +9,19 @@ import models from './models';
  */
 const port = process.env.PORT || '4000';
 async function start() {
-  // Start the GraphQL server
-  models.sequelize.sync().then(() => {
-    server.listen(
-      {
-        port
-      },
-      () => {
-        console.log(`Server is running on localhost:${port}`);
-      }
-    );
+  // can use glob syntax to select multiple files
+  sequelizeFixtures.loadFixtures(fixtures, models).then(() => {
+    // Start the GraphQL server
+    models.sequelize.sync().then(() => {
+      server.listen(
+        {
+          port
+        },
+        () => {
+          console.log(`Server is running on localhost:${port}`);
+        }
+      );
+    });
   });
 }
 

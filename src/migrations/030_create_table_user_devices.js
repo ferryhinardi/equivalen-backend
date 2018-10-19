@@ -1,43 +1,45 @@
 export default {
+  /*
+   * User devices with registered license.
+   */
   up: (queryInterface, Sequelize) =>
-    /*
-     * A payment event for an order -> PaymentEventQuantity
-     * For example:
-     * All lines have been paid for
-     * 2 lines have been refunded
-     */
-    queryInterface.createTable('payment_events', {
+    queryInterface.createTable('user_devices', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      order_id: {
+      hostname: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      user_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,
         references: {
-          model: 'orders',
+          model: 'users',
           field: 'id'
         }
       },
-      payment_event_type_id: {
+      device_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
+      license_id: {
         type: Sequelize.INTEGER,
         onDelete: 'SET NULL',
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: 'payment_event_types',
+          model: 'licenses',
           field: 'id'
         }
       },
-      reference: {
-        type: Sequelize.TEXT('long'),
+      platform: {
+        type: Sequelize.STRING,
         allowNull: true
-      },
-      amount: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
       },
       created_at: {
         allowNull: false,
@@ -46,11 +48,7 @@ export default {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      deleted_at: {
-        allowNull: true,
-        type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('payment_events')
+  down: queryInterface => queryInterface.dropTable('user_devices')
 };
