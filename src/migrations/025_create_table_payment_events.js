@@ -25,7 +25,7 @@ export default {
       payment_event_type_id: {
         type: Sequelize.INTEGER,
         onDelete: 'SET NULL',
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'payment_event_types',
           field: 'id'
