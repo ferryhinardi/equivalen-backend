@@ -32,13 +32,12 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-app.use(bodyParser);
 
 /* =============================== */
 // Route API
 /* =============================== */
 app.get('/api/v1/orders/:id/reindex', reindexOrder);
-app.post('/api/v1/orderXenditInvoices/reindex', reindexXenditInvoice);
+app.post('/api/v1/orderXenditInvoices/reindex', bodyParser.json(), reindexXenditInvoice);
 
 server.applyMiddleware({
   app,
