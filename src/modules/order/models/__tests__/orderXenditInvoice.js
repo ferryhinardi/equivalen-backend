@@ -35,6 +35,9 @@ describe('test orderXenditInvoice', () => {
     expect(order.isPaid()).toEqual(false);
     await simulatePayment(order);
     await order.reindex();
+    await new Promise(resolve => {
+      setTimeout(resolve, 1000);
+    });
     await order.reload();
     expect(order.isPaid()).toEqual(true);
   });
