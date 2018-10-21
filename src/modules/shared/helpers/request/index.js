@@ -10,6 +10,7 @@ const endCallback = (resolve, reject, error, response) => {
   try {
     const resObj = response.text ? JSON.parse(response.text) : {};
     if (error) {
+      console.error(error);
       reject({ success: false, error: resObj, status: response.status });
       return;
     }
@@ -19,6 +20,7 @@ const endCallback = (resolve, reject, error, response) => {
       status: response.status
     });
   } catch (errorMessage) {
+    console.error(errorMessage);
     reject({ success: false, error: errorMessage, status: 500 });
   }
 };

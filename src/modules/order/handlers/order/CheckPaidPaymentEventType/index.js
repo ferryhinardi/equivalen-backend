@@ -1,28 +1,16 @@
 import BaseHandler from 'modules/shared/handlers/BaseHandler';
 import getInvoice from 'modules/payment/integrations/xendit/getInvoice';
 
-export default class InitPaymentEventType extends BaseHandler {
+/**
+ * 1. Hit Xendit API, get invoice.
+ * 2. Kalau status payment typenya bukan order.status
+ *    a. Insert payment event baru
+ *    b. Update order.status
+ */
+export default class CheckPaidPaymentEventType extends BaseHandler {
   async run(order, options = {}) {
-    const { PaymentEvent, PaymentEventType } = require('models');
     const invoice = await order.getInvoice(options);
-    const { data: latestInvoice } = await getInvoice({ invoiceId: invoice.invoiceId });
-    let paymentEvent = null;
-    if (latestInvoice.status !== PaymentEventType.PENDING) {
-      const [latestPaymentEventType] = await PaymentEventType.findOrCreate({
-        where: {
-          name: latestInvoice.status
-        },
-        ...options
-      });
-      paymentEvent = await PaymentEvent.findOrCreate({
-        where: {
-          order_id: order.id,
-          payment_event_type_id: latestPaymentEventType.id,
-          amount: latestInvoice.paid_amount
-        },
-        ...options
-      });
-    }
-    return paymentEvent;
+    await invoice.reindex(options);
+    return invoice;
   }
 }

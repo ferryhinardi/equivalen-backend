@@ -29,6 +29,7 @@ export default (sequelize, Sequelize) => {
   );
   PaymentEventType.PENDING = 'PENDING';
   PaymentEventType.PAID = 'PAID';
+  PaymentEventType.SETTLED = 'SETTLED';
   PaymentEventType.CANCELLED = 'CANCELLED';
   return PaymentEventType;
 };

@@ -10,7 +10,7 @@ export default {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      product: {
+      product_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,

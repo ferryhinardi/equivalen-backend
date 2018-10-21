@@ -41,5 +41,11 @@ export default (sequelize, Sequelize) => {
       tableName: 'products'
     }
   );
+  Product.associate = models => {
+    Product.ProductLicense = models.Product.hasOne(models.ProductLicense, {
+      foreignKey: 'product_id',
+      as: 'license'
+    });
+  };
   return Product;
 };

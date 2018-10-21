@@ -13,9 +13,18 @@ export default {
       user_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'users',
+          field: 'id'
+        }
+      },
+      order_line_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'order_lines',
           field: 'id'
         }
       },

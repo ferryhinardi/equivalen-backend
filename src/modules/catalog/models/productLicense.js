@@ -32,7 +32,8 @@ export default (sequelize, Sequelize) => {
   );
   ProductLicense.associate = models => {
     ProductLicense.Product = models.ProductLicense.belongsTo(models.Product, {
-      foreignKey: 'product_id'
+      foreignKey: 'product_id',
+      as: 'product'
     });
   };
   return ProductLicense;

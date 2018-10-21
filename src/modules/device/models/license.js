@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4';
+
 export default (sequelize, Sequelize) => {
   const License = sequelize.define(
     'License',
@@ -28,13 +30,27 @@ export default (sequelize, Sequelize) => {
       }
     },
     {
-      tableName: 'license'
+      tableName: 'licenses'
     }
   );
   License.associate = models => {
     License.User = models.License.belongsTo(models.User, {
       foreignKey: 'user_id'
     });
+    License.OrderLine = models.License.belongsTo(models.OrderLine, {
+      foreignKey: 'order_line_id',
+      as: 'line'
+    });
+  };
+
+  License.createLicense = (licenseData = {}, options) => {
+    return License.create(
+      {
+        licenseCode: uuid(),
+        ...licenseData
+      },
+      options
+    );
   };
   return License;
 };

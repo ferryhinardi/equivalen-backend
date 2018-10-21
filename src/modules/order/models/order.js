@@ -65,6 +65,10 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'order_id',
       as: 'lines'
     });
+    Order.PaymentEvent = models.Order.hasMany(models.PaymentEvent, {
+      foreignKey: 'order_id',
+      as: 'paymentEvents'
+    });
   };
   Order.createOrder = ({ lines, user }) => {
     const { OrderLine } = require('models');
@@ -101,6 +105,32 @@ export default (sequelize, Sequelize) => {
       );
       return order;
     });
+  };
+  Order.prototype.isPaid = function isPaid() {
+    const { PaymentEventType } = sequelize.models;
+    return this.status === PaymentEventType.PAID || this.status === PaymentEventType.SETTLED;
+  };
+  Order.prototype.reindex = async function reindex(options) {
+    return OrderHandler(this, options);
+  };
+  Order.prototype.updateStatus = async function updateStatus(options) {
+    const { PaymentEvent } = sequelize.models;
+    const latestPaymentEvent = await PaymentEvent.findOne({
+      where: {
+        order_id: this.id
+      },
+      order: [['createdAt', 'DESC']],
+      ...options
+    });
+    const paymentEventType = await latestPaymentEvent.getType();
+    if (this.status !== paymentEventType.name) {
+      return this.update(
+        {
+          status: paymentEventType.name
+        },
+        options
+      );
+    }
   };
   return Order;
 };

@@ -19,6 +19,14 @@ export default {
           field: 'id'
         }
       },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      amount: {
+        allowNull: false,
+        type: Sequelize.DECIMAL
+      },
       invoice_id: {
         type: Sequelize.STRING,
         allowNull: false,

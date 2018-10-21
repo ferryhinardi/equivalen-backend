@@ -8,13 +8,13 @@ const getUnixTime = () => (new Date().getTime() / 1000) | 0; // eslint-disable-l
  * @param {*} { amount, email }
  * @returns
  */
-export default function createInvoice({ amount, email }) {
+export default function createInvoice({ amount, email, description }) {
   const externalId = getUnixTime().toString();
   const params = {
     external_id: externalId,
     amount,
     payer_email: email || 'system@admin.com',
-    description: 'Buyer by admin'
+    description: process.env.NODE_ENV === 'test' ? 'TEST' : description || 'Buyer by admin'
   };
   return request.post('/v2/invoices', params);
 }
