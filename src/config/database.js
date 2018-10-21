@@ -4,7 +4,7 @@ module.exports = {
   development: {
     dialect: 'sqlite',
     storage: './db.development.sqlite',
-    logging: true,
+    logging: false,
     operatorsAliases: false,
     quoteIdentifiers: false // set case-insensitive
   },

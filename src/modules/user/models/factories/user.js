@@ -13,7 +13,6 @@ export async function UserFactory(userData) {
     fullName: faker.name.findName(),
     phoneNumber: faker.phone.phoneNumber(),
     photoUrl: faker.image.avatar(),
-    birthDate: faker.date.past(),
     placeBod: faker.address.city(),
     dateBod: faker.date.past(),
     ...userData
