@@ -11,6 +11,6 @@ export const FACEBOOK_ACCOUNT_KIT_VERSION = 'v1.0';
 
 export const XENDIT = {
   host: 'https://api.xendit.co',
-  secretKey: 'xnd_development_OYiFfL4thLX5wc44KrcaEjaZMNOi9YR9kn3l+Rxg+23V+renDw91hA==:',
+  secretKey: 'xnd_production_NIyBfL4thLX5wc44KrcaEjaZMNOi9YR9kn3l+Rxg+23V+renDw91hA==:',
   emailBuyer: 'dev@pt-gps.com'
 };
