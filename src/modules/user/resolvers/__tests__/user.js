@@ -30,6 +30,12 @@ describe('test user', () => {
                 name: "Binus"
               }
             }
+            userDevice: {
+              hostname: "Host"
+              deviceId: "eca4f803-6a0c-5f1c-92c7-95f2b439be75"
+              platform: "darwin"
+              licenseCode: "0935887c-061a-4c84-81f4-8c583192af36"
+            }
           ) {
             id
             isStudent
@@ -48,11 +54,13 @@ describe('test user', () => {
       const {
         isStudent,
         userStudent: { nisnNumber },
-        userProfile: { nikNumber }
+        userProfile: { nikNumber },
+        userDevice: { hostname },
       } = result.body.data.registerUserStudent;
       expect(isStudent).toEqual(true);
       expect(nisnNumber).toEqual('123');
       expect(nikNumber).toEqual('321');
+      expect(hostname).toEqual('Host');
     });
   });
 });
