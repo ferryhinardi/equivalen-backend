@@ -28,6 +28,10 @@ export default (sequelize, Sequelize) => {
         allowNull: false,
         type: Sequelize.DECIMAL
       },
+      notes: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE
