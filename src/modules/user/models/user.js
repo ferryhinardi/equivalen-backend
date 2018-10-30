@@ -121,6 +121,9 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'user_id',
       as: 'profile'
     });
+    User.UserDevice = models.User.hasMany(models.UserDevice, {
+      foreignKey: 'user_id'
+    });
 
     User.School = models.User.belongsToMany(models.School, {
       through: models.UserSchool
