@@ -32,8 +32,12 @@ export default (sequelize, Sequelize) => {
   );
   School.associate = models => {
     School.User = models.School.belongsToMany(models.User, {
-      through: models.UserSchool
+      through: models.UserSchool,
+      foreignKey: 'school_id'
     });
+    School.UserSchool = models.School.hasMany(models.UserSchool, {
+      foreignKey: 'school_id'
+    })
   };
   return School;
 };

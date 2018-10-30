@@ -7,26 +7,6 @@ export default (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true
       },
-      licenseId: {
-        field: 'license_id',
-        type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
-        allowNull: true,
-        references: {
-          model: 'licenses',
-          field: 'id'
-        }
-      },
-      userId: {
-        field: 'user_id',
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'users',
-          field: 'id'
-        }
-      },
       hostname: {
         type: Sequelize.STRING
       },

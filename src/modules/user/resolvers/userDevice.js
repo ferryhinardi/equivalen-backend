@@ -11,32 +11,27 @@ Mutation.createUserDevice = async (
       licenseCode: userDeviceParam.licenseCode
     },
   });
-  const isAvailableAssignLicenseCode = license.dataValues && !license.dataValues.active;
+  const isAvailableAssignLicenseCode = license && !license.active;
 
   if (!isAvailableAssignLicenseCode) {
     throw new Error('License cannot be used!');
   }
 
   await license.update({
-      active: true,
-      userId: user.id,
-    },
+    active: true,
+    userId: user.id,
+  }, {
     ...(transaction ? { transaction } : {})
-  );
-
-  const userDeviceData = {
-    hostname: userDeviceParam.hostname,
-    platform: userDeviceParam.platform,
-    deviceId: userDeviceParam.deviceId,
-    licenseId: license.dataValues.id,
-    userId: 1,
-  };
+  });
+  
   const [userDevice, created] = await UserDevice.findOrCreate({
     where: {
-      deviceId: userDeviceData.deviceId,
-      licenseId: license.dataValues.id
+      hostname: userDeviceParam.hostname,
+      platform: userDeviceParam.platform,
+      deviceId: userDeviceParam.deviceId,
+      license_id: license.id,
+      user_id: user.id,
     },
-    defaults: userDeviceData,
     ...(transaction ? { transaction } : {})
   });
 

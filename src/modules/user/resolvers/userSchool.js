@@ -16,19 +16,13 @@ export default {
         where: schoolData,
         ...(transaction ? { transaction } : {})
       });
-      const userSchoolData = {
-        userId: user.id,
-        schoolId: school.id,
-        startYear,
-        endYear,
-      };
-      const [userSchool, created] = await UserSchool.findOrCreate(userSchoolData, {
+      const [[userSchool]] = await user.addSchool(school, {
+        through: {
+          startYear,
+          endYear
+        },
         ...(transaction ? { transaction } : {})
       });
-
-      if (!created) {
-        throw new Error('User already have school!');
-      }
 
       return userSchool;
     }

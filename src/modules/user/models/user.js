@@ -126,7 +126,11 @@ export default (sequelize, Sequelize) => {
     });
 
     User.School = models.User.belongsToMany(models.School, {
-      through: models.UserSchool
+      through: models.UserSchool,
+      foreignKey: 'user_id'
+    });
+    User.UserSchool = models.User.hasMany(models.UserSchool, {
+      foreignKey: 'user_id'
     });
   };
   User.prototype.getToken = function getUserToken() {
