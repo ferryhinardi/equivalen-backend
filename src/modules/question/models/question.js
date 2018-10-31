@@ -40,5 +40,20 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'question_id'
     });
   };
+  Question.addOptions = async function add(question, options, transaction) {
+    return Promise.all([
+      ...options
+        .map(async (opt) => {
+          const { option, content, order } = await opt;
+          await question.addOption(option, {
+            through: {
+              content,
+              order
+            },
+            ...(transaction ? { transaction } : {})
+          })
+        })
+    ]).then(() => question);
+  };
   return Question;
 };

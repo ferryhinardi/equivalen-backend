@@ -1,6 +1,7 @@
 type User {
   id: ID!
   userStudent: UserStudent
+  userTeacher: UserTeacher
   authProviders: [AuthProvider!]
   userSchools: [UserSchool!]
   userProfile: UserProfile
