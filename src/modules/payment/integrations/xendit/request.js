@@ -1,8 +1,8 @@
-import config from 'config/app';
+import config from 'config/xendit';
 import request from 'modules/shared/helpers/request';
 
-const Authorization = `Basic ${Buffer.from(config.XENDIT.secretKey).toString('base64')}`;
-request.init(config.XENDIT.host, {
+const Authorization = `Basic ${Buffer.from(config.xenditSecretKey).toString('base64')}`;
+request.init(config.xenditHost, {
   Authorization
 });
 
