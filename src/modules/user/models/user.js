@@ -142,6 +142,9 @@ export default (sequelize, Sequelize) => {
   User.prototype.isStudent = function isStudent() {
     return this.getStudent().then(result => !!result);
   };
+  User.prototype.isTeacher = function isTeacher() {
+    return this.getTeacher().then(result => !!result);
+  };
   User.register = async function register(userData, userAuthProvider) {
     const { AuthProvider } = require('models');
     const { email, username } = userData;
