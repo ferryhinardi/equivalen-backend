@@ -1,0 +1,15 @@
+type UserTeacher {
+  id: ID!
+  nuptkNumber: String
+}
+
+input UserTeacherInput {
+  nuptkNumber: String!
+}
+
+extend type Mutation {
+  """
+  Create or update Authenticated user Teacher data.
+  """
+  createOrUpdateUserTeacher(userTeacher: UserTeacherInput): UserTeacher!
+}
