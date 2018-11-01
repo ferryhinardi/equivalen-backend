@@ -16,6 +16,7 @@ export default {
     gender: resolver(User.Gender),
     userStudent: resolver(User.UserStudent),
     userProfile: resolver(User.UserProfile),
+    userDevice: resolver(User.UserDevice),
     authProviders: resolver(User.AuthProvider),
     isStudent: user => user.isStudent(),
     token: user => user.getToken(),

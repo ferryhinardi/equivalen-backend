@@ -4,6 +4,7 @@ type User {
   authProviders: [AuthProvider!]
   userSchools: [UserSchool!]
   userProfile: UserProfile
+  userDevice: [UserDevice!]
 
   isStudent: Boolean
   token: String

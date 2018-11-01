@@ -34,6 +34,9 @@ export default (sequelize, Sequelize) => {
     UserDevice.License = models.UserDevice.belongsTo(models.License, {
       foreignKey: 'license_id',
     });
+    UserDevice.User = models.UserDevice.belongsTo(models.User, {
+      foreignKey: 'user_id'
+    });
   };
   return UserDevice;
 };

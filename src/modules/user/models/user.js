@@ -121,6 +121,10 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'user_id',
       as: 'profile'
     });
+    User.License = models.User.belongsToMany(models.License, {
+      through: models.UserDevice,
+      foreignKey: 'user_id'
+    });
     User.UserDevice = models.User.hasMany(models.UserDevice, {
       foreignKey: 'user_id'
     });
