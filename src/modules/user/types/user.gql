@@ -1,11 +1,13 @@
 type User {
   id: ID!
   userStudent: UserStudent
+  userTeacher: UserTeacher
   authProviders: [AuthProvider!]
   userSchools: [UserSchool!]
   userProfile: UserProfile
 
   isStudent: Boolean
+  isTeacher: Boolean
   token: String
 
   gender: Gender
@@ -40,5 +42,14 @@ extend type Mutation {
     userProfile: UserProfileInput
     userSchool: UserSchoolInput
     userStudent: UserStudentInput
+  ): User
+
+  """
+  Create Authenticated user as a teacher.
+  """
+  registerUserTeacher(
+    userProfile: UserProfileInput
+    userSchool: UserSchoolInput
+    userTeacher: UserTeacherInput
   ): User
 }
