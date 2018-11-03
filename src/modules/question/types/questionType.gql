@@ -1,0 +1,13 @@
+type QuestionType {
+  id: ID!
+  name: String!
+}
+
+input QuestionTypeInput {
+  id: ID
+  name: String!
+}
+
+extend type Mutation {
+  createOrUpdateQuestionType(questionType: QuestionTypeInput): QuestionType
+}
