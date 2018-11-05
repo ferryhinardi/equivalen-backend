@@ -77,4 +77,49 @@ describe('test user', () => {
       expect(hostname).toEqual('Host');
     });
   });
+
+  describe('mutation registerUserTeacher', () => {
+    it('should return 200', async () => {
+      const user = await UserFactory();
+      const query = `
+        mutation {
+          registerUserTeacher (
+            userTeacher: {
+              nuptkNumber: "456"
+            }
+            userProfile: {
+              nikNumber: "654"
+            }
+            userSchool: {
+              startYear: "2012"
+              endYear: "2016"
+              school: {
+                name: "Binus"
+              }
+            }
+          ) {
+            id
+            isTeacher
+            userTeacher {
+              nuptkNumber
+            }
+            userProfile {
+              nikNumber
+            }
+          }
+        }
+      `;
+      const result = await request(query, undefined, {
+        Authorization: `Bearer ${user.getToken()}`
+      });
+      const {
+        isTeacher,
+        userTeacher: { nuptkNumber },
+        userProfile: { nikNumber }
+      } = result.body.data.registerUserTeacher;
+      expect(isTeacher).toEqual(true);
+      expect(nuptkNumber).toEqual('456');
+      expect(nikNumber).toEqual('654');
+    });
+  });
 });

@@ -1,11 +1,10 @@
-type QuestionType {
+type QuestionOption {
   id: ID!
-  name: String!
-}
-
-type Option {
-  id: ID!
-  name: String!
+  content: String!
+  order: Int!
+  option: Option!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 type Question {
@@ -17,15 +16,25 @@ type Question {
   updatedAt: Date!
 }
 
-type QuestionOption {
-  id: ID!
-  content: String!
+input QuestionOptionInput {
+  content: String
   order: Int!
-  option: Option!
-  createdAt: Date!
-  updatedAt: Date!
+  option: OptionInput!
+}
+
+input QuestionInput {
+  content: String!
+  type: QuestionTypeInput!
+  options: [QuestionOptionInput]
 }
 
 extend type Query {
   questions: [Question!]
+}
+
+extend type Mutation {
+  """
+  Create Question Option
+  """
+  createOrUpdateQuestion(question: QuestionInput): Question
 }

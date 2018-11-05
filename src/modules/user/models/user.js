@@ -117,6 +117,10 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'user_id',
       as: 'student'
     });
+    User.UserTeacher = models.User.hasOne(models.UserTeacher, {
+      foreignKey: 'user_id',
+      as: 'teacher'
+    });
     User.UserProfile = models.User.hasOne(models.UserProfile, {
       foreignKey: 'user_id',
       as: 'profile'
@@ -148,6 +152,9 @@ export default (sequelize, Sequelize) => {
   };
   User.prototype.isStudent = function isStudent() {
     return this.getStudent().then(result => !!result);
+  };
+  User.prototype.isTeacher = function isTeacher() {
+    return this.getTeacher().then(result => !!result);
   };
   User.register = async function register(userData, userAuthProvider) {
     const { AuthProvider, Gender } = require('models');

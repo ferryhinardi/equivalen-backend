@@ -1,0 +1,12 @@
+type Option {
+  id: ID!
+  name: String!
+}
+
+input OptionInput {
+  name: String
+}
+
+extend type Mutation {
+  createOrUpdateOption(options: [OptionInput]): [Option]
+}
