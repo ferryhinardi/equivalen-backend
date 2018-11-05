@@ -2,6 +2,7 @@ import request from 'modules/shared/libs/jest/request';
 
 import { User, sequelize } from 'models';
 import UserFactory from 'modules/user/models/factories/user';
+import GenderFactory from 'modules/user/models/factories/gender';
 import { verify } from 'modules/shared/libs/jwt';
 
 async function getToken() {
@@ -34,6 +35,7 @@ describe('test accountKit', () => {
   it('should register user with accountKit provider', async () => {
     let query = {};
     const token = await getToken();
+    await GenderFactory();
     const { phoneNumber } = verify(token);
     expect(phoneNumber).toEqual('089536789121');
 
@@ -45,6 +47,7 @@ describe('test accountKit', () => {
               fullName: "Jacky Wijaya"
               username: "jekiwijaya"
               phoneNumber: "089536789121"
+              gender: "Male"
               password: "test"
               placeBod: "Jakarta"
               dateBod: "1995-12-17"
@@ -55,6 +58,9 @@ describe('test accountKit', () => {
               email
               placeBod
               dateBod
+              gender {
+                name
+              }
             }
           }
         }
@@ -68,6 +74,7 @@ describe('test accountKit', () => {
     expect(user.email).toEqual('jekiwijaya@hotmail.com');
     expect(user.placeBod).toEqual('Jakarta');
     expect(user.dateBod).toBeTruthy();
+    expect(user.gender.name).toEqual('Male');
   });
 
   it('should cannot register with same email', async () => {

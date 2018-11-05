@@ -34,8 +34,12 @@ export default (sequelize, Sequelize) => {
     }
   );
   License.associate = models => {
-    License.User = models.License.belongsTo(models.User, {
-      foreignKey: 'user_id'
+    License.User = models.License.belongsToMany(models.User, {
+      through: models.UserDevice,
+      foreignKey: 'license_id'
+    });
+    License.UserDevice = models.License.hasMany(models.UserDevice, {
+      foreignKey: 'license_id'
     });
     License.OrderLine = models.License.belongsTo(models.OrderLine, {
       foreignKey: 'order_line_id',

@@ -1,5 +1,6 @@
 import request from 'modules/shared/libs/jest/request';
 import UserFactory from 'modules/user/models/factories/user';
+import LicenseFactory from 'modules/license/models/factories/license';
 import { sequelize } from 'models';
 
 describe('test user', () => {
@@ -14,6 +15,7 @@ describe('test user', () => {
   describe('mutation registerUserStudent', () => {
     it('should return 200', async () => {
       const user = await UserFactory();
+      const license = await LicenseFactory();
       const query = `
         mutation {
           registerUserStudent (
@@ -30,14 +32,29 @@ describe('test user', () => {
                 name: "Binus"
               }
             }
+            userDevice: {
+              hostname: "Host"
+              deviceId: "eca4f803-6a0c-5f1c-92c7-95f2b439be75"
+              platform: "darwin"
+              licenseCode: "${license.licenseCode}"
+            }
           ) {
             id
             isStudent
+            userSchools {
+              startYear
+              school {
+                name
+              }
+            }
             userStudent {
               nisnNumber
             }
             userProfile {
               nikNumber
+            }
+            userDevice {
+              hostname
             }
           }
         }
@@ -48,11 +65,16 @@ describe('test user', () => {
       const {
         isStudent,
         userStudent: { nisnNumber },
-        userProfile: { nikNumber }
+        userProfile: { nikNumber },
+        userSchools: { 0: { startYear, school: { name } } },
+        userDevice: { 0: { hostname } },
       } = result.body.data.registerUserStudent;
       expect(isStudent).toEqual(true);
       expect(nisnNumber).toEqual('123');
       expect(nikNumber).toEqual('321');
+      expect(startYear).toEqual(2012);
+      expect(name).toEqual('Binus');
+      expect(hostname).toEqual('Host');
     });
   });
 

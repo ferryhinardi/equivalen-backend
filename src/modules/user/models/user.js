@@ -125,9 +125,20 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'user_id',
       as: 'profile'
     });
+    User.License = models.User.belongsToMany(models.License, {
+      through: models.UserDevice,
+      foreignKey: 'user_id'
+    });
+    User.UserDevice = models.User.hasMany(models.UserDevice, {
+      foreignKey: 'user_id'
+    });
 
     User.School = models.User.belongsToMany(models.School, {
-      through: models.UserSchool
+      through: models.UserSchool,
+      foreignKey: 'user_id'
+    });
+    User.UserSchool = models.User.hasMany(models.UserSchool, {
+      foreignKey: 'user_id'
     });
   };
   User.prototype.getToken = function getUserToken() {
@@ -146,8 +157,8 @@ export default (sequelize, Sequelize) => {
     return this.getTeacher().then(result => !!result);
   };
   User.register = async function register(userData, userAuthProvider) {
-    const { AuthProvider } = require('models');
-    const { email, username } = userData;
+    const { AuthProvider, Gender } = require('models');
+    const { email, username, gender: genderName } = userData;
     const userWithEmail = await User.findOne({
       where: {
         email
@@ -160,14 +171,20 @@ export default (sequelize, Sequelize) => {
       }
     });
     if (userWithUsername) throw new Error('username already registered');
-    const [[authProvider], user] = await Promise.all([
+    const [[authProvider], user, gender] = await Promise.all([
       AuthProvider.findOrCreate({
         where: {
           name: 'Account Kit'
         }
       }),
-      User.create(userData)
+      User.create(userData),
+      Gender.findOne({
+        where: {
+          name: genderName
+        }
+      })
     ]);
+    user.setGender(gender);
     await user.addAuthProvider(authProvider, {
       through: {
         sourceId: userAuthProvider.id,

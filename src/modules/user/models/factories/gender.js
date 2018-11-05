@@ -1,12 +1,10 @@
-import faker from 'faker';
 import { Gender } from 'models';
 
-export async function GenderFactory(fData) {
-  const data = {
-    name: faker.random.word(),
-    ...fData
-  };
-  return Gender.create(data);
+export async function GenderFactory() {
+  return Promise.all([
+    Gender.create({ name: 'Male' }),
+    Gender.create({ name: 'Female' })
+  ]);
 }
 
 export default GenderFactory;

@@ -35,8 +35,12 @@ export default (sequelize, Sequelize) => {
     }
   );
   UserSchool.associate = models => {
-    UserSchool.User = models.UserSchool.belongsTo(models.User);
-    UserSchool.School = models.UserSchool.belongsTo(models.School);
+    UserSchool.School = models.UserSchool.belongsTo(models.School, {
+      foreignKey: 'school_id'
+    });
+    UserSchool.User = models.UserSchool.belongsTo(models.User, {
+      foreignKey: 'user_id'
+    });
   };
   return UserSchool;
 };

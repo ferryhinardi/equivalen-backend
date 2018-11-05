@@ -1,0 +1,21 @@
+type UserDevice {
+  id: ID!
+  hostname: String
+  platform: String
+  deviceId: String
+}
+
+input UserDeviceInput {
+  hostname: String
+  platform: String
+  deviceId: String
+  licenseCode: String
+}
+
+extend type Mutation {
+
+  """
+  Create or update Authenticated user Device data.
+  """
+  createUserDevice(userDevice: UserDeviceInput): UserDevice!
+}
