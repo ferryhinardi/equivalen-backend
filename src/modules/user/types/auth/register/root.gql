@@ -11,6 +11,7 @@ input RegisterUserInput {
   email: String! @constraint(format: "email")
   fullName: String!
   username: String!
+  gender: String
   phoneNumber: String!
   password: String!
   placeBod: String
