@@ -12,8 +12,8 @@ export default async function reindexXenditInvoice(req, res) {
   });
   debug(`Incoming webhook: orderXenditInvoice - debug: ${JSON.stringify(orderXenditInvoice)}`);
   const order = await orderXenditInvoice.getOrder();
-  // await order.reindex();
-  // await order.reload();
+  await order.reindex();
+  await order.reload();
   return res.json({
     status: 'success',
     data: {
