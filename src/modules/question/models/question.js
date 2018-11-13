@@ -32,6 +32,21 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'question_type_id',
       as: 'questionType'
     });
+    Question.Curriculum = models.Question.belongsToMany(models.Curriculum, {
+      through: models.QuestionInfo,
+      foreignKey: 'curriculum_id'
+    })
+    Question.Course = models.Question.belongsToMany(models.Course, {
+      through: models.QuestionInfo,
+      foreignKey: 'course_id'
+    })
+    Question.Chapter = models.Question.belongsToMany(models.Chapter, {
+      through: models.QuestionInfo,
+      foreignKey: 'chapter_id'
+    })
+    Question.QuestionInfo = models.Question.hasMany(models.QuestionInfo, {
+      foreignKey: 'question_id'
+    });
     Question.Option = models.Question.belongsToMany(models.Option, {
       through: models.QuestionOption,
       foreignKey: 'question_id'
