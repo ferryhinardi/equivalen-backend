@@ -1,6 +1,6 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('question_infos', {
+    queryInterface.createTable('courses', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,32 +16,13 @@ export default {
           field: 'id'
         }
       },
-      course_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
+      name: {
         allowNull: false,
-        references: {
-          model: 'courses',
-          field: 'id'
-        }
+        type: Sequelize.STRING
       },
-      chapter_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'chapters',
-          field: 'id'
-        }
-      },
-      question_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
+      image_url: {
         allowNull: true,
-        references: {
-          model: 'questions',
-          field: 'id'
-        }
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
@@ -56,5 +37,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('question_infos')
+  down: queryInterface => queryInterface.dropTable('courses')
 };
