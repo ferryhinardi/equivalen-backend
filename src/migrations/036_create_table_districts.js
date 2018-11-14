@@ -1,24 +1,11 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('schools', {
+    queryInterface.createTable('districts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      name: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      province_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'provinces',
-          field: 'id'
-        }
       },
       city_id: {
         type: Sequelize.INTEGER,
@@ -29,14 +16,9 @@ export default {
           field: 'id'
         }
       },
-      district_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
+      name: {
         allowNull: false,
-        references: {
-          model: 'districts',
-          field: 'id'
-        }
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
@@ -51,5 +33,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('schools')
+  down: queryInterface => queryInterface.dropTable('districts')
 };
