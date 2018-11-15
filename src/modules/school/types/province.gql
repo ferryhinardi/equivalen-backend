@@ -1,0 +1,18 @@
+type Province {
+  id: ID!
+  name: String
+  cities: [City!]
+  schools: [School!]
+}
+
+input ProvinceInput {
+  id: ID
+  name: String
+}
+
+extend type Query {
+  """
+  Get list of provinces.
+  """
+  provinces: [Province!]
+}
