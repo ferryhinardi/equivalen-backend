@@ -16,5 +16,5 @@ extend type Query {
   """
   Get list of cities.
   """
-  cities: [City!]
+  cities(provinceId: ID): [City]
 }

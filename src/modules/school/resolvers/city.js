@@ -8,6 +8,16 @@ export default {
     schools: resolver(City.SChool),
   },
   Query: {
-    cities: resolver(City),
+    cities: resolver(City, {
+      before: (findOption, args) => {
+        if (args.provinceId) {
+          findOption.where = {
+            province_id: args.provinceId
+          }
+        }
+
+        return findOption;
+      },
+    }),
   }
 };
