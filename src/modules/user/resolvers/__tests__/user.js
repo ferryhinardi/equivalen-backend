@@ -1,6 +1,7 @@
 import request from 'modules/shared/libs/jest/request';
-import UserFactory from 'modules/user/models/factories/user';
-import LicenseFactory from 'modules/license/models/factories/license';
+import { UserFactory } from 'modules/user/models/factories/user';
+import { LicenseFactory } from 'modules/license/models/factories/license';
+import { SchoolFactory } from 'modules/school/models/factories/school';
 import { sequelize } from 'models';
 
 describe('test user', () => {
@@ -16,6 +17,7 @@ describe('test user', () => {
     it('should return 200', async () => {
       const user = await UserFactory();
       const license = await LicenseFactory();
+      const school = await SchoolFactory({ name: 'Binus' });
       const query = `
         mutation {
           registerUserStudent (
@@ -29,7 +31,7 @@ describe('test user', () => {
               startYear: "2012"
               endYear: "2016"
               school: {
-                name: "Binus"
+                name: "${school.name}"
               }
             }
             userDevice: {
@@ -69,7 +71,7 @@ describe('test user', () => {
         userSchools: { 0: { startYear, school: { name } } },
         userDevice: { 0: { hostname } },
       } = result.body.data.registerUserStudent;
-      expect(isStudent).toEqual(true);
+      expect(isStudent).toBeTruthy();
       expect(nisnNumber).toEqual('123');
       expect(nikNumber).toEqual('321');
       expect(startYear).toEqual(2012);
@@ -81,6 +83,7 @@ describe('test user', () => {
   describe('mutation registerUserTeacher', () => {
     it('should return 200', async () => {
       const user = await UserFactory();
+      const school = await SchoolFactory({ name: 'Binus' });
       const query = `
         mutation {
           registerUserTeacher (
@@ -94,7 +97,7 @@ describe('test user', () => {
               startYear: "2012"
               endYear: "2016"
               school: {
-                name: "Binus"
+                name: "${school.name}"
               }
             }
           ) {
@@ -117,7 +120,7 @@ describe('test user', () => {
         userTeacher: { nuptkNumber },
         userProfile: { nikNumber }
       } = result.body.data.registerUserTeacher;
-      expect(isTeacher).toEqual(true);
+      expect(isTeacher).toBeTruthy();
       expect(nuptkNumber).toEqual('456');
       expect(nikNumber).toEqual('654');
     });

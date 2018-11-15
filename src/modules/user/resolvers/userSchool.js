@@ -1,5 +1,5 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { UserSchool, School } from 'models';
+import { Province, City, District, UserSchool, School } from 'models';
 
 export default {
   UserSchool: {
@@ -12,8 +12,23 @@ export default {
       { userSchool: { startYear, endYear, school: schoolData } },
       { user, transaction }
     ) => {
+      const province = await Province.find({
+        where: schoolData.province
+      });
+      const city = await City.find({
+        where: schoolData.city
+      });
+      const district = await District.find({
+        where: schoolData.district
+      });
       const [school] = await School.findOrCreate({
-        where: schoolData,
+        where: {
+          name: schoolData.name,
+          province_id: province.id,
+          city_id: city.id,
+          district_id: district.id
+        },
+        include: [ Province, City, District ],
         ...(transaction ? { transaction } : {})
       });
       const [[userSchool]] = await user.addSchool(school, {

@@ -1,6 +1,10 @@
 import request from 'modules/shared/libs/jest/request';
-import UserFactory from 'modules/user/models/factories/user';
-import { School, UserSchool, sequelize } from 'models';
+import { UserFactory } from 'modules/user/models/factories/user';
+import { ProvinceFactory } from 'modules/school/models/factories/province';
+import { CityFactory } from 'modules/school/models/factories/city';
+import { DistrictFactory } from 'modules/school/models/factories/district';
+import { SchoolFactory } from 'modules/school/models/factories/school';
+import { sequelize } from 'models';
 
 describe('test userSchool', () => {
   beforeAll(() => sequelize.sync({ force: true }));
@@ -14,17 +18,27 @@ describe('test userSchool', () => {
   describe('mutation createUserSchool', () => {
     it('should create new school', async () => {
       const user = await UserFactory();
-      let query = `
+      const province = await ProvinceFactory({ name: 'Province Test' });
+      const city = await CityFactory({ name: 'City Test' });
+      const district = await DistrictFactory({ name: 'District Test' });
+      const school = await SchoolFactory({ name: 'Bina Nusantara University' });
+      const query = `
         mutation {
           createUserSchool (
             userSchool: {
               startYear: "2012"
               endYear: "2016"
               school: {
-                name: "Bina Nusantara University"
-                province: "Jakarta"
-                city: "Jakarta Barat"
-                district: "Kebon Jeruk"
+                name: "${school.name}"
+                province: {
+                  name: "${province.name}"
+                }
+                city: {
+                  name: "${city.name}"
+                }
+                district: {
+                  name: "${district.name}"
+                }
               }
             }
           ) {
@@ -33,9 +47,15 @@ describe('test userSchool', () => {
             school {
               id
               name
-              province
-              city
-              district
+              province {
+                name
+              }
+              city {
+                name
+              }
+              district {
+                name
+              }
             }
           }
         }
@@ -46,14 +66,19 @@ describe('test userSchool', () => {
       const {
         startYear,
         endYear,
-        school: { name, province, city, district }
+        school: {
+          name,
+          province: { name: provinceName },
+          city: { name: cityName },
+          district: { name: districtName },
+        }
       } = result.body.data.createUserSchool;
       expect(startYear).toEqual(2012);
       expect(endYear).toEqual(2016);
       expect(name).toEqual('Bina Nusantara University');
-      expect(province).toEqual('Jakarta');
-      expect(city).toEqual('Jakarta Barat');
-      expect(district).toEqual('Kebon Jeruk');
+      expect(provinceName).toEqual('Province Test');
+      expect(cityName).toEqual('City Test');
+      expect(districtName).toEqual('District Test');
     });
   });
 });

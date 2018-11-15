@@ -1,6 +1,6 @@
 export default (sequelize, Sequelize) => {
-  const School = sequelize.define(
-    'School',
+  const District = sequelize.define(
+    'District',
     {
       id: {
         type: Sequelize.INTEGER,
@@ -22,28 +22,18 @@ export default (sequelize, Sequelize) => {
       }
     },
     {
-      tableName: 'schools',
+      tableName: 'districts',
       deletedAt: 'deleted_at',
       paranoid: true
     }
   );
-  School.associate = models => {
-    School.Province = models.School.belongsTo(models.Province, {
-      foreignKey: 'province_id'
-    });
-    School.City = models.School.belongsTo(models.City, {
+  District.associate = models => {
+    District.City = models.District.belongsTo(models.City, {
       foreignKey: 'city_id'
     });
-    School.District = models.School.belongsTo(models.District, {
+    District.School = models.District.hasMany(models.School, {
       foreignKey: 'district_id'
     });
-    School.User = models.School.belongsToMany(models.User, {
-      through: models.UserSchool,
-      foreignKey: 'school_id'
-    });
-    School.UserSchool = models.School.hasMany(models.UserSchool, {
-      foreignKey: 'school_id'
-    })
   };
-  return School;
+  return District;
 };

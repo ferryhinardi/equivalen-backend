@@ -1,16 +1,17 @@
 type School {
   id: ID!
   name: String!
-  city: String
-  province: String
-  district: String
+  province: Province
+  city: City
+  district: District
+  users: [User!]
 }
 
 input SchoolInput {
   name: String!
-  city: String
-  province: String
-  district: String
+  province: ProvinceInput
+  city: CityInput
+  district: DistrictInput
 }
 
 extend type Query {

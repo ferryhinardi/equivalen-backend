@@ -1,0 +1,19 @@
+type District {
+  id: ID!
+  name: String
+  city: City
+  schools: [School!]
+}
+
+input DistrictInput {
+  id: ID
+  name: String
+  city: CityInput
+}
+
+extend type Query {
+  """
+  Get list of cities.
+  """
+  districts: [District!]
+}
