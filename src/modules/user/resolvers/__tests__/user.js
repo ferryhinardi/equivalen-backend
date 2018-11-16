@@ -23,6 +23,7 @@ describe('test user', () => {
           registerUserStudent (
             userStudent: {
               nisnNumber: "123"
+              grade: "8"
             }
             userProfile: {
               nikNumber: "321"
@@ -51,6 +52,7 @@ describe('test user', () => {
             }
             userStudent {
               nisnNumber
+              grade
             }
             userProfile {
               nikNumber
@@ -66,13 +68,14 @@ describe('test user', () => {
       });
       const {
         isStudent,
-        userStudent: { nisnNumber },
+        userStudent: { nisnNumber, grade },
         userProfile: { nikNumber },
         userSchools: { 0: { startYear, school: { name } } },
         userDevice: { 0: { hostname } },
       } = result.body.data.registerUserStudent;
       expect(isStudent).toBeTruthy();
       expect(nisnNumber).toEqual('123');
+      expect(grade).toEqual('8');
       expect(nikNumber).toEqual('321');
       expect(startYear).toEqual(2012);
       expect(name).toEqual('Binus');

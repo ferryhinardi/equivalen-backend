@@ -1,10 +1,12 @@
 type UserStudent {
   id: ID!
   nisnNumber: String
+  grade: String
 }
 
 input UserStudentInput {
   nisnNumber: String!
+  grade: String
 }
 
 extend type Mutation {

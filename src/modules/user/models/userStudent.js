@@ -21,6 +21,7 @@ export default (sequelize, Sequelize) => {
         field: 'nisn_number',
         type: Sequelize.STRING
       },
+      grade: Sequelize.STRING,
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE
