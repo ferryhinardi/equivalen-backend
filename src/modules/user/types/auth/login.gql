@@ -1,6 +1,7 @@
 input LoginInput {
   username: String
   password: String
+  deviceId: String
 }
 
 extend type Mutation {

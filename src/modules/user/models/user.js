@@ -203,5 +203,16 @@ export default (sequelize, Sequelize) => {
     if (bcrypt.compareSync(password, user.password)) return user;
     return null;
   };
+  User.findDevice = async function findDevice({ user, deviceId }) {
+    const { UserDevice } = require('models');
+    const userDevice = await UserDevice.findOne({
+      where: {
+        user_id: user.id
+      }
+    });
+    if (!userDevice) throw new Error('Device not found');
+    if (userDevice.deviceId !== deviceId) throw new Error('Device not belong to you');
+    return userDevice;
+  };
   return User;
 };
