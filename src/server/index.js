@@ -36,6 +36,7 @@ app.use((req, res, next) => {
 /* =============================== */
 // Route API
 /* =============================== */
+app.get('/health', (req, res) => res.sendStatus(200));
 app.get('/api/v1/orders/:id/reindex', reindexOrder);
 app.post('/api/v1/orderXenditInvoices/reindex', bodyParser.json(), reindexXenditInvoice);
 
