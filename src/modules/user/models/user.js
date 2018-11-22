@@ -156,6 +156,15 @@ export default (sequelize, Sequelize) => {
   User.prototype.isTeacher = function isTeacher() {
     return this.getTeacher().then(result => !!result);
   };
+  User.getCurrentUser = async function getCurrentUser(token) {
+    const { id } = verify(token);
+    const user = await User.findOne({
+      where: { id }
+    });
+
+    if (!user) throw new Error('User not found');
+    return user;
+  };
   User.register = async function register(userData, userAuthProvider) {
     const { AuthProvider, Gender } = require('models');
     const { email, username, gender: genderName } = userData;

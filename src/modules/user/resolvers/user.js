@@ -28,7 +28,11 @@ export default {
   },
   Query: {
     user: resolver(User),
-    users: resolver(User)
+    users: resolver(User),
+    currentUser: (_, models, ctx) => {
+      const user = User.getCurrentUser(ctx.token);
+      return user;
+    }
   },
   Mutation: {
     registerUserStudent: (_, { userProfile, userSchool, userStudent, userDevice }, ctx) =>

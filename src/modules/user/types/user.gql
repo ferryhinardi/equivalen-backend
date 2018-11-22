@@ -28,6 +28,10 @@ extend type Query {
   Get User
   """
   user(phoneNumber: String): User
+  """
+  Get Current User Login
+  """
+  currentUser: User
 
   """
   Get list of users
