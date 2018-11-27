@@ -1,0 +1,25 @@
+type Archive {
+  id: ID!
+  name: String!
+  minimumScore: Float
+  questionType: QuestionType
+  evaluation: Evaluation
+  packages: [Package]
+}
+
+input ArchiveInput {
+  id: ID
+  name: String
+  minimumScore: Float
+  questionType: QuestionTypeInput
+  evaluation: EvaluationInput
+  packages: [PackageInput]
+}
+
+extend type Query {
+  archives: [Archive]
+}
+
+extend type Mutation {
+  createOrUpdateArchive(archive: ArchiveInput): Archive
+}

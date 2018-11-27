@@ -1,0 +1,13 @@
+type Evaluation {
+  id: ID!
+  type: String!
+}
+
+input EvaluationInput {
+  id: ID
+  type: String
+}
+
+extend type Query {
+  evaluations: [Evaluation]
+}

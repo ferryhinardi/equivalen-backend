@@ -1,0 +1,11 @@
+type Package {
+  id: ID!
+  name: String!
+  questions: [Question]
+}
+
+input PackageInput {
+  id: ID
+  name: String
+  questions: [QuestionInput]
+}
