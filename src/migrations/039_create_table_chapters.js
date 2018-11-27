@@ -9,8 +9,8 @@ export default {
       },
       course_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
+        onDelete: 'SET NULL',
+        allowNull: true,
         references: {
           model: 'courses',
           field: 'id'

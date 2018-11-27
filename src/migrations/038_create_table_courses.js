@@ -9,8 +9,8 @@ export default {
       },
       curriculum_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
+        onDelete: 'SET NULL',
+        allowNull: true,
         references: {
           model: 'curriculums',
           field: 'id'

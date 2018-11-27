@@ -5,6 +5,7 @@ type Archive {
   questionType: QuestionType
   evaluation: Evaluation
   packages: [Package]
+  createdAt: Date
 }
 
 input ArchiveInput {

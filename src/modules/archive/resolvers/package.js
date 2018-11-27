@@ -1,3 +1,4 @@
+import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
 import { Sequelize, Package, Question } from 'models';
 
 export const createOrUpdatePackage = async (
@@ -48,4 +49,13 @@ export const createOrUpdatePackage = async (
   return promisePackages;
 };
 
-export default createOrUpdatePackage;
+export default {
+  Package: {
+    archive: resolver(Package.Archive),
+    questions: resolver(Package.Question),
+    totalQuestion: packageData => packageData.getPackageQuestions()
+  },
+  Query: {
+    packages: resolver(Package)
+  },
+};

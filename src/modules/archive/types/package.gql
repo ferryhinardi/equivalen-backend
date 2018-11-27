@@ -1,11 +1,24 @@
+type PackageQuestion {
+  id: ID!
+  question: Question
+}
+
 type Package {
   id: ID!
   name: String!
+
   questions: [Question]
+  archive: Archive
+
+  totalQuestion: Int
 }
 
 input PackageInput {
   id: ID
   name: String
   questions: [QuestionInput]
+}
+
+extend type Query {
+  packages: [Package]
 }

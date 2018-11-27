@@ -1,0 +1,5 @@
+type Course {
+  id: ID
+  name: String
+  curriculum: Curriculum
+}

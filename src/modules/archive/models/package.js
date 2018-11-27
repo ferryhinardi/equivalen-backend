@@ -28,6 +28,12 @@ export default (sequelize, Sequelize) => {
     }
   );
 
+  Package.prototype.getPackageQuestions = async function getPackageQuestions() {
+    const questions = await this.getQuestions();
+
+    return questions ? questions.length : 0;
+  };
+
   Package.associate = models => {
     Package.Archive = models.Package.belongsTo(models.Archive, {
       foreignKey: 'archive_id'

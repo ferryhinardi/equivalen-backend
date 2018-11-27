@@ -31,7 +31,11 @@ export default (sequelize, Sequelize) => {
     Chapter.Course = models.Chapter.belongsTo(models.Course, {
       foreignKey: 'course_id'
     });
-    Chapter.Question = models.Chapter.hasMany(models.Question, {
+    Chapter.Question = models.Chapter.belongsToMany(models.Question, {
+      through: models.QuestionInfo,
+      foreignKey: 'chapter_id'
+    });
+    Chapter.QuestionInfo = models.Chapter.hasMany(models.QuestionInfo, {
       foreignKey: 'chapter_id'
     });
   };

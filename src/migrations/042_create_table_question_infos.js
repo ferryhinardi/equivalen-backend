@@ -9,8 +9,8 @@ export default {
       },
       curriculum_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
+        onDelete: 'SET NULL',
+        allowNull: true,
         references: {
           model: 'curriculums',
           field: 'id'
@@ -18,8 +18,8 @@ export default {
       },
       course_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
+        onDelete: 'SET NULL',
+        allowNull: true,
         references: {
           model: 'courses',
           field: 'id'
@@ -27,8 +27,8 @@ export default {
       },
       chapter_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
+        onDelete: 'SET NULL',
+        allowNull: true,
         references: {
           model: 'chapters',
           field: 'id'

@@ -7,10 +7,19 @@ type QuestionOption {
   updatedAt: Date!
 }
 
+type QuestionInfo {
+  id: ID
+  curriculum: Curriculum
+  course: Course
+  chapter: Chapter
+  question: Question
+}
+
 type Question {
   id: ID!
   content: String!
   type: QuestionType!
+  questionInfos: [QuestionInfo]
   options: [QuestionOption!]
   createdAt: Date!
   updatedAt: Date!

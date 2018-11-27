@@ -1,5 +1,10 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { Question, QuestionOption, sequelize } from 'models';
+import {
+  Question,
+  QuestionInfo,
+  QuestionOption,
+  sequelize,
+} from 'models';
 
 import { Mutation as MutationOption } from './option';
 import { Mutation as MutationQuestionType } from './questionType';
@@ -8,7 +13,13 @@ const { createOrUpdateOption } = MutationOption;
 const { createOrUpdateQuestionType } = MutationQuestionType;
 
 export default {
+  QuestionInfo: {
+    curriculum: resolver(QuestionInfo.Curriculum),
+    course: resolver(QuestionInfo.Course),
+    chapter: resolver(QuestionInfo.Chapter),
+  },
   Question: {
+    questionInfos: resolver(Question.QuestionInfo),
     type: resolver(Question.QuestionType),
     options: resolver(Question.QuestionOption, {
       before: findOptions => {

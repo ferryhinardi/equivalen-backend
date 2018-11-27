@@ -54,6 +54,13 @@ export default (sequelize, Sequelize) => {
     Question.QuestionOption = models.Question.hasMany(models.QuestionOption, {
       foreignKey: 'question_id'
     });
+    Question.Package = models.Question.belongsToMany(models.Package, {
+      through: models.PackageQuestion,
+      foreignKey: 'question_id'
+    });
+    Question.PackageQuestion = models.Question.hasMany(models.PackageQuestion, {
+      foreignKey: 'question_id'
+    });
   };
   Question.addOptions = async function add(question, options, transaction) {
     return Promise.all([
