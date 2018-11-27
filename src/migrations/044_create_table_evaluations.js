@@ -24,5 +24,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('user_archives')
+  down: queryInterface => queryInterface.dropTable('evaluations')
 };

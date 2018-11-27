@@ -38,5 +38,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('archive_packages')
+  down: queryInterface => queryInterface.dropTable('package_questions')
 };
