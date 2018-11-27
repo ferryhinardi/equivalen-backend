@@ -2,6 +2,7 @@ type Archive {
   id: ID!
   name: String!
   minimumScore: Float
+  curriculum: Curriculum
   questionType: QuestionType
   evaluation: Evaluation
   packages: [Package]
@@ -12,6 +13,7 @@ input ArchiveInput {
   id: ID
   name: String
   minimumScore: Float
+  curriculum: CurriculumInput
   questionType: QuestionTypeInput
   evaluation: EvaluationInput
   packages: [PackageInput]

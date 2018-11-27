@@ -1,6 +1,7 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
 import { sequelize, Archive } from 'models';
 import QuestionTypeResolver from 'modules/question/resolvers/questionType';
+import { findCurriculum } from 'modules/question/resolvers/curriculum';
 import { findEvaluation } from './evaluation';
 import { createOrUpdatePackage } from './package';
 
@@ -8,6 +9,7 @@ const { createOrUpdateQuestionType } = QuestionTypeResolver.Mutation;
 
 export default {
   Archive: {
+    curriculum: resolver(Archive.Curriculum),
     evaluation: resolver(Archive.Evaluation),
     questionType: resolver(Archive.QuestionType),
     packages: resolver(Archive.Package)
@@ -20,9 +22,10 @@ export default {
       return sequelize.transaction(async (transaction1) => {
         return sequelize.transaction(async (transaction2) => {
           const ctxWithTransction = { ...ctx, transaction1 };
-          const [questionType, evaluation] = await Promise.all([
+          const [questionType, evaluation, curriculum] = await Promise.all([
             createOrUpdateQuestionType(_, { questionType: archiveParam.questionType }, { transaction: null }),
             findEvaluation(archiveParam),
+            findCurriculum(archiveParam),
           ]);
 
           const archiveData = {
@@ -31,6 +34,7 @@ export default {
             minimumScore: archiveParam.minimumScore,
             question_type_id: questionType.get('id'),
             evaluation_id: evaluation.get('id'),
+            curriculum_id: curriculum.get('id'),
           };
           const [archive, created] = await Archive.findOrCreate({
             where: archiveData,

@@ -31,6 +31,9 @@ export default (sequelize, Sequelize) => {
     Curriculum.Course = models.Curriculum.hasMany(models.Course, {
       foreignKey: 'curriculum_id'
     });
+    Curriculum.Archive = models.Curriculum.hasMany(models.Archive, {
+      foreignKey: 'curriculum_id'
+    });
     Curriculum.Question = models.Curriculum.belongsToMany(models.Question, {
       through: models.QuestionInfo,
       foreignKey: 'curriculum_id'

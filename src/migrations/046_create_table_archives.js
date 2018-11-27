@@ -25,6 +25,15 @@ export default {
           field: 'id'
         }
       },
+      curriculum_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL',
+        allowNull: true,
+        references: {
+          model: 'curriculums',
+          field: 'id'
+        }
+      },
       name: {
         allowNull: false,
         type: Sequelize.STRING
