@@ -1,3 +1,4 @@
+import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
 import { QuestionType } from 'models';
 
 const Mutation = {};
@@ -19,5 +20,8 @@ Mutation.createOrUpdateQuestionType = async (
 };
 
 export default {
+  Query: {
+    questionTypes: resolver(QuestionType)
+  },
   Mutation
 };

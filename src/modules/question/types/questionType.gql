@@ -8,6 +8,10 @@ input QuestionTypeInput {
   name: String!
 }
 
+extend type Query {
+  questionTypes: [QuestionType]
+}
+
 extend type Mutation {
   createOrUpdateQuestionType(questionType: QuestionTypeInput): QuestionType
 }

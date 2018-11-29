@@ -1,0 +1,14 @@
+type UserRelationship {
+  id: ID!
+  user: User
+  userTarget: User
+  status: String
+}
+
+input UserRelationInput {
+  id: ID
+}
+
+extend type Mutation {
+  addStudentRelationship(userTarget: UserRelationInput): UserRelationship
+}

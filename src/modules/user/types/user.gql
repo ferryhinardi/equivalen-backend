@@ -23,6 +23,10 @@ type User {
   updatedAt: Date
 }
 
+input UserInput {
+  id: ID
+}
+
 extend type Query {
   """
   Get User
