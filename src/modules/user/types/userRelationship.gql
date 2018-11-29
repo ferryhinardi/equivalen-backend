@@ -10,5 +10,6 @@ input UserRelationInput {
 }
 
 extend type Mutation {
-  addStudentRelationship(userTarget: UserRelationInput): UserRelationship
+  addTeacherRelationship(userTarget: UserRelationInput): UserRelationship
+  approveRequestRelationship(userTarget: UserRelationInput): UserRelationship
 }

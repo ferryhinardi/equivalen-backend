@@ -31,7 +31,7 @@ export default (sequelize, Sequelize) => {
     UserRelationship.User = models.UserRelationship.belongsTo(models.User, {
       foreignKey: 'user_id'
     });
-    UserRelationship.User = models.UserRelationship.belongsTo(models.User, {
+    UserRelationship.UserTarget = models.UserRelationship.belongsTo(models.User, {
       foreignKey: 'target_id'
     });
   };
