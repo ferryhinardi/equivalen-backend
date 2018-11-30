@@ -8,6 +8,10 @@ export default (sequelize, Sequelize) => {
         autoIncrement: true
       },
       content: Sequelize.TEXT('long'),
+      used: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE
@@ -35,15 +39,15 @@ export default (sequelize, Sequelize) => {
     Question.Curriculum = models.Question.belongsToMany(models.Curriculum, {
       through: models.QuestionInfo,
       foreignKey: 'curriculum_id'
-    })
+    });
     Question.Course = models.Question.belongsToMany(models.Course, {
       through: models.QuestionInfo,
       foreignKey: 'course_id'
-    })
+    });
     Question.Chapter = models.Question.belongsToMany(models.Chapter, {
       through: models.QuestionInfo,
       foreignKey: 'chapter_id'
-    })
+    });
     Question.QuestionInfo = models.Question.hasMany(models.QuestionInfo, {
       foreignKey: 'question_id'
     });
@@ -60,6 +64,9 @@ export default (sequelize, Sequelize) => {
     });
     Question.PackageQuestion = models.Question.hasMany(models.PackageQuestion, {
       foreignKey: 'question_id'
+    });
+    Question.CreatedBy = models.Question.belongsTo(models.User, {
+      foreignKey: 'created_by'
     });
   };
   Question.addOptions = async function add(question, options, transaction) {

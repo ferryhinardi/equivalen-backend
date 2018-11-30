@@ -42,8 +42,14 @@ export default (sequelize, Sequelize) => {
   );
   UserTeacher.associate = models => {
     UserTeacher.User = models.UserTeacher.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user'
+      foreignKey: 'user_id'
+    });
+    UserTeacher.Course = models.UserTeacher.belongsToMany(models.Course, {
+      through: models.UserTeacherCourse,
+      foreignKey: 'user_teacher_id'
+    });
+    UserTeacher.UserTeacherCourse = models.UserTeacher.hasMany(models.UserTeacherCourse, {
+      foreignKey: 'user_teacher_id'
     });
   };
   return UserTeacher;

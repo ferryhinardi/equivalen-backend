@@ -140,6 +140,9 @@ export default (sequelize, Sequelize) => {
     User.UserSchool = models.User.hasMany(models.UserSchool, {
       foreignKey: 'user_id'
     });
+    User.Question = models.User.hasMany(models.Question, {
+      foreignKey: 'created_by'
+    });
   };
   User.prototype.getToken = function getUserToken() {
     return getToken({

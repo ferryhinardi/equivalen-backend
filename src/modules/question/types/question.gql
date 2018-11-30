@@ -19,8 +19,10 @@ type Question {
   id: ID!
   content: String!
   type: QuestionType!
+  used: Int
   questionInfos: [QuestionInfo]
   options: [QuestionOption!]
+  createdBy: User
   createdAt: Date!
   updatedAt: Date!
 }

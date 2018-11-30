@@ -1,35 +1,28 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('questions', {
+    queryInterface.createTable('user_teacher_courses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      content: {
+      userTeacherId: {
+        field: 'user_teacher_id',
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         allowNull: false,
-        type: Sequelize.TEXT('long')
-      },
-      used: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
-      question_type_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
-        allowNull: true,
         references: {
-          model: 'question_types',
+          model: 'user_teacher',
           field: 'id'
         }
       },
-      created_by: {
+      course_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         allowNull: true,
         references: {
-          model: 'users',
+          model: 'courses',
           field: 'id'
         }
       },
@@ -46,5 +39,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('questions')
+  down: queryInterface => queryInterface.dropTable('user_teacher_courses')
 };

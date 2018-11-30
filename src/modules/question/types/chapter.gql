@@ -3,3 +3,7 @@ type Chapter {
   name: String
   course: Course
 }
+
+extend type Query {
+  chapters(courseId: ID): [Chapter]
+}

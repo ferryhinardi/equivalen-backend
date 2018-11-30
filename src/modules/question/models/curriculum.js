@@ -28,9 +28,6 @@ export default (sequelize, Sequelize) => {
     }
   );
   Curriculum.associate = models => {
-    Curriculum.Course = models.Curriculum.hasMany(models.Course, {
-      foreignKey: 'curriculum_id'
-    });
     Curriculum.Archive = models.Curriculum.hasMany(models.Archive, {
       foreignKey: 'curriculum_id'
     });

@@ -2,6 +2,7 @@ import request from 'modules/shared/libs/jest/request';
 import { UserFactory } from 'modules/user/models/factories/user';
 import { LicenseFactory } from 'modules/license/models/factories/license';
 import { SchoolFactory } from 'modules/school/models/factories/school';
+import { CourseFactory } from 'modules/question/models/factories/course';
 import { sequelize } from 'models';
 
 describe('test user', () => {
@@ -87,11 +88,15 @@ describe('test user', () => {
     it('should return 200', async () => {
       const user = await UserFactory();
       const school = await SchoolFactory({ name: 'Binus' });
+      const course = await CourseFactory();
       const query = `
         mutation {
           registerUserTeacher (
             userTeacher: {
               nuptkNumber: "456"
+              courses: [{
+                id: ${course.id}
+              }]
             }
             userProfile: {
               nikNumber: "654"
@@ -108,6 +113,10 @@ describe('test user', () => {
             isTeacher
             userTeacher {
               nuptkNumber
+              courses {
+                id
+                name
+              }
             }
             userProfile {
               nikNumber

@@ -1,5 +1,14 @@
 type Course {
   id: ID
   name: String
-  curriculum: Curriculum
+  chapters: [Chapter]
+}
+
+input CourseInput {
+  id: ID
+  name: String
+}
+
+extend type Query {
+  courses: [Course]
 }

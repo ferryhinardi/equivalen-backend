@@ -1,0 +1,8 @@
+type UserTeacherCourse {
+  userTeacher: UserTeacher
+  courses: [Course]
+}
+
+extend type Mutation {
+  createUserTeacherCourse(courses: [CourseInput]): UserTeacherCourse!
+}

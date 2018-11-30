@@ -43,8 +43,7 @@ export default (sequelize, Sequelize) => {
   );
   UserStudent.associate = models => {
     UserStudent.User = models.UserStudent.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user'
+      foreignKey: 'user_id'
     });
   };
   return UserStudent;

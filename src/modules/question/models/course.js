@@ -28,9 +28,6 @@ export default (sequelize, Sequelize) => {
     }
   );
   Course.associate = models => {
-    Course.Curriculum = models.Course.belongsTo(models.Curriculum, {
-      foreignKey: 'curriculum_id'
-    });
     Course.Chapter = models.Course.hasMany(models.Chapter, {
       foreignKey: 'course_id'
     });
@@ -39,6 +36,13 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'course_id'
     });
     Course.QuestionInfo = models.Course.hasMany(models.QuestionInfo, {
+      foreignKey: 'course_id'
+    });
+    Course.UserTeacher = models.Course.belongsToMany(models.UserTeacher, {
+      through: models.UserTeacherCourse,
+      foreignKey: 'course_id'
+    });
+    Course.UserTeacherCourse = models.Course.hasMany(models.UserTeacherCourse, {
       foreignKey: 'course_id'
     });
   };

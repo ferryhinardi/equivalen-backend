@@ -1,10 +1,12 @@
 type UserTeacher {
   id: ID!
   nuptkNumber: String
+  courses: [Course]
 }
 
 input UserTeacherInput {
   nuptkNumber: String!
+  courses: [CourseInput]
 }
 
 extend type Mutation {

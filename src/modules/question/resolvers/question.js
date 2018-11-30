@@ -1,4 +1,5 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
+import get from 'lodash/get';
 import {
   Question,
   QuestionInfo,
@@ -21,6 +22,7 @@ export default {
   Question: {
     questionInfos: resolver(Question.QuestionInfo),
     type: resolver(Question.QuestionType),
+    createdBy: resolver(Question.CreatedBy),
     options: resolver(Question.QuestionOption, {
       before: findOptions => {
         findOptions.order = [['order', 'asc']];
@@ -44,7 +46,8 @@ export default {
         ]).then(async([questionType, options]) => {
           const questionData = {
             content: questionParam.content,
-            question_type_id: questionType.get('id')
+            question_type_id: questionType.get('id'),
+            created_by: get(ctx, 'user.id')
           };
           const question = await Question.create(questionData, { transaction });
           await Question.addOptions(question, options, transaction);
