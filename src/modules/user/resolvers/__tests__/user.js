@@ -89,6 +89,7 @@ describe('test user', () => {
       const user = await UserFactory();
       const school = await SchoolFactory({ name: 'Binus' });
       const course = await CourseFactory();
+      const license = await LicenseFactory();
       const query = `
         mutation {
           registerUserTeacher (
@@ -107,6 +108,12 @@ describe('test user', () => {
               school: {
                 name: "${school.name}"
               }
+            }
+            userDevice: {
+              hostname: "Host"
+              deviceId: "eca4f803-6a0c-5f1c-92c7-95f2b439be75"
+              platform: "darwin"
+              licenseCode: "${license.licenseCode}"
             }
           ) {
             id
