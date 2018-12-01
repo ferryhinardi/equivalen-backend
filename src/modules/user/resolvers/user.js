@@ -55,5 +55,19 @@ export default {
           createUserDevice(_, { userDevice }, ctxWithTransction)
         ]).then(() => ctx.user.reload({ transaction }));
       }),
+    verificationEmail: async (_, { email }) => {
+      const user = await User.verificationEmail(email);
+      return {
+        user,
+        token: user.getToken()
+      };
+    },
+    forgotPassword: (_, { oldPassword, newPassword }, ctx) =>
+      sequelize.transaction(async (transaction) => {
+        const ctxWithTransction = { ...ctx, transaction };
+        await User.forgotPassword(oldPassword, newPassword, ctxWithTransction);
+
+        return true;
+      }),
   }
 };

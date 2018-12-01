@@ -63,4 +63,19 @@ extend type Mutation {
     userTeacher: UserTeacherInput
     userDevice: UserDeviceInput
   ): User
+
+  """
+  Verify email user.
+  """
+  verificationEmail(
+    email: String
+  ): LoginResponse
+
+  """
+  Forgot Password user.
+  """
+  forgotPassword(
+    oldPassword: String
+    newPassword: String
+  ): Boolean
 }

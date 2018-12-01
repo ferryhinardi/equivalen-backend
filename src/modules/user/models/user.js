@@ -226,5 +226,27 @@ export default (sequelize, Sequelize) => {
     if (userDevice.deviceId !== deviceId) throw new Error('Device not belong to you');
     return userDevice;
   };
+  User.verificationEmail = async function verificationEmail(email) {
+    const user = await User.findOne({
+      where: {
+        email
+      }
+    });
+    if (!user) throw new Error('Email not found');
+    return user;
+  };
+  User.forgotPassword = async function forgotPassword(oldPassword, newPassword, { user: userData, transaction }) {
+    const { password } = userData;
+    if (!bcrypt.compareSync(oldPassword, password)) {
+      throw new Error('Wrong password!');
+    }
+
+    const user = await userData.update(
+      { password: newPassword },
+      ...(transaction ? { transaction } : {})
+    );
+
+    return user;
+  };
   return User;
 };

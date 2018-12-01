@@ -12,13 +12,13 @@ export default {
       { userSchool: { startYear, endYear, school: schoolData } },
       { user, transaction }
     ) => {
-      const province = await Province.find({
+      const province = await Province.findOne({
         where: schoolData.province
       });
-      const city = await City.find({
+      const city = await City.findOne({
         where: schoolData.city
       });
-      const district = await District.find({
+      const district = await District.findOne({
         where: schoolData.district
       });
       const [school] = await School.findOrCreate({

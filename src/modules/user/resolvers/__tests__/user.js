@@ -144,4 +144,90 @@ describe('test user', () => {
       expect(nikNumber).toEqual('654');
     });
   });
+
+  describe('mutation verification email', () => {
+    it('should return 200', async () => {
+      const user = await UserFactory({
+        email: 'test@admin.com'
+      });
+      const query = `
+        mutation {
+          verificationEmail(email: "${user.email}") {
+            user {
+              email
+            }
+          }
+        }
+      `;
+      const result = await request(query);
+      const {
+        user: { email }
+      } = result.body.data.verificationEmail;
+      expect(email).toEqual(user.email);
+    });
+
+    it('should fail verify, because email not registered', async () => {
+      await UserFactory({
+        email: 'test@admin.com'
+      });
+      const query = `
+        mutation {
+          verificationEmail(email: "abc@mail.com") {
+            user {
+              email
+            }
+          }
+        }
+      `;
+      let error = null;
+      try {
+        await request(query);
+      } catch (e) {
+        error = e;
+      }
+      expect(error).toBeTruthy();
+    });
+  });
+
+  describe('mutation forgot password', () => {
+    it('should return 200', async () => {
+      const oldPassword = 'admin12345';
+      const newPassword = 'admin123';
+      const user = await UserFactory({
+        password: oldPassword
+      });
+      const query = `
+        mutation {
+          forgotPassword(oldPassword: "${oldPassword}", newPassword: "${newPassword}")
+        }
+      `;
+      const result = await request(query, undefined, {
+        Authorization: `Bearer ${user.getToken()}`
+      });
+      const isChanged = result.body.data.forgotPassword;
+      expect(isChanged).toBeTruthy();
+    });
+    
+    it('should fail forgot password, because wrong password', async () => {
+      const oldPassword = 'admin12345';
+      const newPassword = 'admin123';
+      const user = await UserFactory({
+        password: 'admin1234'
+      });
+      const query = `
+        mutation {
+          forgotPassword(oldPassword: "${oldPassword}", newPassword: "${newPassword}")
+        }
+      `;
+      let error = null;
+      try {
+        await request(query, undefined, {
+          Authorization: `Bearer ${user.getToken()}`
+        });
+      } catch (e) {
+        error = e;
+      }
+      expect(error).toBeTruthy();
+    });
+  });
 });
