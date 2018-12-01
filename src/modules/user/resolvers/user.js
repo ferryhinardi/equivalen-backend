@@ -45,13 +45,14 @@ export default {
           createUserDevice(_, { userDevice }, ctxWithTransction)
         ]).then(() => ctx.user.reload({ transaction }));
       }),
-    registerUserTeacher: (_, { userProfile, userSchool, userTeacher }, ctx) =>
+    registerUserTeacher: (_, { userProfile, userSchool, userTeacher, userDevice }, ctx) =>
       sequelize.transaction(transaction => {
         const ctxWithTransction = { ...ctx, transaction };
         return Promise.all([
           createOrUpdateUserProfile(_, { userProfile }, ctxWithTransction),
           createUserSchool(_, { userSchool }, ctxWithTransction),
-          createOrUpdateUserTeacher(_, { userTeacher }, ctxWithTransction)
+          createOrUpdateUserTeacher(_, { userTeacher }, ctxWithTransction),
+          createUserDevice(_, { userDevice }, ctxWithTransction)
         ]).then(() => ctx.user.reload({ transaction }));
       }),
   }

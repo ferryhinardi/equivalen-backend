@@ -61,5 +61,6 @@ extend type Mutation {
     userProfile: UserProfileInput
     userSchool: UserSchoolInput
     userTeacher: UserTeacherInput
+    userDevice: UserDeviceInput
   ): User
 }
