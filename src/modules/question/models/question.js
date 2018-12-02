@@ -12,6 +12,7 @@ export default (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
+      answer: Sequelize.STRING,
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE

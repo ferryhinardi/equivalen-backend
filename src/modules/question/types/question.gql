@@ -20,6 +20,7 @@ type Question {
   content: String!
   type: QuestionType!
   used: Int
+  answer: String
   questionInfos: [QuestionInfo]
   options: [QuestionOption!]
   createdBy: User
@@ -35,6 +36,7 @@ input QuestionOptionInput {
 
 input QuestionInput {
   content: String!
+  answer: String
   type: QuestionTypeInput!
   options: [QuestionOptionInput]
 }

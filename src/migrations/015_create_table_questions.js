@@ -15,6 +15,10 @@ export default {
         type: Sequelize.INTEGER,
         allowNull: true
       },
+      answer: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       question_type_id: {
         type: Sequelize.INTEGER,
         onDelete: 'SET NULL',

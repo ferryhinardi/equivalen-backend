@@ -46,6 +46,7 @@ export default {
         ]).then(async([questionType, options]) => {
           const questionData = {
             content: questionParam.content,
+            answer: questionParam.answer,
             question_type_id: questionType.get('id'),
             created_by: get(ctx, 'user.id')
           };
