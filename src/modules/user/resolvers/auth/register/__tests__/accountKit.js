@@ -51,6 +51,7 @@ describe('test accountKit', () => {
               password: "test"
               placeBod: "Jakarta"
               dateBod: "1995-12-17"
+              biography: "bio"
             }
           ) {
             user {
@@ -94,6 +95,7 @@ describe('test accountKit', () => {
               password: "test"
               placeBod: "Jakarta"
               dateBod: "1995-12-17"
+              biography: "bio"
             }
           ) {
             user {
@@ -133,6 +135,7 @@ describe('test accountKit', () => {
               password: "test"
               placeBod: "Jakarta"
               dateBod: "1995-12-17"
+              biography: "bio"
             }
           ) {
             user {

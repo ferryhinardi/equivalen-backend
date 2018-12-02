@@ -44,6 +44,10 @@ export default {
         allowNull: true,
         type: Sequelize.DATE
       },
+      biography: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

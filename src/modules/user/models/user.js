@@ -38,6 +38,7 @@ export default (sequelize, Sequelize) => {
         field: 'date_bod',
         type: Sequelize.DATE
       },
+      biography: Sequelize.STRING,
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE

@@ -19,6 +19,7 @@ type User {
   photoUrl: String
   placeBod: String
   dateBod: Date
+  biography: String
   createdAt: Date
   updatedAt: Date
 }

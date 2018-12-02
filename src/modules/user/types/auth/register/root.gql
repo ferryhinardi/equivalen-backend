@@ -16,4 +16,5 @@ input RegisterUserInput {
   password: String!
   placeBod: String
   dateBod: Date
+  biography: String
 }
