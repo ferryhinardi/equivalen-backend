@@ -1,0 +1,15 @@
+type VideoTutorial {
+  id: ID
+  url: String
+  question: Question
+}
+
+input VideoTutorialInput {
+  id: ID
+  url: String
+  question: QuestionInput
+}
+
+extend type Query {
+  videoTutorials: [VideoTutorial]
+}

@@ -30,11 +30,6 @@ describe('test orderXenditInvoice', () => {
     expect(invoice.amount).toEqual(300000);
   });
 
-  /**
-   * Note: get Problem in Xendit
-   * Showing: Cannot POST /payment_code/simulate_payment!
-   */
-  /*
   it('should update xenditInvoice status', async () => {
     const order = await OrderFactory();
     expect(order.isPaid()).toEqual(false);
@@ -46,5 +41,4 @@ describe('test orderXenditInvoice', () => {
     await order.reload();
     expect(order.isPaid()).toEqual(true);
   });
-  */
 });

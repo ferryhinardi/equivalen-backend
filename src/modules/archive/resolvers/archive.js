@@ -1,5 +1,5 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { sequelize, Archive } from 'models';
+import { sequelize, Archive, Evaluation } from 'models';
 import QuestionTypeResolver from 'modules/question/resolvers/questionType';
 import { findCurriculum } from 'modules/question/resolvers/curriculum';
 import { findEvaluation } from './evaluation';
@@ -15,7 +15,18 @@ export default {
     packages: resolver(Archive.Package)
   },
   Query: {
-    archives: resolver(Archive)
+    archives: resolver(Archive, {
+      before: (findOption, { args }) => {
+        if (args.evaluation) {
+          findOption.include = [{
+            model: Evaluation,
+            where: args.evaluation
+          }]
+        }
+
+        return findOption;
+      },
+    })
   },
   Mutation: {
     createOrUpdateArchive: (_, { archive: archiveParam }, ctx) => {
