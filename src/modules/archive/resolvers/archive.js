@@ -16,6 +16,11 @@ export default {
   Query: {
     archives: resolver(Archive, {
       before: (findOption, { args }) => {
+        if (args && args.pageSize || args && args.offset) {
+          findOption.limit = args.pageSize;
+          findOption.offset = args.offset;
+        }
+
         if (args && args.evaluation) {
           findOption.include = [{
             model: Evaluation,

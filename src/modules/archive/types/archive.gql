@@ -17,6 +17,8 @@ input ArchiveInput {
   questionType: QuestionTypeInput
   evaluation: EvaluationInput
   packages: [PackageInput]
+  pageSize: Int
+  offset: Int
 }
 
 extend type Query {
