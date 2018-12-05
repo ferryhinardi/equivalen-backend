@@ -13,7 +13,6 @@ export const createOrUpdatePackage = async (
         where: pack,
         defaults: {
           ...pack,
-          archive_id: archive.get('id'),
         },
         ...(transaction ? { transaction } : {})
       });
@@ -31,19 +30,18 @@ export const createOrUpdatePackage = async (
         throw new Error('Question Not Found');
       }
 
-      let result;
-
       if (created) {
-        result = await packageResult.setQuestions(questionsRelated, {
+        await packageResult.addArchive(archive);
+        await packageResult.setQuestions(questionsRelated, {
           ...(transaction ? { transaction } : {})
         });
       } else {
-        result = await packageResult.update(packageData, {
+        await packageResult.update(packageData, {
           ...(transaction ? { transaction } : {})
         });
       }
 
-      return result;
+      return packageResult;
     });
 
   return promisePackages;

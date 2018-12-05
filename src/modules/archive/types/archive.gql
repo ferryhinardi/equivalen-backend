@@ -24,5 +24,5 @@ extend type Query {
 }
 
 extend type Mutation {
-  createOrUpdateArchive(archive: ArchiveInput): Archive
+  createArchive(archive: ArchiveInput): Archive
 }

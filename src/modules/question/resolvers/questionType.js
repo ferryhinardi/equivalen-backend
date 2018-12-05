@@ -18,6 +18,14 @@ Mutation.createOrUpdateQuestionType = async (
   }
   return questionType;
 };
+Mutation.findQuestionType = async ({ questionType }, { transaction }) => {
+  const questionTypeResult = await QuestionType.findOne({
+    where: questionType,
+    ...(transaction ? { transaction } : {})
+  });
+
+  return questionTypeResult;
+};
 
 export default {
   Query: {
