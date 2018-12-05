@@ -17,12 +17,20 @@ input ArchiveInput {
   questionType: QuestionTypeInput
   evaluation: EvaluationInput
   packages: [PackageInput]
-  pageSize: Int
-  offset: Int
 }
 
 extend type Query {
-  archives(args: ArchiveInput): [Archive]
+  archives(
+    id: ID
+    name: String
+    minimumScore: Float
+    curriculum: CurriculumInput
+    questionType: QuestionTypeInput
+    evaluation: EvaluationInput
+    packages: [PackageInput]
+    pageSize: Int
+    offset: Int
+  ): [Archive]
 }
 
 extend type Mutation {

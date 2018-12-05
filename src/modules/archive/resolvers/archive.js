@@ -15,18 +15,20 @@ export default {
   },
   Query: {
     archives: resolver(Archive, {
-      before: (findOption, { args }) => {
-        if (args && args.pageSize || args && args.offset) {
+      before: (findOption, args) => {
+        if (args.pageSize || args.offset) {
           findOption.limit = args.pageSize;
           findOption.offset = args.offset;
         }
 
-        if (args && args.evaluation) {
+        if (args.evaluation) {
           findOption.include = [{
             model: Evaluation,
             where: args.evaluation
           }]
         }
+
+        findOption.order = [ ['updatedAt', 'DESC'] ];
 
         return findOption;
       },

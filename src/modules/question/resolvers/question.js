@@ -1,9 +1,13 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
 import get from 'lodash/get';
 import {
+  Curriculum,
+  Course,
+  Chapter,
   Question,
   QuestionInfo,
   QuestionOption,
+  QuestionType,
   sequelize,
 } from 'models';
 
@@ -34,7 +38,64 @@ export default {
     option: resolver(QuestionOption.Option)
   },
   Query: {
-    questions: resolver(Question)
+    questions: resolver(Question, {
+      before: (findOption, args) => {
+        if (args.pageSize || args.offset) {
+          findOption.limit = args.pageSize;
+          findOption.offset = args.offset;
+        }
+
+        if (args.id) {
+          findOption.where = {
+            id: args.id
+          };
+        }
+
+        if (args.questionInfo) {
+          if (args.questionInfo.curriculum) {
+            findOption.include = [{
+              model: QuestionInfo,
+              required: true,
+              include: [{
+                model: Curriculum,
+                where: args.questionInfo.curriculum,
+                required: true
+              }]
+            }]
+          }
+          if (args.questionInfo.course) {
+            findOption.include = [{
+              model: QuestionInfo,
+              required: true,
+              include: [{
+                model: Course,
+                where: args.questionInfo.course,
+                required: true
+              }]
+            }]
+          }
+          if (args.questionInfo.chapter) {
+            findOption.include = [{
+              model: QuestionInfo,
+              include: [{
+                model: Chapter,
+                where: args.questionInfo.chapter,
+                required: true
+              }]
+            }]
+          }
+        }
+
+        if (args.type) {
+          findOption.include = [{
+            model: QuestionType,
+            where: args.type
+          }]
+        }
+
+        return findOption;
+      },
+    })
   },
   Mutation: {
     createOrUpdateQuestion: (_, { question: questionParam }, ctx) =>

@@ -4,6 +4,15 @@ type Chapter {
   course: Course
 }
 
+input ChapterInput {
+  id: ID
+  name: String
+}
+
 extend type Query {
-  chapters(courseId: ID): [Chapter]
+  chapters(
+    courseId: ID
+    pageSize: Int
+    offset: Int
+  ): [Chapter]
 }

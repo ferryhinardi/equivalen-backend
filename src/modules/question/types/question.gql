@@ -15,6 +15,12 @@ type QuestionInfo {
   question: Question
 }
 
+input QuestionInfoInput {
+  curriculum: CurriculumInput
+  course: CourseInput
+  chapter: ChapterInput
+}
+
 type Question {
   id: ID!
   content: String!
@@ -43,7 +49,13 @@ input QuestionInput {
 }
 
 extend type Query {
-  questions: [Question!]
+  questions(
+    id: ID
+    type: QuestionTypeInput
+    questionInfo: QuestionInfoInput
+    pageSize: Int
+    offset: Int
+  ): [Question!]
 }
 
 extend type Mutation {

@@ -8,6 +8,11 @@ export default {
   Query: {
     chapters: resolver(Chapter, {
       before: (findOption, args) => {
+        if (args.pageSize || args.offset) {
+          findOption.limit = args.pageSize;
+          findOption.offset = args.offset;
+        }
+
         if (args.courseId) {
           findOption.where = {
             course_id: args.courseId
