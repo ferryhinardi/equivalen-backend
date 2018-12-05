@@ -53,6 +53,7 @@ extend type Query {
     id: ID
     type: QuestionTypeInput
     questionInfo: QuestionInfoInput
+    package: PackageInput
     pageSize: Int
     offset: Int
   ): [Question!]

@@ -8,6 +8,8 @@ import {
   QuestionInfo,
   QuestionOption,
   QuestionType,
+  Package,
+  PackageQuestion,
   sequelize,
 } from 'models';
 
@@ -77,6 +79,7 @@ export default {
           if (args.questionInfo.chapter) {
             findOption.include = [{
               model: QuestionInfo,
+              required: true,
               include: [{
                 model: Chapter,
                 where: args.questionInfo.chapter,
@@ -84,6 +87,18 @@ export default {
               }]
             }]
           }
+        }
+
+        if (args.package) {
+          findOption.include = [{
+            model: PackageQuestion,
+            required: true,
+            include: [{
+              model: Package,
+              where: args.package,
+              required: true
+            }]
+          }]
         }
 
         if (args.type) {
