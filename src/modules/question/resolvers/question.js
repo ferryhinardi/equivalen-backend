@@ -42,8 +42,8 @@ export default {
   Query: {
     questions: resolver(Question, {
       before: (findOption, args) => {
-        if (args.pageSize || args.offset) {
-          findOption.limit = args.pageSize;
+        if (args.limit || args.offset) {
+          findOption.limit = args.limit;
           findOption.offset = args.offset;
         }
 
@@ -57,33 +57,27 @@ export default {
           if (args.questionInfo.curriculum) {
             findOption.include = [{
               model: QuestionInfo,
-              required: true,
               include: [{
                 model: Curriculum,
                 where: args.questionInfo.curriculum,
-                required: true
               }]
             }]
           }
           if (args.questionInfo.course) {
             findOption.include = [{
               model: QuestionInfo,
-              required: true,
               include: [{
                 model: Course,
-                where: args.questionInfo.course,
-                required: true
+                where: args.questionInfo.course
               }]
             }]
           }
           if (args.questionInfo.chapter) {
             findOption.include = [{
               model: QuestionInfo,
-              required: true,
               include: [{
                 model: Chapter,
-                where: args.questionInfo.chapter,
-                required: true
+                where: args.questionInfo.chapter
               }]
             }]
           }
@@ -92,11 +86,9 @@ export default {
         if (args.package) {
           findOption.include = [{
             model: PackageQuestion,
-            required: true,
             include: [{
               model: Package,
-              where: args.package,
-              required: true
+              where: args.package
             }]
           }]
         }

@@ -28,7 +28,7 @@ extend type Query {
     questionType: QuestionTypeInput
     evaluation: EvaluationInput
     packages: [PackageInput]
-    pageSize: Int
+    limit: Int
     offset: Int
   ): [Archive]
 }

@@ -16,8 +16,8 @@ export default {
   Query: {
     archives: resolver(Archive, {
       before: (findOption, args) => {
-        if (args.pageSize || args.offset) {
-          findOption.limit = args.pageSize;
+        if (args.limit || args.offset) {
+          findOption.limit = args.limit;
           findOption.offset = args.offset;
         }
 

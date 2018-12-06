@@ -12,7 +12,7 @@ input ChapterInput {
 extend type Query {
   chapters(
     courseId: ID
-    pageSize: Int
+    limit: Int
     offset: Int
   ): [Chapter]
 }
