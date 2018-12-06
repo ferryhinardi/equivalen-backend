@@ -1,5 +1,6 @@
+import get from 'lodash/get';
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { sequelize, Archive, Evaluation, Package, PackageQuestion } from 'models';
+import { sequelize, User, Archive, Evaluation, Package, PackageQuestion } from 'models';
 import QuestionTypeResolver from 'modules/question/resolvers/questionType';
 import { findCurriculum } from 'modules/question/resolvers/curriculum';
 import { findEvaluation } from './evaluation';
@@ -11,7 +12,8 @@ export default {
     curriculum: resolver(Archive.Curriculum),
     evaluation: resolver(Archive.Evaluation),
     questionType: resolver(Archive.QuestionType),
-    packages: resolver(Archive.Package)
+    packages: resolver(Archive.Package),
+    createdBy: resolver(Archive.CreatedBy)
   },
   Query: {
     archives: resolver(Archive, {
@@ -28,6 +30,13 @@ export default {
           }]
         }
 
+        if (args.createdBy) {
+          findOption.include = [{
+            model: User,
+            where: args.createdBy
+          }]
+        }
+
         findOption.order = [ ['updatedAt', 'DESC'] ];
 
         return findOption;
@@ -35,7 +44,7 @@ export default {
     })
   },
   Mutation: {
-    createArchive: async (_, { archive: archiveParam }) => {
+    createArchive: async (_, { archive: archiveParam }, ctx) => {
       let transaction;
       try {
         transaction = await sequelize.transaction();
@@ -49,7 +58,8 @@ export default {
           minimumScore: archiveParam.minimumScore,
           question_type_id: questionType.get('id'),
           evaluation_id: evaluation.get('id'),
-          curriculum_id: curriculum.get('id')
+          curriculum_id: curriculum.get('id'),
+          created_by: get(ctx, 'user.id')
         };
         const alreadyCreated = await Archive.findOne({
           where: archiveData,

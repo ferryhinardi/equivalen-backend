@@ -42,6 +42,15 @@ export default {
         allowNull: false,
         type: Sequelize.FLOAT
       },
+      created_by: {
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL',
+        allowNull: true,
+        references: {
+          model: 'users',
+          field: 'id'
+        }
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
