@@ -22,7 +22,7 @@ export default {
       order_line_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'order_lines',
           field: 'id'
