@@ -6,6 +6,7 @@ type Archive {
   questionType: QuestionType
   evaluation: Evaluation
   packages: [Package]
+  assignment: Assignment
   createdAt: Date
   createdBy: User
 }

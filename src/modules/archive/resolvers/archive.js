@@ -13,7 +13,8 @@ export default {
     evaluation: resolver(Archive.Evaluation),
     questionType: resolver(Archive.QuestionType),
     packages: resolver(Archive.Package),
-    createdBy: resolver(Archive.CreatedBy)
+    createdBy: resolver(Archive.CreatedBy),
+    assignment: resolver(Archive.Assignment)
   },
   Query: {
     archives: resolver(Archive, {

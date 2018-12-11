@@ -11,5 +11,9 @@ input VideoTutorialInput {
 }
 
 extend type Query {
-  videoTutorials: [VideoTutorial]
+  videoTutorials(
+    limit: Int
+    offset: Int
+    courseId: ID
+  ): [VideoTutorial]
 }

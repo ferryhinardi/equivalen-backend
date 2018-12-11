@@ -45,6 +45,7 @@ input QuestionInput {
   content: String
   answer: String
   type: QuestionTypeInput
+  questionInfo: QuestionInfoInput
   options: [QuestionOptionInput]
 }
 
