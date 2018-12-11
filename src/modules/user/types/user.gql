@@ -6,6 +6,7 @@ type User {
   userSchools: [UserSchool!]
   userProfile: UserProfile
   userDevice: [UserDevice!]
+  videoRecommended: [VideoRecommended]
 
   isStudent: Boolean
   isTeacher: Boolean

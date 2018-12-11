@@ -144,6 +144,14 @@ export default (sequelize, Sequelize) => {
     User.Question = models.User.hasMany(models.Question, {
       foreignKey: 'created_by'
     });
+
+    User.VideoTutorial = models.User.belongsToMany(models.VideoTutorial, {
+      through: models.VideoRecommended,
+      foreignKey: 'user_id'
+    });
+    User.VideoRecommended = models.User.hasMany(models.VideoRecommended, {
+      foreignKey: 'user_id'
+    });
   };
   User.prototype.getToken = function getUserToken() {
     return getToken({

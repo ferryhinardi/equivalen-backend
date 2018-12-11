@@ -1,0 +1,5 @@
+type VideoRecommended {
+  id: ID
+  user: User
+  videoTutorial: VideoTutorial
+}

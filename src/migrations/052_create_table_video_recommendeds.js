@@ -1,34 +1,29 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('user_relationship', {
+    queryInterface.createTable('video_recommendeds', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      video_tutorial_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'video_tutorials',
+          field: 'id'
+        }
+      },
       user_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'users',
           field: 'id'
         }
-      },
-      target_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'users',
-          field: 'id'
-        }
-      },
-      approved: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
       },
       created_at: {
         allowNull: false,
@@ -43,5 +38,5 @@ export default {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('user_relationship')
+  down: queryInterface => queryInterface.dropTable('video_recommendeds')
 };

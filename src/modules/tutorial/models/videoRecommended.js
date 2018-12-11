@@ -1,15 +1,11 @@
 export default (sequelize, Sequelize) => {
-  const VideoTutorial = sequelize.define(
-    'VideoTutorial',
+  const VideoRecommended = sequelize.define(
+    'VideoRecommended',
     {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      },
-      url: {
-        allowNull: false,
-        type: Sequelize.STRING
       },
       createdAt: {
         field: 'created_at',
@@ -25,15 +21,18 @@ export default (sequelize, Sequelize) => {
       }
     },
     {
-      tableName: 'video_tutorials',
+      tableName: 'video_recommendeds',
       deletedAt: 'deleted_at',
       paranoid: true
     }
   );
-  VideoTutorial.associate = models => {
-    VideoTutorial.Question = models.VideoTutorial.belongsTo(models.Question, {
-      foreignKey: 'question_id'
+  VideoRecommended.associate = models => {
+    VideoRecommended.User = models.VideoRecommended.belongsTo(models.User, {
+      foreignKey: 'user_id'
+    });
+    VideoRecommended.VideoTutorial = models.VideoRecommended.belongsTo(models.VideoTutorial, {
+      foreignKey: 'video_tutorial_id'
     });
   };
-  return VideoTutorial;
+  return VideoRecommended;
 };
