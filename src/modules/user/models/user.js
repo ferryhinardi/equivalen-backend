@@ -1,6 +1,9 @@
+import config from 'config/app';
 import PhoneNumber from 'awesome-phonenumber';
 import { getToken, verify } from 'modules/shared/libs/jwt';
+import { encrypt } from 'modules/shared/helpers/encryption';
 import bcrypt from 'bcrypt';
+import moment from 'moment';
 
 function getHashedPassword(password) {
   return bcrypt.hashSync(password, 8);
@@ -235,16 +238,57 @@ export default (sequelize, Sequelize) => {
     if (userDevice.deviceId !== deviceId) throw new Error('Device not belong to you');
     return userDevice;
   };
-  User.verificationEmail = async function verificationEmail(email) {
+  User.verificationEmail = async function verificationEmail(email, { transaction }) {
+    const { Sequelize: SequelizeModel, ForgotPassword } = require('models');
     const user = await User.findOne({
       where: {
         email
-      }
+      },
+      ...(transaction ? { transaction } : {})
     });
     if (!user) throw new Error('Email not found');
+    
+    /**
+     * Insert into table forgot password to send email
+     */
+    const expired = moment().add(1, 'hours').format();
+    const timestamp = moment().format();
+    const encryptKey = encrypt({
+      token: user.getToken(),
+      timestamp
+    });
+    const hashUrl = `${config.API_URL}/forgot?key=${encryptKey}`;
+    const [forgotPassword] = await ForgotPassword.findOrCreate({
+      where: {
+        user_id: user.id,
+        expired: {
+          [SequelizeModel.Op.gt]: moment().toDate()
+        }
+      },
+      defaults: {
+        user_id: user.id,
+        hashUrl,
+        expired
+      },
+      ...(transaction ? { transaction } : {})
+    });
+    await forgotPassword.sendEmailForgot(transaction);
+    
     return user;
   };
-  User.forgotPassword = async function forgotPassword(oldPassword, newPassword, { user: userData, transaction }) {
+  User.forgotPassword = async function forgotPassword(userId, newPassword) {
+    const transaction = await sequelize.transaction();
+    const userFound = await User.findByPk(userId, { transaction });
+    
+    if (!userFound) {
+      throw new Error('User Not Found');
+    }
+
+    const user = await userFound.update({ password: newPassword }, { transaction });
+    
+    return user;
+  };
+  User.changePassword = async function changePassword(oldPassword, newPassword, { user: userData, transaction }) {
     const { password } = userData;
     if (!bcrypt.compareSync(oldPassword, password)) {
       throw new Error('Wrong password!');
@@ -256,6 +300,13 @@ export default (sequelize, Sequelize) => {
     );
 
     return user;
+  };
+  User.updatePersonalData = async function updatePersonalData({ userData }, { user, transaction }) {
+    const res = await user.update(userData, 
+      ...(transaction ? { transaction } : {})
+    );
+
+    return res;
   };
   return User;
 };

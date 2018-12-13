@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import { showForgotPasswordForm, postForgotPassword } from 'modules/user/controllers/forgotPassword';
 import reindexOrder from 'modules/order/controllers/reindexOrder';
 import reindexXenditInvoice from 'modules/order/controllers/reindexXenditInvoice';
 
@@ -17,7 +18,7 @@ const server = new ApolloServer({
   context,
   schemaDirectives,
   introspection: true,
-  playground: true
+  playground: process.env.NODE_ENV
 });
 
 const app = express();
@@ -37,6 +38,8 @@ app.use((req, res, next) => {
 // Route API
 /* =============================== */
 app.get('/health', (req, res) => res.sendStatus(200));
+app.get('/forgot', showForgotPasswordForm);
+app.post('/forgot', bodyParser.json(), bodyParser.urlencoded({ extended: true }), postForgotPassword);
 app.get('/api/v1/orders/:id/reindex', reindexOrder);
 app.post('/api/v1/orderXenditInvoices/reindex', bodyParser.json(), reindexXenditInvoice);
 

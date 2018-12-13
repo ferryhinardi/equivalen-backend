@@ -27,6 +27,8 @@ type User {
 
 input UserInput {
   id: ID
+  email: String
+  biography: String
 }
 
 extend type Query {
@@ -76,8 +78,15 @@ extend type Mutation {
   """
   Forgot Password user.
   """
-  forgotPassword(
+  changePassword(
     oldPassword: String
     newPassword: String
   ): Boolean
+
+  """
+  Update data user.
+  """
+  updatePersonalData(
+    userData: UserInput
+  ): User
 }

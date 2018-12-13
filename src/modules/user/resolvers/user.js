@@ -55,17 +55,26 @@ export default {
           createUserDevice(_, { userDevice }, ctxWithTransction)
         ]).then(() => ctx.user.reload({ transaction }));
       }),
-    verificationEmail: async (_, { email }) => {
-      const user = await User.verificationEmail(email);
-      return {
-        user,
-        token: user.getToken()
-      };
-    },
-    forgotPassword: (_, { oldPassword, newPassword }, ctx) =>
+    verificationEmail: async (_, { email }, ctx) =>
       sequelize.transaction(async (transaction) => {
         const ctxWithTransction = { ...ctx, transaction };
-        await User.forgotPassword(oldPassword, newPassword, ctxWithTransction);
+        const user = await User.verificationEmail(email, ctxWithTransction);
+        return {
+          user,
+          token: user.getToken()
+        };
+      }),
+    changePassword: (_, { oldPassword, newPassword }, ctx) =>
+      sequelize.transaction(async (transaction) => {
+        const ctxWithTransction = { ...ctx, transaction };
+        await User.changePassword(oldPassword, newPassword, ctxWithTransction);
+
+        return true;
+      }),
+    updatePersonalData: (_, { userData }, ctx) =>
+      sequelize.transaction(async (transaction) => {
+        const ctxWithTransction = { ...ctx, transaction };
+        await User.updatePersonalData(userData, ctxWithTransction);
 
         return true;
       }),
