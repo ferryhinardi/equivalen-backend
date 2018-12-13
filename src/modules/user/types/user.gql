@@ -15,6 +15,7 @@ type User {
   gender: Gender
   username: String
   fullName: String
+  password: String
   email: String
   phoneNumber: String
   photoUrl: String
@@ -76,12 +77,12 @@ extend type Mutation {
   ): LoginResponse
 
   """
-  Forgot Password user.
+  Change Password user.
   """
   changePassword(
     oldPassword: String
     newPassword: String
-  ): Boolean
+  ): User
 
   """
   Update data user.

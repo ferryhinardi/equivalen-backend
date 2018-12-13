@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import request from 'modules/shared/libs/jest/request';
 import { UserFactory } from 'modules/user/models/factories/user';
 import { LicenseFactory } from 'modules/license/models/factories/license';
@@ -189,7 +190,7 @@ describe('test user', () => {
     });
   });
 
-  describe('mutation forgot password', () => {
+  describe('mutation change password', () => {
     it('should return 200', async () => {
       const oldPassword = 'admin12345';
       const newPassword = 'admin123';
@@ -198,13 +199,16 @@ describe('test user', () => {
       });
       const query = `
         mutation {
-          forgotPassword(oldPassword: "${oldPassword}", newPassword: "${newPassword}")
+          changePassword(oldPassword: "${oldPassword}", newPassword: "${newPassword}") {
+            password
+          }
         }
       `;
       const result = await request(query, undefined, {
         Authorization: `Bearer ${user.getToken()}`
       });
-      const isChanged = result.body.data.forgotPassword;
+      const { password } = result.body.data.changePassword;
+      const isChanged = bcrypt.compareSync(newPassword, password);
       expect(isChanged).toBeTruthy();
     });
     
@@ -216,7 +220,9 @@ describe('test user', () => {
       });
       const query = `
         mutation {
-          forgotPassword(oldPassword: "${oldPassword}", newPassword: "${newPassword}")
+          changePassword(oldPassword: "${oldPassword}", newPassword: "${newPassword}") {
+            password
+          }
         }
       `;
       let error = null;

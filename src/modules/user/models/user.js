@@ -93,12 +93,14 @@ export default (sequelize, Sequelize) => {
           }
           if (user.password) {
             try {
-              const hashedPassword = bcrypt.hashSync(user.password, 8);
+              const hashedPassword = getHashedPassword(user.password);
               user.password = hashedPassword;
             } catch (e) {
               console.error(e);
             }
           }
+
+          return user;
         }
       }
     }
@@ -278,18 +280,22 @@ export default (sequelize, Sequelize) => {
   };
   User.forgotPassword = async function forgotPassword(userId, newPassword) {
     const transaction = await sequelize.transaction();
-    const userFound = await User.findByPk(userId, { transaction });
+    const userFound = await User.findOne({
+      where: { id: userId },
+    }, { transaction });
     
     if (!userFound) {
       throw new Error('User Not Found');
     }
 
     const user = await userFound.update({ password: newPassword }, { transaction });
-    
+
+    transaction.commit();    
+
     return user;
   };
   User.changePassword = async function changePassword(oldPassword, newPassword, { user: userData, transaction }) {
-    const { password } = userData;
+    const { password } = userData || {};
     if (!bcrypt.compareSync(oldPassword, password)) {
       throw new Error('Wrong password!');
     }

@@ -67,9 +67,9 @@ export default {
     changePassword: (_, { oldPassword, newPassword }, ctx) =>
       sequelize.transaction(async (transaction) => {
         const ctxWithTransction = { ...ctx, transaction };
-        await User.changePassword(oldPassword, newPassword, ctxWithTransction);
+        const user = await User.changePassword(oldPassword, newPassword, ctxWithTransction);
 
-        return true;
+        return user;
       }),
     updatePersonalData: (_, { userData }, ctx) =>
       sequelize.transaction(async (transaction) => {
