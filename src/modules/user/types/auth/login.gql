@@ -2,6 +2,7 @@ input LoginInput {
   username: String
   password: String
   deviceId: String
+  byPass: Boolean
 }
 
 extend type Mutation {
