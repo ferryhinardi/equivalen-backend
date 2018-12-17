@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import config from 'config/app';
 import { showForgotPasswordForm, postForgotPassword } from 'modules/user/controllers/forgotPassword';
 import reindexOrder from 'modules/order/controllers/reindexOrder';
 import reindexXenditInvoice from 'modules/order/controllers/reindexXenditInvoice';
@@ -11,6 +12,7 @@ import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import context from './context';
 import schemaDirectives from './directives';
+// import LoggingExtension from './logger';
 
 const server = new ApolloServer({
   typeDefs,
@@ -18,7 +20,11 @@ const server = new ApolloServer({
   context,
   schemaDirectives,
   introspection: true,
-  playground: process.env.NODE_ENV
+  playground: process.env.NODE_ENV,
+  engine: {
+    apiKey: config.ENGINE_API_KEY
+  }
+  // extensions: [() => new LoggingExtension()]
 });
 
 const app = express();
