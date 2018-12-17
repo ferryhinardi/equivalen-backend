@@ -15,19 +15,21 @@ import context from './context';
 import schemaDirectives from './directives';
 import LoggingExtension from './logger';
 
-const server = new ApolloServer({
+const opts = {
   typeDefs,
   resolvers,
   context,
   schemaDirectives,
   introspection: true,
   playground: process.env.NODE_ENV,
-  engine: {
-    apiKey: config.ENGINE_API_KEY
-  },
   extensions: [() => new LoggingExtension(winston)]
-});
+};
 
+if (process.env.NODE_ENV !== 'test') {
+  opts.engine = { apiKey: config.ENGINE_API_KEY };
+}
+
+const server = new ApolloServer(opts);
 const app = express();
 
 app.use(
