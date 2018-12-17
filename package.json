@@ -13,8 +13,7 @@
     "build:dist": "babel src --out-dir dist --copy-files --ignore *.test.js,__tests__,__mocks__",
     "build:watch": "npm run build:dist -- -w",
     "database:init": "mkdir -p dist/migrations src/migrations && npm run sequelize db:migrate",
-    "sequelize": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize $*",
-    "heroku-postbuild": "npx apollo service:push --endpoint=https://equivalen-backend-staging.herokuapp.com && npx apollo service:push --endpoint=https://equivalen-backend-production.herokuapp.com"
+    "sequelize": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize $*"
   },
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
