@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import winston from 'winston';
 
 import config from 'config/app';
 import { showForgotPasswordForm, postForgotPassword } from 'modules/user/controllers/forgotPassword';
@@ -12,7 +13,7 @@ import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import context from './context';
 import schemaDirectives from './directives';
-// import LoggingExtension from './logger';
+import LoggingExtension from './logger';
 
 const server = new ApolloServer({
   typeDefs,
@@ -23,8 +24,8 @@ const server = new ApolloServer({
   playground: process.env.NODE_ENV,
   engine: {
     apiKey: config.ENGINE_API_KEY
-  }
-  // extensions: [() => new LoggingExtension()]
+  },
+  extensions: [() => new LoggingExtension(winston)]
 });
 
 const app = express();
