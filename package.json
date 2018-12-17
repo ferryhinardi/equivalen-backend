@@ -13,7 +13,8 @@
     "build:dist": "babel src --out-dir dist --copy-files --ignore *.test.js,__tests__,__mocks__",
     "build:watch": "npm run build:dist -- -w",
     "database:init": "mkdir -p dist/migrations src/migrations && npm run sequelize db:migrate",
-    "sequelize": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize $*"
+    "sequelize": "./node_modules/.bin/babel-node ./node_modules/.bin/sequelize $*",
+    "heroku-postbuild": "npx apollo service:push --endpoint=https://equivalen-backend-staging.herokuapp.com"
   },
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
@@ -42,6 +43,7 @@
     "glob": "^7.1.2",
     "graphql": "^14.0.2",
     "graphql-constraint-directive": "^1.2.0",
+    "graphql-extensions": "^0.4.1",
     "graphql-relay": "^0.5.5",
     "graphql-sequelize": "^9.0.1",
     "jsonwebtoken": "^8.3.0",
@@ -57,7 +59,9 @@
     "sqlite3": "^3.1.8",
     "superagent": "^3.8.3",
     "supertest": "^3.0.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "winston": "^3.1.0",
+    "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
