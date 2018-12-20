@@ -15,7 +15,7 @@ export default (sequelize, Sequelize) => {
       },
       from: {
         allowNull: false,
-        defaultValue: 'dev@pt-gps.com',
+        defaultValue: 'do-not-reply@pt-gps.com',
         type: Sequelize.STRING
       },
       templateId: {

@@ -18,7 +18,7 @@ export default {
       },
       hash_url: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       expired: Sequelize.DATE,
       created_at: {

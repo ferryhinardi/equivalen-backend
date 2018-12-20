@@ -19,7 +19,7 @@ export default {
       from: {
         allowNull: false,
         type: Sequelize.STRING,
-        default: 'dev@pt-gps.com'
+        default: 'do-not-reply@pt-gps.com'
       },
       subject: {
         allowNull: false,
@@ -31,7 +31,7 @@ export default {
       },
       dynamic_template_data: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       content: {
         allowNull: true,
