@@ -7,7 +7,7 @@ export default (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true
       },
-      status: Sequelize.STRING,
+      status: Sequelize.ENUM('PENDING', 'APPROVED'),
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE
