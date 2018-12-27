@@ -4,17 +4,17 @@ type UserProfile {
 }
 
 input UserProfileInput {
-  nikNumber: String!
+  nikNumber: String
 }
 
 extend type Mutation {
   """
   createUserProfile is deprecated. use createOrUpdateUserProfile!
   """
-  createUserProfile(userProfile: UserProfileInput): UserProfile!
+  createUserProfile(userProfile: UserProfileInput): UserProfile
 
   """
   Create or update authenticated user profile data.
   """
-  createOrUpdateUserProfile(userProfile: UserProfileInput): UserProfile!
+  createOrUpdateUserProfile(userProfile: UserProfileInput): UserProfile
 }
