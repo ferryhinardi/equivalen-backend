@@ -44,6 +44,15 @@ class LogFunctionExtension {
     const log = `[RESPONSE DATA]: ${JSON.stringify(o.graphqlResponse)}`;
     this.logFunction.info(log);
   }
+
+  willResolveField = () =>
+    (error, result) => {
+      if (error) {
+        this.logFunction.error(`[ERROR]: ${JSON.stringify(error)}`);
+      } else {
+        this.logFunction.info(`[RESULT]: ${result}`);
+      }
+    }
 }
 
 export default LogFunctionExtension;
