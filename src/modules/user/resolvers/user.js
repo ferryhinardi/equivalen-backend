@@ -1,5 +1,6 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
 import { User, sequelize } from 'models';
+import get from 'lodash/get';
 
 import { Mutation as MutationUserProfile } from './userProfile';
 import { Mutation as MutationUserSchool } from './userSchool';
@@ -19,7 +20,18 @@ export default {
     userStudent: resolver(User.UserStudent),
     userTeacher: resolver(User.UserTeacher),
     userProfile: resolver(User.UserProfile),
-    userDevice: resolver(User.UserDevice),
+    userDevice: resolver(User.UserDevice, {
+      after: (results, args) => {
+        if (args.deviceId) {
+          return results.map((result) => ({
+            ...result.dataValues,
+            isMatchDeviceId: result.deviceId === args.deviceId
+          }));
+        }
+
+        return results;
+      }
+    }),
     authProviders: resolver(User.AuthProvider),
     isStudent: user => user.isStudent(),
     isTeacher: user => user.isTeacher(),

@@ -3,6 +3,7 @@ type UserDevice {
   hostname: String
   platform: String
   deviceId: String
+  isMatchDeviceId: Boolean
 }
 
 input UserDeviceInput {

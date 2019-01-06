@@ -5,7 +5,7 @@ type User {
   authProviders: [AuthProvider!]
   userSchools: [UserSchool!]
   userProfile: UserProfile
-  userDevice: [UserDevice!]
+  userDevice(deviceId: String): [UserDevice!]
   videoRecommended: [VideoRecommended]
 
   isStudent: Boolean
