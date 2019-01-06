@@ -48,6 +48,10 @@ export default {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      deleted_at: {
+        allowNull: true,
+        type: Sequelize.DATE
       }
     }),
   down: queryInterface => queryInterface.dropTable('user_devices')

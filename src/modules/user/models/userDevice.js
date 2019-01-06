@@ -24,10 +24,16 @@ export default (sequelize, Sequelize) => {
       updatedAt: {
         field: 'updated_at',
         type: Sequelize.DATE
+      },
+      deletedAt: {
+        field: 'deleted_at',
+        type: Sequelize.DATE
       }
     },
     {
-      tableName: 'user_devices'
+      tableName: 'user_devices',
+      deletedAt: 'deleted_at',
+      paranoid: true
     }
   );
   UserDevice.associate = models => {

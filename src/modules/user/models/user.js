@@ -179,7 +179,7 @@ export default (sequelize, Sequelize) => {
       where: { id }
     });
 
-    if (!user) throw new Error('User not found');
+    if (!user) throw new Error('Anda belum terdaftar');
     return user;
   };
   User.register = async function register(userData, userAuthProvider) {
