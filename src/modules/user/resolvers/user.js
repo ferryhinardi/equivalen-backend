@@ -1,6 +1,5 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
 import { User, sequelize } from 'models';
-import get from 'lodash/get';
 
 import { Mutation as MutationUserProfile } from './userProfile';
 import { Mutation as MutationUserSchool } from './userSchool';

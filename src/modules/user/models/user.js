@@ -190,13 +190,13 @@ export default (sequelize, Sequelize) => {
         email
       }
     });
-    if (userWithEmail) throw new Error('email already registered');
+    if (userWithEmail) throw new Error('email sudah terdaftar');
     const userWithUsername = await User.findOne({
       where: {
         username
       }
     });
-    if (userWithUsername) throw new Error('username already registered');
+    if (userWithUsername) throw new Error('username sudah terdaftar');
     const [[authProvider], user, gender] = await Promise.all([
       AuthProvider.findOrCreate({
         where: {
@@ -225,9 +225,11 @@ export default (sequelize, Sequelize) => {
         username
       }
     });
-    if (!user) throw new Error('User not found');
-    if (bcrypt.compareSync(password, user.password)) return user;
-    return null;
+    if (!user) throw new Error('Anda belum terdaftar');
+    if (!bcrypt.compareSync(password, user.password))
+      throw new Error('Password anda salah');
+
+    return user;
   };
   User.findDevice = async function findDevice({ user, deviceId }) {
     const { UserDevice } = require('models');
@@ -236,8 +238,8 @@ export default (sequelize, Sequelize) => {
         user_id: user.id
       }
     });
-    if (!userDevice) throw new Error('Device not found');
-    if (userDevice.deviceId !== deviceId) throw new Error('Device not belong to you');
+    if (!userDevice) throw new Error('Device anda belum terdaftar');
+    if (userDevice.deviceId !== deviceId) throw new Error('Device bukan milik anda');
     return userDevice;
   };
   User.verificationEmail = async function verificationEmail(email, { transaction }) {
@@ -248,7 +250,7 @@ export default (sequelize, Sequelize) => {
       },
       ...(transaction ? { transaction } : {})
     });
-    if (!user) throw new Error('Email not found');
+    if (!user) throw new Error('Email tidak ditemukan');
     
     /**
      * Insert into table forgot password to send email
@@ -285,7 +287,7 @@ export default (sequelize, Sequelize) => {
     }, { transaction });
     
     if (!userFound) {
-      throw new Error('User Not Found');
+      throw new Error('Anda belum terdaftar');
     }
 
     const user = await userFound.update({ password: newPassword }, { transaction });
@@ -297,7 +299,7 @@ export default (sequelize, Sequelize) => {
   User.changePassword = async function changePassword(oldPassword, newPassword, { user: userData, transaction }) {
     const { password } = userData || {};
     if (!bcrypt.compareSync(oldPassword, password)) {
-      throw new Error('Wrong password!');
+      throw new Error('salah password');
     }
 
     const user = await userData.update(

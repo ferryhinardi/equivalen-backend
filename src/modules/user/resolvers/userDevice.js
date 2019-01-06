@@ -13,11 +13,11 @@ Mutation.createUserDevice = async (
   });
 
   if (!license) {
-    throw new Error('License not found!');
+    throw new Error('License tidak ditemukan!');
   }
 
   if (license.active) {
-    throw new Error('License cannot be used!');
+    throw new Error('License sudah pernah digunakan!');
   }
 
   await license.update({
