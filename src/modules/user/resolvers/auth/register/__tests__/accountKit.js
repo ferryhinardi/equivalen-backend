@@ -115,7 +115,7 @@ describe('test accountKit', () => {
     } catch (e) {
       error = e;
     }
-    expect(error[0].message).toEqual('email already registered');
+    expect(error[0].message).toEqual('email sudah terdaftar');
   });
 
   it('should cannot register with same username', async () => {
@@ -155,6 +155,6 @@ describe('test accountKit', () => {
     } catch (e) {
       error = e;
     }
-    expect(error[0].message).toEqual('username already registered');
+    expect(error[0].message).toEqual('username sudah terdaftar');
   });
 });
