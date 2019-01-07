@@ -9,9 +9,13 @@ export default async function context({ req }) {
   let user = null;
   if (headers.authorization) {
     token = headers.authorization.replace('Bearer ', '');
-    const { id } = verify(token);
+    const { id, phoneNumber } = verify(token);
     if (id) {
       user = await User.findById(id);
+    } else if (phoneNumber) {
+      user = await User.findOne({
+        where: { phoneNumber }
+      });
     }
   }
   return {
