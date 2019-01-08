@@ -25,10 +25,23 @@ export default {
           field: 'id'
         }
       },
-      approved: {
+      status_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+        references: {
+          model: 'user_relationship_status',
+          field: 'id'
+        }
+      },
+      type_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'user_relationship_types',
+          field: 'id'
+        }
       },
       created_at: {
         allowNull: false,
