@@ -154,7 +154,7 @@ describe('test user relationship', () => {
       const resultRelation = await request(query, undefined, {
         Authorization: `Bearer ${usera.getToken()}`
       });
-      const { status: { name: statusName } } = resultRelation.body.data.approveRequestRelationship;
+      const { status: { name: statusName } } = resultRelation.body.data.rejectRequestRelationship;
       expect(statusName).toEqual('REJECTED');
     });
   });
