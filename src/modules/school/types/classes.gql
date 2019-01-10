@@ -1,0 +1,11 @@
+type Classes {
+  id: ID
+  name: String
+  grade: Grade
+}
+
+input ClassesInput {
+  id: ID
+  name: String
+  grade: GradeInput
+}

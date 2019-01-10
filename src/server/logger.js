@@ -20,23 +20,23 @@ class LogFunctionExtension {
   }
 
   parsingDidStart() {
-    this.logFunction.info('Parsing Start');
+    // Parsing Start
     return () => {
-      this.logFunction.info('Parsing End');
+      // Parsing End
     };
   }
 
   validationDidStart() {
-    this.logFunction.info('Validation Start');
+    // Validation Start
     return () => {
-      this.logFunction.info('Validation End');
+      // Validation End
     };
   }
 
   executionDidStart() {
-    this.logFunction.info('Execution Start');
+    // Execution Start
     return () => {
-      this.logFunction.info('Execution End');
+      // Execution End
     };
   }
 
@@ -46,11 +46,9 @@ class LogFunctionExtension {
   }
 
   willResolveField = () =>
-    (error, result) => {
+    (error) => {
       if (error) {
         this.logFunction.error(`[ERROR]: ${JSON.stringify(error)}`);
-      } else {
-        this.logFunction.info(`[RESULT]: ${result}`);
       }
     }
 }

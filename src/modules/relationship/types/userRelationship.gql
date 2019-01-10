@@ -1,0 +1,34 @@
+type Target {
+  user: User
+  class: Classes
+}
+
+type UserRelationship {
+  id: ID!
+  user: User
+  target: Target
+  status: UserRelationshipStatus
+  type: UserRelationshipType
+}
+
+input TargetRelationInput {
+  id: ID
+}
+
+extend type Query {
+  userRelationship: UserRelationship
+  userRelationships(
+    user: UserInput
+    status: UserRelationshipStatusInput
+    type: UserRelationshipTypeInput
+    limit: Int
+    offset: Int
+  ): [UserRelationship]
+}
+
+extend type Mutation {
+  addTeacherRelationship(userTarget: TargetRelationInput): UserRelationship
+  approveRequestRelationship(userTarget: TargetRelationInput): UserRelationship
+  rejectRequestRelationship(userTarget: TargetRelationInput): UserRelationship
+  addClassRelationship(classTarget: TargetRelationInput): UserRelationship
+}

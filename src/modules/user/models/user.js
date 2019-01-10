@@ -157,6 +157,12 @@ export default (sequelize, Sequelize) => {
     User.VideoRecommended = models.User.hasMany(models.VideoRecommended, {
       foreignKey: 'user_id'
     });
+    User.UserRelationship = models.User.hasOne(models.UserRelationship, {
+      foreignKey: 'user_id'
+    });
+    User.UserRelationshipTarget = models.User.hasOne(models.UserRelationship, {
+      foreignKey: 'target_id'
+    });
   };
   User.prototype.getToken = function getUserToken() {
     return getToken({

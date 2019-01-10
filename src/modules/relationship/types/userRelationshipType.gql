@@ -1,0 +1,9 @@
+type UserRelationshipType {
+  id: ID!
+  name: String
+}
+
+input UserRelationshipTypeInput {
+  id: ID
+  name: String
+}

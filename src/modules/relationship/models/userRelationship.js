@@ -7,7 +7,6 @@ export default (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true
       },
-      status: Sequelize.ENUM('PENDING', 'APPROVED'),
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE
@@ -31,8 +30,17 @@ export default (sequelize, Sequelize) => {
     UserRelationship.User = models.UserRelationship.belongsTo(models.User, {
       foreignKey: 'user_id'
     });
-    UserRelationship.UserTarget = models.UserRelationship.belongsTo(models.User, {
+    UserRelationship.UserTargetUser = models.UserRelationship.belongsTo(models.User, {
       foreignKey: 'target_id'
+    });
+    UserRelationship.UserTargetClass = models.UserRelationship.belongsTo(models.Classes, {
+      foreignKey: 'target_id'
+    });
+    UserRelationship.Status = models.UserRelationship.belongsTo(models.UserRelationshipStatus, {
+      foreignKey: 'status_id'
+    });
+    UserRelationship.Type = models.UserRelationship.belongsTo(models.UserRelationshipType, {
+      foreignKey: 'type_id'
     });
   };
   return UserRelationship;
