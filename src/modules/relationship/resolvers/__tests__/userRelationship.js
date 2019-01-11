@@ -1,4 +1,5 @@
 import request from 'modules/shared/libs/jest/request';
+import { NotificationFactory } from 'modules/notification/models/factories/notification';
 import { UserFactory } from 'modules/user/models/factories/user';
 import { UserStudentFactory } from 'modules/user/models/factories/userStudent';
 import { UserTeacherFactory } from 'modules/user/models/factories/userTeacher';
@@ -31,6 +32,7 @@ describe('test user relationship', () => {
       });
       await UserRelationshipStatusFactory();
       await UserRelationshipTypeFactory();
+      await NotificationFactory();
 
       const query = `
         mutation {

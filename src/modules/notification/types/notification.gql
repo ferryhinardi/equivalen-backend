@@ -1,0 +1,8 @@
+type Notification {
+  id: ID!
+  name: String
+}
+
+extend type Mutation {
+  resetNotification(notificationType: String): Boolean
+}

@@ -163,6 +163,14 @@ export default (sequelize, Sequelize) => {
     User.UserRelationshipTarget = models.User.hasOne(models.UserRelationship, {
       foreignKey: 'target_id'
     });
+
+    User.Notification = models.User.belongsToMany(models.Notification, {
+      through: models.UserNotification,
+      foreignKey: 'user_id'
+    });
+    User.UserNotification = models.User.hasMany(models.UserNotification, {
+      foreignKey: 'user_id'
+    });
   };
   User.prototype.getToken = function getUserToken() {
     return getToken({

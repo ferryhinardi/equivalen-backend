@@ -19,6 +19,7 @@ export default {
     userStudent: resolver(User.UserStudent),
     userTeacher: resolver(User.UserTeacher),
     userProfile: resolver(User.UserProfile),
+    userNotification: resolver(User.UserNotification),
     userDevice: resolver(User.UserDevice, {
       after: (results, args) => {
         if (args.deviceId) {

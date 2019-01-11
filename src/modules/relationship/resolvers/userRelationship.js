@@ -5,6 +5,7 @@ import {
   UserRelationship,
   UserRelationshipStatus,
   UserRelationshipType,
+  Notification,
   sequelize,
 } from 'models';
 
@@ -96,7 +97,7 @@ export default {
           where: userTarget,
           ...(transaction ? { transaction } : {})
         });
-        const isTeacher = await userTargetRelation.isTeacher();
+        const isTeacher = userTargetRelation.isTeacher();
 
         if (!isTeacher) {
           throw new Error('Member bukan seorang guru');
@@ -122,10 +123,14 @@ export default {
           type_id: type.id
         };
 
-        const [userRelationship] = await UserRelationship.findOrCreate({
+        const [userRelationship, created] = await UserRelationship.findOrCreate({
           where: userRelationshipData,
           ...(transaction ? { transaction } : {})
         });
+
+        if (created) {
+          await Notification.applyNotification({ notificationType: Notification.RELATIONSHIP }, { user, transaction });
+        }
 
         return userRelationship;
       }),

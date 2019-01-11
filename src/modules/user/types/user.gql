@@ -5,6 +5,7 @@ type User {
   authProviders: [AuthProvider!]
   userSchools: [UserSchool!]
   userProfile: UserProfile
+  userNotification: [UserNotification]
   userDevice(deviceId: String): [UserDevice!]
   videoRecommended: [VideoRecommended]
 

@@ -1,0 +1,6 @@
+type UserNotification {
+  id: ID
+  user: User
+  notification: Notification
+  total: Int
+}
