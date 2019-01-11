@@ -27,6 +27,11 @@ export default (sequelize, Sequelize) => {
       paranoid: true
     }
   );
+  UserRelationshipStatus.associate = models => {
+    UserRelationshipStatus.UserRelationship = models.UserRelationshipStatus.hasMany(models.UserRelationship, {
+      foreignKey: 'status_id'
+    });
+  };
   UserRelationshipStatus.PENDING = 'PENDING';
   UserRelationshipStatus.APPROVED = 'APPROVED';
   UserRelationshipStatus.REJECTED = 'REJECTED';

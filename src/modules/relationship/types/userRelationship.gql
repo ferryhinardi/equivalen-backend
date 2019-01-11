@@ -19,6 +19,7 @@ extend type Query {
   userRelationship: UserRelationship
   userRelationships(
     user: UserInput
+    target: TargetRelationInput
     status: UserRelationshipStatusInput
     type: UserRelationshipTypeInput
     limit: Int

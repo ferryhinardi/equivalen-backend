@@ -27,6 +27,11 @@ export default (sequelize, Sequelize) => {
       paranoid: true
     }
   );
+  UserRelationshipType.associate = models => {
+    UserRelationshipType.UserRelationship = models.UserRelationshipType.hasMany(models.UserRelationship, {
+      foreignKey: 'type_id'
+    });
+  };
   UserRelationshipType.USER = 'USER';
   UserRelationshipType.CLASS = 'CLASS';
   return UserRelationshipType;

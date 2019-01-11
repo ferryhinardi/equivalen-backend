@@ -28,10 +28,12 @@ export default (sequelize, Sequelize) => {
   );
   UserRelationship.associate = models => {
     UserRelationship.User = models.UserRelationship.belongsTo(models.User, {
-      foreignKey: 'user_id'
+      foreignKey: 'user_id',
+      as: 'user_related'
     });
     UserRelationship.UserTargetUser = models.UserRelationship.belongsTo(models.User, {
-      foreignKey: 'target_id'
+      foreignKey: 'target_id',
+      as: 'user_target'
     });
     UserRelationship.UserTargetClass = models.UserRelationship.belongsTo(models.Classes, {
       foreignKey: 'target_id'

@@ -19,25 +19,28 @@ export default {
   Query: {
     archives: resolver(Archive, {
       before: (findOption, args) => {
+        let include = [];
+
         if (args.limit || args.offset) {
           findOption.limit = args.limit;
           findOption.offset = args.offset;
         }
 
         if (args.evaluation) {
-          findOption.include = [{
+          include = include.concat([{
             model: Evaluation,
             where: args.evaluation
-          }]
+          }]);
         }
 
         if (args.createdBy) {
-          findOption.include = [{
+          include = include.concat([{
             model: User,
             where: args.createdBy
-          }]
+          }]);
         }
 
+        findOption.include = include;
         findOption.order = [ ['updatedAt', 'DESC'] ];
 
         return findOption;

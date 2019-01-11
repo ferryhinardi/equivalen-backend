@@ -32,31 +32,58 @@ export default {
     userRelationship: resolver(UserRelationship),
     userRelationships: resolver(UserRelationship, {
       before: (findOption, args) => {
+        let include = [];
+
         if (args.limit || args.offset) {
           findOption.limit = args.limit;
           findOption.offset = args.offset;
         }
 
         if (args.type) {
-          findOption.include = [{
+          include = include.concat([{
             model: UserRelationshipType,
             where: args.type
-          }]
+          }]);
         }
 
         if (args.status) {
-          findOption.include = [{
+          include = include.concat([{
             model: UserRelationshipStatus,
             where: args.status
-          }]
+          }]);
         }
 
         if (args.user) {
-          findOption.include = [{
+          include = include.concat([{
             model: User,
+            as: 'user_related',
             where: args.user
-          }]
+          }]);
         }
+
+        /**
+         * type => [
+         *  { id: "1", name: "USER" }
+         *  { id: "2", name: "CLASS" }
+         * ]
+         */
+
+        if (args.target && args.type) {
+          if (args.type.id === "1" || args.type.name === "USER") {
+            include = include.concat([{
+              model: User,
+              as: 'user_target',
+              where: args.target
+            }]);
+          } else {
+            include = include.concat([{
+              model: Classes,
+              where: args.target
+            }]);
+          }
+        }
+
+        findOption.include = include;
 
         return findOption;
       },

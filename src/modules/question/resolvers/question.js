@@ -42,6 +42,8 @@ export default {
   Query: {
     questions: resolver(Question, {
       before: (findOption, args) => {
+        let include = [];
+
         if (args.limit || args.offset) {
           findOption.limit = args.limit;
           findOption.offset = args.offset;
@@ -55,50 +57,52 @@ export default {
 
         if (args.questionInfo) {
           if (args.questionInfo.curriculum) {
-            findOption.include = [{
+            include = include.concat([{
               model: QuestionInfo,
               include: [{
                 model: Curriculum,
                 where: args.questionInfo.curriculum,
               }]
-            }]
+            }]);
           }
           if (args.questionInfo.course) {
-            findOption.include = [{
+            include = include.concat([{
               model: QuestionInfo,
               include: [{
                 model: Course,
                 where: args.questionInfo.course
               }]
-            }]
+            }]);
           }
           if (args.questionInfo.chapter) {
-            findOption.include = [{
+            include = include.concat([{
               model: QuestionInfo,
               include: [{
                 model: Chapter,
                 where: args.questionInfo.chapter
               }]
-            }]
+            }]);
           }
         }
 
         if (args.package) {
-          findOption.include = [{
+          include = include.concat([{
             model: PackageQuestion,
             include: [{
               model: Package,
               where: args.package
             }]
-          }]
+          }]);
         }
 
         if (args.type) {
-          findOption.include = [{
+          include = include.concat([{
             model: QuestionType,
             where: args.type
-          }]
+          }]);
         }
+
+        findOption.include = include;
 
         return findOption;
       },

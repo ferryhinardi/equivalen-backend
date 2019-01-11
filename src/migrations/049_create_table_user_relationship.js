@@ -16,15 +16,7 @@ export default {
           field: 'id'
         }
       },
-      target_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'users',
-          field: 'id'
-        }
-      },
+      target_id: Sequelize.INTEGER,
       status_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',

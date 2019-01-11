@@ -8,13 +8,15 @@ export default {
   Query: {
     videoTutorials: resolver(VideoTutorial, {
       before: (findOption, args) => {
+        let include = [];
+      
         if (args.limit || args.offset) {
           findOption.limit = args.limit;
           findOption.offset = args.offset;
         }
 
         if (args.order) {
-          findOption.include = [{
+          include = include.concat([{
             model: Question,
             include: {
               model: QuestionInfo,
@@ -22,18 +24,20 @@ export default {
                 ['chapter_id', 'ASC']
               ]
             }
-          }];
+          }]);
         }
 
         if (args.courseId) {
-          findOption.include = [{
+          include = include.concat([{
             model: Question,
             include: {
               model: QuestionInfo,
               where: { course_id: args.courseId }
             }
-          }]
+          }]);
         }
+
+        findOption.include = include;
 
         return findOption;
       },
