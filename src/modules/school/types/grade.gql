@@ -7,3 +7,10 @@ input GradeInput {
   id: ID
   name: String
 }
+
+extend type Query {
+  """
+  Get list of grades.
+  """
+  grades: [Grade]
+}

@@ -9,3 +9,10 @@ input ClassesInput {
   name: String
   grade: GradeInput
 }
+
+extend type Query {
+  """
+  Get list of classes.
+  """
+  Classes: [Classes]
+}
