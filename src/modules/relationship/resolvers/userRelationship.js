@@ -138,7 +138,7 @@ export default {
           },
           ...(transaction ? { transaction } : {})
         });
-console.log('id', id);
+
         if (id) {
           const userRelationById = await UserRelationship.findById(id);
 
