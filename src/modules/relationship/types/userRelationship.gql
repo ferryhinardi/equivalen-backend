@@ -29,7 +29,7 @@ extend type Query {
 
 extend type Mutation {
   addTeacherRelationship(userTarget: TargetRelationInput): UserRelationship
-  approveRequestRelationship(userTarget: TargetRelationInput): UserRelationship
-  rejectRequestRelationship(userTarget: TargetRelationInput): UserRelationship
+  approveRequestRelationship(id: ID, userTarget: TargetRelationInput): UserRelationship
+  rejectRequestRelationship(id: ID, userTarget: TargetRelationInput): UserRelationship
   addClassRelationship(classTarget: TargetRelationInput): UserRelationship
 }

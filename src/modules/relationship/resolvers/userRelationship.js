@@ -130,13 +130,34 @@ export default {
         return userRelationship;
       }),
     
-    approveRequestRelationship: (_, { userTarget }, { user }) =>
+    approveRequestRelationship: (_, { id, userTarget }, { user }) =>
       sequelize.transaction(async (transaction) => {
+        const statusApproved = await UserRelationshipStatus.findOne({
+          where: {
+            name: UserRelationshipStatus.APPROVED
+          },
+          ...(transaction ? { transaction } : {})
+        });
+console.log('id', id);
+        if (id) {
+          const userRelationById = await UserRelationship.findById(id);
+
+          if (!userRelationById) {
+            throw new Error('relasi tidak ditemukan');
+          }
+          
+          const result = await userRelationById.update({ status_id: statusApproved.id }, {
+            ...(transaction ? { transaction } : {})
+          });
+
+          return result;
+        }
+
         const userTargetRelation = await User.findOne({
           where: userTarget,
           ...(transaction ? { transaction } : {})
         });
-        const isStudent = await userTargetRelation.isStudent();
+        const isStudent = userTargetRelation.isStudent();
 
         if (!isStudent) {
           throw new Error('User bukan seorang murid');
@@ -159,29 +180,44 @@ export default {
         });
 
         if (!userRelation) {
-          throw new Error('User not a in relationship');
-        } else {
-          const statusApproved = await UserRelationshipStatus.findOne({
-            where: {
-              name: UserRelationshipStatus.APPROVED
-            },
-            ...(transaction ? { transaction } : {})
-          });
-          await userRelation.update({ status_id: statusApproved.id }, {
-            ...(transaction ? { transaction } : {})
-          });
+          throw new Error('User tidak memiliki relasi');
         }
+
+        const result = await userRelation.update({ status_id: statusApproved.id }, {
+          ...(transaction ? { transaction } : {})
+        });
         
-        return userRelation;
+        return result;
       }),
 
-    rejectRequestRelationship: (_, { userTarget }, { user }) =>
+    rejectRequestRelationship: (_, { id, userTarget }, { user }) =>
       sequelize.transaction(async (transaction) => {
+        const statusApproved = await UserRelationshipStatus.findOne({
+          where: {
+            name: UserRelationshipStatus.REJECTED
+          },
+          ...(transaction ? { transaction } : {})
+        });
+
+        if (id) {
+          const userRelationById = await UserRelationship.findById(id);
+
+          if (!userRelationById) {
+            throw new Error('Relasi tidak ditemukan');
+          }
+          
+          const result = await userRelationById.update({ status_id: statusApproved.id }, {
+            ...(transaction ? { transaction } : {})
+          });
+
+          return result;
+        }
+
         const userTargetRelation = await User.findOne({
           where: userTarget,
           ...(transaction ? { transaction } : {})
         });
-        const isStudent = await userTargetRelation.isStudent();
+        const isStudent = userTargetRelation.isStudent();
 
         if (!isStudent) {
           throw new Error('User bukan seorang murid');
@@ -204,20 +240,14 @@ export default {
         });
 
         if (!userRelation) {
-          throw new Error('User not a in relationship');
-        } else {
-          const statusApproved = await UserRelationshipStatus.findOne({
-            where: {
-              name: UserRelationshipStatus.REJECTED
-            },
-            ...(transaction ? { transaction } : {})
-          });
-          await userRelation.update({ status_id: statusApproved.id }, {
-            ...(transaction ? { transaction } : {})
-          });
+          throw new Error('User tidak memiliki relasi');
         }
+
+        const result = await userRelation.update({ status_id: statusApproved.id }, {
+          ...(transaction ? { transaction } : {})
+        });
         
-        return userRelation;
+        return result;
       }),
 
     addClassRelationship: (_, { classTarget }, { user }) =>
