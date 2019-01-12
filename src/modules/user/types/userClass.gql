@@ -1,0 +1,5 @@
+type UserClass {
+  id: ID
+  user: User
+  class: Classes
+}

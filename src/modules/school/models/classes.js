@@ -34,6 +34,14 @@ export default (sequelize, Sequelize) => {
     Classes.UserRelationship = models.Classes.hasOne(models.UserRelationship, {
       foreignKey: 'target_id'
     });
+
+    Classes.User = models.Classes.belongsToMany(models.User, {
+      through: models.UserClass,
+      foreignKey: 'class_id'
+    });
+    Classes.UserClass = models.Classes.hasMany(models.UserClass, {
+      foreignKey: 'class_id'
+    });
   };
   return Classes;
 };
