@@ -4,6 +4,7 @@ type User {
   userTeacher: UserTeacher
   authProviders: [AuthProvider!]
   userSchools: [UserSchool!]
+  userClass: [UserClass]
   userProfile: UserProfile
   userNotification: [UserNotification]
   userDevice(deviceId: String): [UserDevice!]
@@ -46,7 +47,13 @@ extend type Query {
   """
   Get list of users
   """
-  users: [User!]
+  users(
+    limit: Int,
+    offset: Int,
+    class: ClassesInput,
+    isStudent: Boolean,
+    isTeacher: Boolean
+  ): [User]
 }
 
 extend type Mutation {

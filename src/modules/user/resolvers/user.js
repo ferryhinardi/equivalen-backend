@@ -1,5 +1,12 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { User, sequelize } from 'models';
+import {
+  User,
+  UserStudent,
+  UserTeacher,
+  UserClass,
+  Classes,
+  sequelize,
+} from 'models';
 
 import { Mutation as MutationUserProfile } from './userProfile';
 import { Mutation as MutationUserSchool } from './userSchool';
@@ -16,6 +23,7 @@ const { createOrUpdateUserTeacher } = MutationUserTeacher;
 export default {
   User: {
     gender: resolver(User.Gender),
+    userClass: resolver(User.UserClass),
     userStudent: resolver(User.UserStudent),
     userTeacher: resolver(User.UserTeacher),
     userProfile: resolver(User.UserProfile),
@@ -40,7 +48,46 @@ export default {
   },
   Query: {
     user: resolver(User),
-    users: resolver(User),
+    users: resolver(User, {
+      before: (findOption, args) => {
+        let include = [];
+
+        if (args.limit || args.offset) {
+          findOption.limit = args.limit;
+          findOption.offset = args.offset;
+        }
+
+        if (args.isStudent) {
+          include = include.concat([{
+            model: UserStudent,
+            as: 'student',
+            required: true
+          }]);
+        }
+
+        if (args.isTeacher) {
+          include = include.concat([{
+            model: UserTeacher,
+            as: 'teacher',
+            required: true
+          }]);
+        }
+
+        if (args.class) {
+          include = include.concat([{
+            model: UserClass,
+            include: [{
+              model: Classes,
+              where: args.class
+            }]
+          }]);
+        }
+
+        findOption.include = include;
+
+        return findOption;
+      },
+    }),
     currentUser: (_, models, ctx) => {
       const user = User.getCurrentUser(ctx.token);
       return user;
