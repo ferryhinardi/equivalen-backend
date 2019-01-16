@@ -14,5 +14,5 @@ extend type Query {
   """
   Get list of classes.
   """
-  Classes: [Classes]
+  classes(grade: GradeInput): [Classes]
 }

@@ -21,7 +21,7 @@ const opts = {
   context,
   schemaDirectives,
   introspection: true,
-  playground: process.env.NODE_ENV,
+  playground: process.env.NODE_ENV !== 'production',
   extensions: [() => new LoggingExtension(winston)]
 };
 
