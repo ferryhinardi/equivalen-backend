@@ -1,6 +1,6 @@
 export const IS_DEV = false;
 
-export const API_URL = 'https://equivalen-backend-production.herokuapp.com';
+export const API_URL = 'https://equivalen-backend-staging.herokuapp.com';
 
 export const FACEBOOK_APP_ID = '2281886948759780';
 export const FACEBOOK_ACCOUNT_KIT_APP_SECRET = '4f1cdd68f16c1b773eca65aa67bc6004';

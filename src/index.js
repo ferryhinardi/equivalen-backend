@@ -2,6 +2,7 @@ import sequelizeFixtures from 'sequelize-fixtures';
 import fixtures from './fixtures';
 import server from './server';
 import models from './models';
+import { config } from './config/app';
 
 /**
  * DISCLAIMER: using sequelize#sync is not recommended for production use. Please, please
@@ -18,7 +19,7 @@ async function start() {
           port
         },
         () => {
-          console.log(`Server is running on localhost:${port}`);
+          console.log(`Server is running on ${config.API_URL}`);
         }
       );
     });
