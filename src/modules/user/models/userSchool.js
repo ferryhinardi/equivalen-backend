@@ -22,10 +22,6 @@ export default (sequelize, Sequelize) => {
       updatedAt: {
         field: 'updated_at',
         type: Sequelize.DATE
-      },
-      deletedAt: {
-        field: 'deleted_at',
-        type: Sequelize.DATE
       }
     },
     {
