@@ -18,6 +18,8 @@ export default {
             }
           };
         }
+
+        findOption.order = [ ['name', 'ASC'] ];
         return findOption;
       }
     })
