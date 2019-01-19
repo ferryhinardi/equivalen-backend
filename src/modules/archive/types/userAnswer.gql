@@ -1,0 +1,29 @@
+type UserAnswer {
+  userArchive: UserArchive
+  question: Question
+  orderNo: Int
+  answer: String
+}
+
+input QuestionAnwserInput {
+  question: QuestionInput
+  orderNo: Int
+  answer: String
+}
+
+input UserAnswerInput {
+  userArchive: UserArchiveInput
+  question: QuestionInput
+  orderNo: Int
+  answer: String
+}
+
+input UserAnswerBulkInput {
+  userArchive: UserArchiveInput
+  answers: [QuestionAnwserInput]
+}
+
+extend type Mutation {
+  createUserAnswer(userAnswer: UserAnswerInput): UserAnswer
+  createUserAnswers(userAnswers: UserAnswerBulkInput): [UserAnswer]
+}

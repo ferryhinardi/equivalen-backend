@@ -69,6 +69,14 @@ export default (sequelize, Sequelize) => {
     Question.CreatedBy = models.Question.belongsTo(models.User, {
       foreignKey: 'created_by'
     });
+
+    Question.UserArchive = models.Question.belongsToMany(models.UserArchive, {
+      through: models.UserAnswer,
+      foreignKey: 'question_id'
+    });
+    Question.UserAnswer = models.Question.hasMany(models.UserAnswer, {
+      foreignKey: 'question_id'
+    });
   };
   Question.addOptions = async function add(question, options, transaction) {
     return Promise.all([

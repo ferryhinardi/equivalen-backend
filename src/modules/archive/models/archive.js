@@ -51,6 +51,14 @@ export default (sequelize, Sequelize) => {
     Archive.CreatedBy = models.Archive.belongsTo(models.User, {
       foreignKey: 'created_by'
     });
+
+    Archive.User = models.Archive.belongsToMany(models.User, {
+      through: models.UserArchive,
+      foreignKey: 'archive_id'
+    });
+    Archive.UserArchive = models.Archive.hasMany(models.UserArchive, {
+      foreignKey: 'archive_id'
+    });
   };
 
   return Archive;

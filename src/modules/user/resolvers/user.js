@@ -8,8 +8,8 @@ import {
   sequelize,
 } from 'models';
 
+import { Mutation as MutationUserSchool } from 'modules/school/resolvers/userSchool';
 import { Mutation as MutationUserProfile } from './userProfile';
-import { Mutation as MutationUserSchool } from './userSchool';
 import { Mutation as MutationUserStudent } from './userStudent';
 import { Mutation as MutationUserDevice } from './userDevice';
 import { Mutation as MutationUserTeacher } from './userTeacher';

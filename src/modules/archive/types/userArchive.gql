@@ -1,0 +1,40 @@
+type UserArchive {
+  id: ID
+  user: User
+  owner: User
+  archive: Archive
+  userAnswer: [UserAnswer]
+  opened: Boolean
+  score: Float
+  totalCorrect: Int
+  totalIncorrect: Int
+  totalDoubt: Int
+  totalUnanswer: Int
+  duration: Int
+}
+
+input UserArchiveInput {
+  id: ID
+  archiveId: ID
+}
+
+input UserTeacherArchiveInput {
+  archive: ArchiveInput!
+  users: [UserInput!]
+}
+
+input UserStudentArchiveInput {
+  archive: ArchiveInput!
+  opened: Boolean
+  score: Float
+  totalCorrect: Int
+  totalIncorrect: Int
+  totalDoubt: Int
+  totalUnanswer: Int
+  duration: Int
+}
+
+extend type Mutation {
+  createUserArchives(userArchive: UserTeacherArchiveInput): [UserArchive]
+  updateUserArchive(userArchive: UserStudentArchiveInput): UserArchive
+}

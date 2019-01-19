@@ -1,42 +1,37 @@
 export default {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('questions', {
+    queryInterface.createTable('user_answers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      content: {
-        allowNull: false,
-        type: Sequelize.TEXT('long')
-      },
-      used: {
-        defaultValue: 0,
+      user_archive_id: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        onDelete: 'CASCADE',
+        allowNull: true,
+        references: {
+          model: 'user_archives',
+          field: 'id'
+        }
+      },
+      question_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL',
+        allowNull: true,
+        references: {
+          model: 'questions',
+          field: 'id'
+        }
+      },
+      order_no: {
+        allowNull: true,
+        type: Sequelize.INTEGER
       },
       answer: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
-      },
-      question_type_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
-        allowNull: true,
-        references: {
-          model: 'question_types',
-          field: 'id'
-        }
-      },
-      created_by: {
-        type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
-        allowNull: true,
-        references: {
-          model: 'users',
-          field: 'id'
-        }
       },
       created_at: {
         allowNull: false,
@@ -45,11 +40,7 @@ export default {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      deleted_at: {
-        allowNull: true,
-        type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('questions')
+  down: queryInterface => queryInterface.dropTable('user_answers')
 };
