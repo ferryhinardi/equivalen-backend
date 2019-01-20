@@ -8,6 +8,7 @@ import config from 'config/app';
 import { showForgotPasswordForm, postForgotPassword } from 'modules/user/controllers/forgotPassword';
 import reindexOrder from 'modules/order/controllers/reindexOrder';
 import reindexXenditInvoice from 'modules/order/controllers/reindexXenditInvoice';
+import { simulateCodeAK } from 'modules/user/controllers/simulateCodeAK';
 
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
@@ -51,6 +52,7 @@ app.get('/forgot', showForgotPasswordForm);
 app.post('/forgot', bodyParser.json(), bodyParser.urlencoded({ extended: true }), postForgotPassword);
 app.get('/api/v1/orders/:id/reindex', reindexOrder);
 app.post('/api/v1/orderXenditInvoices/reindex', bodyParser.json(), reindexXenditInvoice);
+app.post('/api/v1/simulateCodeAK', bodyParser.json(), simulateCodeAK);
 
 server.applyMiddleware({
   app,
