@@ -98,20 +98,20 @@ export default {
       sequelize.transaction(transaction => {
         const ctxWithTransction = { ...ctx, transaction };
         return Promise.all([
-          createOrUpdateUserProfile(_, { userProfile }, ctxWithTransction),
           createUserSchool(_, { userSchool }, ctxWithTransction),
           createOrUpdateUserStudent(_, { userStudent }, ctxWithTransction),
-          createUserDevice(_, { userDevice }, ctxWithTransction)
+          createUserDevice(_, { userDevice }, ctxWithTransction),
+          createOrUpdateUserProfile(_, { userProfile }, ctxWithTransction),
         ]).then(() => ctx.user.reload({ transaction }));
       }),
     registerUserTeacher: (_, { userProfile, userSchool, userTeacher, userDevice }, ctx) =>
       sequelize.transaction(transaction => {
         const ctxWithTransction = { ...ctx, transaction };
         return Promise.all([
-          createOrUpdateUserProfile(_, { userProfile }, ctxWithTransction),
           createUserSchool(_, { userSchool }, ctxWithTransction),
           createOrUpdateUserTeacher(_, { userTeacher }, ctxWithTransction),
-          createUserDevice(_, { userDevice }, ctxWithTransction)
+          createUserDevice(_, { userDevice }, ctxWithTransction),
+          createOrUpdateUserProfile(_, { userProfile }, ctxWithTransction),
         ]).then(() => ctx.user.reload({ transaction }));
       }),
     verificationEmail: async (_, { email }, ctx) =>
