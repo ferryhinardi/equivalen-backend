@@ -25,9 +25,7 @@ export default (sequelize, Sequelize) => {
       }
     },
     {
-      tableName: 'user_schools',
-      deletedAt: 'deleted_at',
-      paranoid: true
+      tableName: 'user_schools'
     }
   );
   UserSchool.associate = models => {
