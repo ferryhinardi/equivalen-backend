@@ -115,8 +115,7 @@ describe('test Archive', () => {
         Authorization: `Bearer ${userStudent.getToken()}`
       });
       const [
-        orderNo,
-        { user: { username } },
+        { orderNo, user: { username } },
       ] = result.body.data.generateRandomQuestion;
 
       expect(orderNo).toEqual(1);
