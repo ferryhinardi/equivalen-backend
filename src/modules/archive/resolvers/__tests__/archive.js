@@ -28,11 +28,12 @@ describe('test Archive', () => {
           createArchive(archive:{
             name: "Archive Test"
             minimumScore: 50
-            questionType: { id: "${questionType.id}" },
-            evaluation: {id: "${evaluations[0].id}" },
-            curriculum:{ name:"${curriculum.name}" },
+            totalQuestion: 50
+            questionType: { id: "${questionType.id}" }
+            evaluation: {id: "${evaluations[0].id}" }
+            curriculum:{ name:"${curriculum.name}" }
             packages:[{
-              name:"Package Test",
+              name:"Package Test"
               questions:[{
                 id: "${question1.id}"
               }, {
@@ -42,13 +43,6 @@ describe('test Archive', () => {
           }) {
             name
             minimumScore
-            packages {
-              name
-              questions {
-                id
-                content
-              }
-            }
           }
         }
       `;
@@ -58,21 +52,9 @@ describe('test Archive', () => {
       const {
         name,
         minimumScore,
-        packages: {
-          0: {
-            name: packagesName,
-            questions: {
-              0: {
-                content: question
-              }
-            }
-          }
-        }
       } = result.body.data.createArchive;
       expect(name).toEqual('Archive Test');
       expect(minimumScore).toEqual(50);
-      expect(packagesName).toEqual('Package Test');
-      expect(question).toEqual(question1.content);
     })
   });
 });

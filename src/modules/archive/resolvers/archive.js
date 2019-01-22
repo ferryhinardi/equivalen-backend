@@ -93,6 +93,7 @@ export default {
         }, {
           include: [{
             model: Package,
+            as: 'packages',
             include: [PackageQuestion]
           }],
           transaction
