@@ -36,11 +36,13 @@ export default (sequelize, Sequelize) => {
 
   Package.associate = models => {
     Package.Archive = models.Package.belongsTo(models.Archive, {
-      foreignKey: 'archive_id'
+      foreignKey: 'archive_id',
+      as: 'archive'
     });
     Package.Question = models.Package.belongsToMany(models.Question, {
       through: models.PackageQuestion,
-      foreignKey: 'package_id'
+      foreignKey: 'package_id',
+      as: 'questions'
     });
     Package.PackageQuestion = models.Package.hasMany(models.PackageQuestion, {
       foreignKey: 'package_id'

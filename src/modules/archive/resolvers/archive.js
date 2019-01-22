@@ -60,6 +60,7 @@ export default {
         const archiveData = {
           name: archiveParam.name,
           minimumScore: archiveParam.minimumScore,
+          totalQuestion: archiveParam.totalQuestion,
           question_type_id: questionType.get('id'),
           evaluation_id: evaluation.get('id'),
           curriculum_id: curriculum.get('id'),
@@ -71,7 +72,7 @@ export default {
         });
 
         if (alreadyCreated) {
-          throw new Error('Archive already registered');
+          throw new Error('Arsip sudah pernah dibuat');
         }
 
         const Packages = [

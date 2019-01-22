@@ -12,6 +12,10 @@ export default (sequelize, Sequelize) => {
         field: 'minimum_score',
         type: Sequelize.FLOAT
       },
+      totalQuestion: {
+        field: 'total_question',
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE
@@ -43,7 +47,8 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'evaluation_id'
     });
     Archive.Package = models.Archive.hasMany(models.Package, {
-      foreignKey: 'archive_id'
+      foreignKey: 'archive_id',
+      as: 'packages'
     });
     Archive.Assignment = models.Archive.hasOne(models.Assignment, {
       foreignKey: 'archive_id'

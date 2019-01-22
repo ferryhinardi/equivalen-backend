@@ -15,6 +15,7 @@ input ArchiveInput {
   id: ID
   name: String
   minimumScore: Float
+  totalQuestion: Int
   curriculum: CurriculumInput
   questionType: QuestionTypeInput
   evaluation: EvaluationInput

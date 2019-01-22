@@ -1,0 +1,11 @@
+type PackageRandom {
+  id: ID!
+  orderNo: Int
+  user: User
+  package: Package
+  question: Question
+}
+
+extend type Mutation {
+  generateRandomQuestion(archive: ArchiveInput): [PackageRandom]
+}

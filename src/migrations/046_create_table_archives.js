@@ -42,6 +42,10 @@ export default {
         allowNull: false,
         type: Sequelize.FLOAT
       },
+      total_question: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
       created_by: {
         type: Sequelize.INTEGER,
         onDelete: 'SET NULL',
