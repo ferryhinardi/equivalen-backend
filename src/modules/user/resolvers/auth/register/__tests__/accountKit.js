@@ -157,4 +157,41 @@ describe('test accountKit', () => {
     }
     expect(error[0].message).toEqual('username sudah terdaftar');
   });
+
+  it('should be able empty email', async () => {
+    let query = '';
+    const token = await getToken();
+    await GenderFactory();
+    const { phoneNumber } = verify(token);
+    expect(phoneNumber).toEqual('089536789121');
+    query = `
+        mutation {
+          registerViaAccountKit (
+            user: {
+              fullName: "therecya angella sitio"
+              username: "therecya"
+              gender: "Female"
+              phoneNumber: "089536789121"
+              password: "080104"
+              placeBod: "tangerang"
+              dateBod: "1995-12-17"
+            }
+          ) {
+            user {
+              id
+              email
+              placeBod
+            }
+          }
+        }
+      `;
+    const resultRegisterUser = await request(query, undefined, {
+      Authorization: `Bearer ${token}`
+    });
+    const { user } = resultRegisterUser.body.data.registerViaAccountKit;
+    const users = await User.findAll();
+    expect(users.length).toEqual(1);
+    expect(user.email).toEqual(null);
+    expect(user.placeBod).toEqual('tangerang');
+  });
 });

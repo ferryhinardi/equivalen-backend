@@ -215,12 +215,16 @@ export default (sequelize, Sequelize) => {
   User.register = async function register(userData, userAuthProvider) {
     const { AuthProvider, Gender } = require('models');
     const { email, username, gender: genderName } = userData;
-    const userWithEmail = await User.findOne({
-      where: {
-        email
-      }
-    });
-    if (userWithEmail) throw new Error('email sudah terdaftar');
+
+    if (email !== null) { // Email is optional
+      const userWithEmail = await User.findOne({
+        where: {
+          email
+        }
+      });
+      if (userWithEmail) throw new Error('email sudah terdaftar');
+    }
+
     const userWithUsername = await User.findOne({
       where: {
         username

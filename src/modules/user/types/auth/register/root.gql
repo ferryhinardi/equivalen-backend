@@ -8,7 +8,7 @@ type PrefillResponse {
 }
 
 input RegisterUserInput {
-  email: String! @constraint(format: "email")
+  email: String @constraint(format: "email")
   fullName: String!
   username: String!
   gender: String
