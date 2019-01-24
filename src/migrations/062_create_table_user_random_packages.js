@@ -16,33 +16,6 @@ export default {
           field: 'id'
         }
       },
-      archive_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'archives',
-          field: 'id'
-        }
-      },
-      package_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'packages',
-          field: 'id'
-        }
-      },
-      question_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'SET NULL',
-        allowNull: false,
-        references: {
-          model: 'questions',
-          field: 'id'
-        }
-      },
       order_no: {
         allowNull: true,
         type: Sequelize.INTEGER,
