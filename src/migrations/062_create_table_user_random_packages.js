@@ -25,6 +25,15 @@ export default {
           field: 'id'
         }
       },
+      package_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'packages',
+          field: 'id'
+        }
+      },
       order_no: {
         allowNull: true,
         type: Sequelize.INTEGER,
