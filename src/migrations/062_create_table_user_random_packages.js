@@ -16,6 +16,15 @@ export default {
           field: 'id'
         }
       },
+      archive_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'archives',
+          field: 'id'
+        }
+      },
       order_no: {
         allowNull: true,
         type: Sequelize.INTEGER,
