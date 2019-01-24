@@ -34,6 +34,15 @@ export default {
           field: 'id'
         }
       },
+      question_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'questions',
+          field: 'id'
+        }
+      },
       order_no: {
         allowNull: true,
         type: Sequelize.INTEGER,
