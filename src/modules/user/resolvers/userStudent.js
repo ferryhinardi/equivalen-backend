@@ -6,19 +6,26 @@ Mutation.createOrUpdateUserStudent = async (
   { userStudent: userStudentData },
   { user, transaction }
 ) => {
-  const [userStudent, created] = await UserStudent.findOrCreate({
+  let userStudent = await UserStudent.findOne({
     where: {
       userId: user.id
     },
-    defaults: userStudentData,
     ...(transaction ? { transaction } : {})
   });
-  if (!created) {
-    await userStudent.update(userStudentData, {
+  if (!userStudent) {
+    userStudent = await UserStudent.create({
+      ...userStudentData,
+      userId: user.id
+    }, {
+      ...(transaction ? { transaction } : {})
+    });
+  } else {
+    userStudent = await userStudent.update(userStudentData, {
       ...(transaction ? { transaction } : {})
     });
   }
-  return userStudent;
+
+  return [];
 };
 
 Mutation.createUserStudent = Mutation.createOrUpdateUserStudent;

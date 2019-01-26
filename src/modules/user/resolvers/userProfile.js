@@ -6,18 +6,27 @@ Mutation.createOrUpdateUserProfile = async (
   { userProfile: userProfileData },
   { user, transaction }
 ) => {
-  const [userProfile, created] = await UserProfile.findOrCreate({
+  let userProfile = await UserProfile.findOne({
     where: {
       userId: user.id
     },
-    defaults: userProfileData,
     ...(transaction ? { transaction } : {})
   });
-  if (!created) {
+
+  if (!userProfile) {
+    userProfile = await UserProfile.create({
+      ...userProfileData,
+      userId: user.id
+    }, {
+      ...(transaction ? { transaction } : {})
+    });
+  } else {
     await userProfile.update(userProfileData, {
       ...(transaction ? { transaction } : {})
     });
+    userProfile.reload();
   }
+
   return userProfile;
 };
 
