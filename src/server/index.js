@@ -47,11 +47,7 @@ app.use((req, res, next) => {
 /* =============================== */
 // Route API
 /* =============================== */
-
-if (process.env.NODE_ENV === 'production') {
-  app.get('/', (req, res) => res.sendStatus(200));
-}
-
+app.get('/loaderio-85421aaa6e9b33622e8cab661f56e544', (req, res) => res.sendStatus(200));
 app.get('/health', (req, res) => res.sendStatus(200));
 app.get('/forgot', showForgotPasswordForm);
 app.post('/forgot', bodyParser.json(), bodyParser.urlencoded({ extended: true }), postForgotPassword);
