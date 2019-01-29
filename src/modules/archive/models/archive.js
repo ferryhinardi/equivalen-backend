@@ -67,6 +67,9 @@ export default (sequelize, Sequelize) => {
     Archive.UserArchive = models.Archive.hasMany(models.UserArchive, {
       foreignKey: 'archive_id'
     });
+    Archive.UserAnswer = models.Archive.hasMany(models.UserArchive, {
+      foreignKey: 'archive_id'
+    });
   };
 
   return Archive;

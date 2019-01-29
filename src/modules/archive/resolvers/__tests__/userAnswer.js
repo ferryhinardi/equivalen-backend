@@ -1,7 +1,9 @@
 import request from 'modules/shared/libs/jest/request';
+import { ArchiveFactory } from 'modules/archive/models/factories/archive';
 import { UserArchiveFactory } from 'modules/archive/models/factories/userArchive';
 import { UserStudentFactory } from 'modules/user/models/factories/userStudent';
 import { QuestionFactory } from 'modules/question/models/factories/question';
+import { SaveAnswerFactory } from 'modules/archive/models/factories/saveAnswer';
 import { sequelize } from 'models';
 
 describe('test User Answer', () => {
@@ -136,6 +138,56 @@ describe('test User Answer', () => {
       expect(content2).toEqual(question2.content);
       expect(orderNo2).toEqual(orderNoParam2);
       expect(answer2).toEqual(answerParam2);
+    });
+  });
+
+  describe('mutation get score user answer', () => {
+    it('should return 200', async () => {
+      const userStudent = await UserStudentFactory();
+      const archive = await ArchiveFactory({
+        totalQuestion: 3,
+        minimumScore: 60
+      });
+      const userArchive = await UserArchiveFactory({
+        user_id: userStudent.id,
+        archive_id: archive.id
+      });
+      await SaveAnswerFactory({
+        user_id: userStudent.id,
+        archive_id: userArchive.archive_id,
+        orderNo: 1,
+        answer: 'A'
+      });
+      await SaveAnswerFactory({
+        user_id: userStudent.id,
+        archive_id: userArchive.archive_id,
+        orderNo: 2,
+        answer: 'B'
+      });
+
+      const query = `
+        mutation {
+          collectScore(
+            archiveId: ${userArchive.archive_id}
+          ) {
+            score
+            totalCorrect
+            totalIncorrect
+            totalDoubt
+            totalUnanswer
+            duration
+          }
+        }
+      `;
+      const result = await request(query, undefined, {
+        Authorization: `Bearer ${userStudent.getToken()}`
+      });
+      const { score, totalCorrect, totalIncorrect, totalUnanswer } = result.body.data.collectScore;
+      
+      expect(score).toEqual(33);
+      expect(totalCorrect).toEqual(1);
+      expect(totalIncorrect).toEqual(1);
+      expect(totalUnanswer).toEqual(1);
     });
   });
 });

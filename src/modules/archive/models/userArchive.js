@@ -64,14 +64,6 @@ export default (sequelize, Sequelize) => {
     UserArchive.Archive = models.UserArchive.belongsTo(models.Archive, {
       foreignKey: 'archive_id'
     });
-
-    UserArchive.Question = models.UserArchive.belongsToMany(models.Question, {
-      through: models.UserAnswer,
-      foreignKey: 'user_archive_id'
-    });
-    UserArchive.UserAnswer = models.UserArchive.hasMany(models.UserAnswer, {
-      foreignKey: 'user_archive_id'
-    });
   };
   return UserArchive;
 };

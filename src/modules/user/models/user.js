@@ -187,6 +187,9 @@ export default (sequelize, Sequelize) => {
     User.UserArchive = models.User.hasMany(models.UserArchive, {
       foreignKey: 'user_id'
     });
+    User.UserAnswer = models.User.hasMany(models.UserAnswer, {
+      foreignKey: 'user_id'
+    });
   };
   User.prototype.getToken = function getUserToken() {
     return getToken({

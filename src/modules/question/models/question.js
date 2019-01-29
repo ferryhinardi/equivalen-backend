@@ -70,10 +70,6 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'created_by'
     });
 
-    Question.UserArchive = models.Question.belongsToMany(models.UserArchive, {
-      through: models.UserAnswer,
-      foreignKey: 'question_id'
-    });
     Question.UserAnswer = models.Question.hasMany(models.UserAnswer, {
       foreignKey: 'question_id'
     });

@@ -3,7 +3,6 @@ type UserArchive {
   user: User
   owner: User
   archive: Archive
-  userAnswer: [UserAnswer]
   opened: Boolean
   score: Float
   totalCorrect: Int

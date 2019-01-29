@@ -13,6 +13,7 @@ export async function QuestionFactory(questionData) {
     const data = {
       question_type_id: questionType.id,
       content: faker.lorem.paragraphs(),
+      answer: 'A',
       ...questionData
     };
     const question = await Question.create(data, { transaction: t });
