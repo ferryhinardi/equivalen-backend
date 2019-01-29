@@ -9,9 +9,8 @@ export default {
     question: resolver(PackageRandom.Question)
   },
   Mutation: {
-    generateRandomQuestion: (_, { archive: archiveParam }, { user }) =>
+    generateRandomQuestion: (_, { archiveId }, { user }) =>
       sequelize.transaction(async (transaction) => {
-        const archiveId = archiveParam.id;
         const archive = await Archive.findOne({
           where: { id: archiveId },
           include: [

@@ -34,6 +34,15 @@ export default {
           field: 'id'
         }
       },
+      course_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL',
+        allowNull: true,
+        references: {
+          model: 'courses',
+          field: 'id'
+        }
+      },
       name: {
         allowNull: false,
         type: Sequelize.STRING

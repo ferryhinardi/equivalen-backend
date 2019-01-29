@@ -43,6 +43,9 @@ export default (sequelize, Sequelize) => {
     Archive.Curriculum = models.Archive.belongsTo(models.Curriculum, {
       foreignKey: 'curriculum_id'
     });
+    Archive.Course = models.Archive.belongsTo(models.Course, {
+      foreignKey: 'course_id'
+    });
     Archive.Evaluation = models.Archive.belongsTo(models.Evaluation, {
       foreignKey: 'evaluation_id'
     });

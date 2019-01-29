@@ -8,6 +8,10 @@ export default (sequelize, Sequelize) => {
         autoIncrement: true
       },
       name: Sequelize.STRING,
+      imageUrl: {
+        field: 'image_url',
+        type: Sequelize.STRING
+      },
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE

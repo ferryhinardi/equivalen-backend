@@ -7,5 +7,5 @@ type PackageRandom {
 }
 
 extend type Mutation {
-  generateRandomQuestion(archive: ArchiveInput): [PackageRandom]
+  generateRandomQuestion(archiveId: ID): [PackageRandom]
 }

@@ -3,6 +3,7 @@ type Archive {
   name: String!
   minimumScore: Float
   curriculum: Curriculum
+  course: Course
   questionType: QuestionType
   evaluation: Evaluation
   packages: [Package]
@@ -35,6 +36,7 @@ extend type Query {
     limit: Int
     offset: Int
   ): [Archive]
+  archive(id: ID): Archive
 }
 
 extend type Mutation {

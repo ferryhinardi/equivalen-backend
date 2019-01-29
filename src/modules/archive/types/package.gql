@@ -20,5 +20,6 @@ input PackageInput {
 }
 
 extend type Query {
-  packages: [Package]
+  packages(id: ID): [Package]
+  package(id: ID): Package
 }

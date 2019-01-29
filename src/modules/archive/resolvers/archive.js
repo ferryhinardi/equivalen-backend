@@ -10,6 +10,7 @@ const { findQuestionType } = QuestionTypeResolver.Mutation;
 export default {
   Archive: {
     curriculum: resolver(Archive.Curriculum),
+    course: resolver(Archive.Course),
     evaluation: resolver(Archive.Evaluation),
     questionType: resolver(Archive.QuestionType),
     packages: resolver(Archive.Package),
@@ -45,6 +46,17 @@ export default {
 
         return findOption;
       },
+    }),
+    archive: resolver(Archive, {
+      before: (findOption, args) => {
+        if (args.id) {
+          findOption.where = {
+            id: args.id
+          };
+        }
+
+        return findOption;
+      }
     })
   },
   Mutation: {

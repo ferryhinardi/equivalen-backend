@@ -54,6 +54,27 @@ export default {
     totalQuestion: packageData => packageData.getPackageQuestions()
   },
   Query: {
-    packages: resolver(Package)
+    packages: resolver(Package, {
+      before: (findOption, args) => {
+        if (args.id) {
+          findOption.where = {
+            id: args.id
+          };
+        }
+
+        return findOption;
+      }
+    }),
+    package: resolver(Package, {
+      before: (findOption, args) => {
+        if (args.id) {
+          findOption.where = {
+            id: args.id
+          };
+        }
+
+        return findOption;
+      }
+    })
   },
 };
