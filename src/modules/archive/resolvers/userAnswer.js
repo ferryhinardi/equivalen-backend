@@ -9,7 +9,7 @@ export default {
     question: resolver(UserAnswer.Question)
   },
   Mutation: {
-    createUserAnswer: (_, { userAnswer: userAnswerParam }, { user }) =>
+    saveUserAnswer: (_, { userAnswer: userAnswerParam }, { user }) =>
       sequelize.transaction(async (transaction) => {
         const { archiveId } = userAnswerParam;
         const questionId = get(userAnswerParam, 'question.id');
@@ -55,7 +55,7 @@ export default {
 
         return userAnswer;
       }),
-    createUserAnswers: (_, { userAnswers }, { user }) =>
+    saveUserAnswers: (_, { userAnswers }, { user }) =>
       sequelize.transaction(async (transaction) => {
         const { archiveId } = userAnswers;
         const userArchive = await UserArchive.findOne({

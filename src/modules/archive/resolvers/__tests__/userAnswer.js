@@ -25,7 +25,7 @@ describe('test User Answer', () => {
 
       const query = `
         mutation {
-          createUserAnswer(
+          saveUserAnswer(
             userAnswer: {
               archiveId: ${userArchive.archive_id}
               question: { id: ${question.id} }
@@ -56,7 +56,7 @@ describe('test User Answer', () => {
         question: { content },
         orderNo,
         answer
-      } = result.body.data.createUserAnswer;
+      } = result.body.data.saveUserAnswer;
 
       expect(archiveId).toEqual(userArchive.archive_id.toString());
       expect(content).toEqual(question.content);
@@ -80,7 +80,7 @@ describe('test User Answer', () => {
 
       const query = `
         mutation {
-          createUserAnswers(
+          saveUserAnswers(
             userAnswers: {
               archiveId: ${userArchive.archive_id}
               answers: [
@@ -127,7 +127,7 @@ describe('test User Answer', () => {
           orderNo: orderNo2,
           answer: answer2
         }
-      ] = result.body.data.createUserAnswers;
+      ] = result.body.data.saveUserAnswers;
 
       expect(archiveId).toEqual(userArchive.archive_id.toString());
       expect(content1).toEqual(question1.content);

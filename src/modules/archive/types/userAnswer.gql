@@ -25,6 +25,6 @@ input UserAnswerBulkInput {
 }
 
 extend type Mutation {
-  createUserAnswer(userAnswer: UserAnswerInput): UserAnswer
-  createUserAnswers(userAnswers: UserAnswerBulkInput): [UserAnswer]
+  saveUserAnswer(userAnswer: UserAnswerInput): UserAnswer
+  saveUserAnswers(userAnswers: UserAnswerBulkInput): [UserAnswer]
 }
