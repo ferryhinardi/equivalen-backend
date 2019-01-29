@@ -14,54 +14,6 @@ describe('test User Answer', () => {
   });
 
   describe('mutation create user answer', () => {
-    it('should return 200, by user archive by id', async () => {
-      const userStudent = await UserStudentFactory();
-      const userArchive = await UserArchiveFactory({
-        user_id: userStudent.id
-      });
-      const question = await QuestionFactory();
-      const answerParam = 'A';
-      const orderNoParam = 1;
-
-      const query = `
-        mutation {
-          createUserAnswer(
-            userAnswer: {
-              userArchive: { id: ${userArchive.id} },
-              question: { id: ${question.id} },
-              orderNo: ${orderNoParam},
-              answer: "${answerParam}"
-            }
-          ) {
-            userArchive {
-              archive {
-                id
-              }
-            }
-            question {
-              content
-            }
-            orderNo
-            answer
-          }
-        }
-      `;
-      const result = await request(query, undefined, {
-        Authorization: `Bearer ${userStudent.getToken()}`
-      });
-      const {
-        userArchive: { archive: { id: archiveId } },
-        question: { content },
-        orderNo,
-        answer
-      } = result.body.data.createUserAnswer;
-
-      expect(archiveId).toEqual(userArchive.archive_id.toString());
-      expect(content).toEqual(question.content);
-      expect(orderNo).toEqual(orderNoParam);
-      expect(answer).toEqual(answerParam);
-    });
-
     it('should return 200, by user archive by archive id', async () => {
       const userStudent = await UserStudentFactory();
       const userArchive = await UserArchiveFactory({
@@ -75,16 +27,18 @@ describe('test User Answer', () => {
         mutation {
           createUserAnswer(
             userAnswer: {
-              userArchive: { archiveId: ${userArchive.archive_id} },
-              question: { id: ${question.id} },
-              orderNo: ${orderNoParam},
+              archiveId: ${userArchive.archive_id}
+              question: { id: ${question.id} }
+              orderNo: ${orderNoParam}
               answer: "${answerParam}"
             }
           ) {
-            userArchive {
-              archive {
-                id
-              }
+            archive {
+              id
+            }
+            user {
+              id
+              username
             }
             question {
               content
@@ -98,7 +52,7 @@ describe('test User Answer', () => {
         Authorization: `Bearer ${userStudent.getToken()}`
       });
       const {
-        userArchive: { archive: { id: archiveId } },
+        archive: { id: archiveId },
         question: { content },
         orderNo,
         answer
@@ -112,7 +66,7 @@ describe('test User Answer', () => {
   });
 
   describe('mutation create bulk user answer', () => {
-    it('should return 200, create bulk by user archive by id', async () => {
+    it('should return 200, create bulk by user archive by archive id', async () => {
       const userStudent = await UserStudentFactory();
       const userArchive = await UserArchiveFactory({
         user_id: userStudent.id
@@ -128,7 +82,7 @@ describe('test User Answer', () => {
         mutation {
           createUserAnswers(
             userAnswers: {
-              userArchive: { id: ${userArchive.id} },
+              archiveId: ${userArchive.archive_id}
               answers: [
                 {
                   question: { id: ${question1.id} },
@@ -143,10 +97,12 @@ describe('test User Answer', () => {
               ]
             }
           ) {
-            userArchive {
-              archive {
-                id
-              }
+            archive {
+              id
+            }
+            user {
+              id
+              username
             }
             question {
               content
@@ -161,7 +117,7 @@ describe('test User Answer', () => {
       });
       const [
         {
-          userArchive: { archive: { id: archiveId } },
+          archive: { id: archiveId },
           question: { content: content1 },
           orderNo: orderNo1,
           answer: answer1

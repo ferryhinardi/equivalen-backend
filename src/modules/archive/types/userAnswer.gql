@@ -1,5 +1,6 @@
 type UserAnswer {
-  userArchive: UserArchive
+  user: User
+  archive: Archive
   question: Question
   orderNo: Int
   answer: String
@@ -12,14 +13,14 @@ input QuestionAnwserInput {
 }
 
 input UserAnswerInput {
-  userArchive: UserArchiveInput
+  archiveId: ID
   question: QuestionInput
   orderNo: Int
   answer: String
 }
 
 input UserAnswerBulkInput {
-  userArchive: UserArchiveInput
+  archiveId: ID
   answers: [QuestionAnwserInput]
 }
 

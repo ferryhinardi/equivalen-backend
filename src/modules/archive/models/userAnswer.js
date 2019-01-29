@@ -30,8 +30,11 @@ export default (sequelize, Sequelize) => {
     }
   );
   UserAnswer.associate = models => {
-    UserAnswer.UserArchive = models.UserAnswer.belongsTo(models.UserArchive, {
-      foreignKey: 'user_archive_id'
+    UserAnswer.User = models.UserAnswer.belongsTo(models.User, {
+      foreignKey: 'user_id'
+    });
+    UserAnswer.Archive = models.UserAnswer.belongsTo(models.Archive, {
+      foreignKey: 'archive_id'
     });
     UserAnswer.Question = models.UserAnswer.belongsTo(models.Question, {
       foreignKey: 'question_id'

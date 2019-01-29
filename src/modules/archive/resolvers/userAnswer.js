@@ -4,26 +4,19 @@ import { Sequelize, sequelize, UserAnswer, UserArchive, Question } from 'models'
 
 export default {
   UserAnswer: {
-    userArchive: resolver(UserAnswer.UserArchive),
+    user: resolver(UserAnswer.User),
+    archive: resolver(UserAnswer.Archive),
     question: resolver(UserAnswer.Question)
   },
   Mutation: {
-    createUserAnswer: (_, { userAnswer: userAnswerParam }) =>
+    createUserAnswer: (_, { userAnswer: userAnswerParam }, { user }) =>
       sequelize.transaction(async (transaction) => {
-        const { archiveId, id: userArchiveId } = get(userAnswerParam, 'userArchive', {});
+        const { archiveId } = userAnswerParam;
         const questionId = get(userAnswerParam, 'question.id');
-        let userArchive;
-
-        if (archiveId) {
-          userArchive = await UserArchive.findOne({
-            where: { archive_id: archiveId },
-            ...(transaction ? { transaction } : {})
-          });
-        } else if (userArchiveId) {
-          userArchive = await UserArchive.findByPk(userArchiveId, {
-            ...(transaction ? { transaction } : {})
-          });
-        }
+        const userArchive = await UserArchive.findOne({
+          where: { archive_id: archiveId },
+          ...(transaction ? { transaction } : {})
+        });
 
         if (!userArchive) {
           throw new Error('Arship murid tidak ditemukan');
@@ -35,31 +28,40 @@ export default {
           throw new Error('Soal tidak ditemukan');
         }
 
-        const [[userAnswer]] = await userArchive.addQuestion(question, {
-          through: {
-            orderNo: userAnswerParam.orderNo,
-            answer: userAnswerParam.answer
+        let userAnswer = await UserAnswer.findOne({
+          where: {
+            user_id: user.id,
+            archive_id: archiveId,
+            question_id: questionId,
           },
           ...(transaction ? { transaction } : {})
         });
 
-        return userAnswer;
-      }),
-    createUserAnswers: (_, { userAnswers }) =>
-      sequelize.transaction(async (transaction) => {
-        const { archiveId, id: userArchiveId } = get(userAnswers, 'userArchive', {});
-        let userArchive;
-
-        if (archiveId) {
-          userArchive = await UserArchive.findOne({
-            where: { archive_id: archiveId },
+        if (!userAnswer) {
+          userAnswer = await UserAnswer.create({
+            user_id: user.id,
+            archive_id: archiveId,
+            question_id: questionId,
+            orderNo: userAnswerParam.orderNo,
+            answer: userAnswerParam.answer
+          }, {
             ...(transaction ? { transaction } : {})
           });
-        } else if (userArchiveId) {
-          userArchive = await UserArchive.findByPk(userArchiveId, {
+        } else {
+          userAnswer = await userAnswer.update(userAnswerParam, {
             ...(transaction ? { transaction } : {})
           });
         }
+
+        return userAnswer;
+      }),
+    createUserAnswers: (_, { userAnswers }, { user }) =>
+      sequelize.transaction(async (transaction) => {
+        const { archiveId } = userAnswers;
+        const userArchive = await UserArchive.findOne({
+          where: { archive_id: archiveId },
+          ...(transaction ? { transaction } : {})
+        });
 
         if (!userArchive) {
           throw new Error('Arship murid tidak ditemukan');
@@ -68,13 +70,30 @@ export default {
         const answers = get(userAnswers, 'answers', []);
         const promises = answers.map(async ({ question, orderNo, answer }) => {
           const questionRelated = await Question.findByPk(question.id);
-          const [[userAnswer]] = await userArchive.addQuestion(questionRelated, {
-            through: {
-              orderNo,
-              answer
+          let userAnswer = await UserAnswer.findOne({
+            where: {
+              user_id: user.id,
+              archive_id: archiveId,
+              question_id: questionRelated.id,
             },
             ...(transaction ? { transaction } : {})
           });
+          
+          if (!userAnswer) {
+            userAnswer = await UserAnswer.create({
+              user_id: user.id,
+              archive_id: archiveId,
+              question_id: questionRelated.id,
+              orderNo,
+              answer
+            }, {
+              ...(transaction ? { transaction } : {})
+            });
+          } else {
+            userAnswer = await userAnswer.update({ orderNo, answer }, {
+              ...(transaction ? { transaction } : {})
+            });
+          }
 
           return userAnswer;
         });

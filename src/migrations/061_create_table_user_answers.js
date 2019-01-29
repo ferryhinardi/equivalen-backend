@@ -7,12 +7,21 @@ export default {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_archive_id: {
+      user_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         allowNull: true,
         references: {
-          model: 'user_archives',
+          model: 'users',
+          field: 'id'
+        }
+      },
+      archive_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL',
+        allowNull: true,
+        references: {
+          model: 'archives',
           field: 'id'
         }
       },
