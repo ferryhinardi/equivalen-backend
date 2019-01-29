@@ -92,9 +92,7 @@ describe('test Archive', () => {
       const query = `
         mutation {
           generateRandomQuestion(
-            archive: {
-              id: ${archive.id}
-            }
+            archiveId: ${archive.id}
           ) {
             orderNo
             user {
