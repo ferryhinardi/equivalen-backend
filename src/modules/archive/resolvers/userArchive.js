@@ -1,12 +1,42 @@
 import get from 'lodash/get';
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { Sequelize, sequelize, User, Archive, UserArchive } from 'models';
+import { Sequelize, sequelize, User, Archive, UserArchive, Evaluation } from 'models';
 
 export default {
   UserArchive: {
     archive: resolver(UserArchive.Archive),
     user: resolver(UserArchive.User),
     owner: resolver(UserArchive.Owner)
+  },
+  Query: {
+    archiveByUser: resolver(UserArchive, {
+      before: (findOption, args) => {
+        let include = [];
+
+        if (args.limit || args.offset) {
+          findOption.limit = args.limit;
+          findOption.offset = args.offset;
+        }
+
+        findOption.where = {
+          user_id: args.userId
+        };
+
+        if (args.evaluationId) {
+          include = include.concat([{
+            model: Archive,
+            where: {
+              evaluation_id: args.evaluationId
+            }
+          }]);
+        }
+
+        findOption.include = include;
+        findOption.order = [ ['updatedAt', 'DESC'] ];
+
+        return findOption;
+      }
+    })
   },
   Mutation: {
     createUserArchives: (_, { userArchive: userArchiveParam }, { user: owner }) =>

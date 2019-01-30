@@ -33,6 +33,15 @@ input UserStudentArchiveInput {
   duration: Int
 }
 
+extend type Query {
+  archiveByUser(
+    limit: Int
+    offset: Int
+    userId: ID
+    evaluationId: ID
+  ): [UserArchive]
+}
+
 extend type Mutation {
   createUserArchives(userArchive: UserTeacherArchiveInput): [UserArchive]
   updateUserArchive(userArchive: UserStudentArchiveInput): UserArchive

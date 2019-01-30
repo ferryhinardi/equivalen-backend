@@ -1,6 +1,14 @@
 import get from 'lodash/get';
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { sequelize, User, Archive, Evaluation, Package, PackageQuestion } from 'models';
+import {
+  sequelize,
+  User,
+  Archive,
+  Evaluation,
+  Package,
+  PackageQuestion,
+  UserArchive
+} from 'models';
 import QuestionTypeResolver from 'modules/question/resolvers/questionType';
 import { findCurriculum } from 'modules/question/resolvers/curriculum';
 import { findEvaluation } from './evaluation';
@@ -15,7 +23,8 @@ export default {
     questionType: resolver(Archive.QuestionType),
     packages: resolver(Archive.Package),
     createdBy: resolver(Archive.CreatedBy),
-    assignment: resolver(Archive.Assignment)
+    assignment: resolver(Archive.Assignment),
+    userArchives: resolver(Archive.UserArchive)
   },
   Query: {
     archives: resolver(Archive, {

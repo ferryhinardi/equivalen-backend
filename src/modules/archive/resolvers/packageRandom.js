@@ -26,6 +26,11 @@ export default {
           ],
           transaction
         });
+
+        if (!archive) {
+          throw new Error('Arsip tidak ditemukan');
+        }
+
         const totalQuestion = archive.totalQuestion || 0;
         const questions = [];
         const { packages } = archive;

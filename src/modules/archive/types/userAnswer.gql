@@ -29,5 +29,7 @@ extend type Mutation {
   saveUserAnswers(userAnswers: UserAnswerBulkInput): [UserAnswer]
   collectScore(
     archiveId: ID
+    duration: Int
+    totalDoubt: Int
   ): UserArchive
 }

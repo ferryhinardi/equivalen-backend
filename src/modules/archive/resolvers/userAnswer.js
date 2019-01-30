@@ -107,7 +107,7 @@ export default {
 
         return Promise.all(promises);
       }),
-    collectScore: (_, { archiveId }, { user }) =>
+    collectScore: (_, { archiveId, duration, totalDoubt }, { user }) =>
       sequelize.transaction(async (transaction) => {
         const archive = await Archive.findByPk(archiveId);
         const userAnswer = await UserAnswer.findAll({
@@ -120,8 +120,6 @@ export default {
         let totalCorrect = 0;
         let totalIncorrect = 0;
         let totalUnanswer = 0;
-        const totalDoubt = 0;
-        const duration = 0;
 
         Array(totalQuestion).fill().forEach((_, idx) => {
           if (userAnswer[idx]) {

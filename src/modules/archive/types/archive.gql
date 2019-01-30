@@ -2,12 +2,14 @@ type Archive {
   id: ID!
   name: String!
   minimumScore: Float
+  totalQuestion: Int
   curriculum: Curriculum
   course: Course
   questionType: QuestionType
   evaluation: Evaluation
   packages: [Package]
   assignment: Assignment
+  userArchives: [UserArchive]
   createdAt: Date
   createdBy: User
 }
