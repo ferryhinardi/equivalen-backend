@@ -6,11 +6,11 @@ import {
   Archive,
   Evaluation,
   Package,
-  PackageQuestion,
-  UserArchive
+  PackageQuestion
 } from 'models';
 import QuestionTypeResolver from 'modules/question/resolvers/questionType';
 import { findCurriculum } from 'modules/question/resolvers/curriculum';
+import { findCourse } from 'modules/question/resolvers/course';
 import { findEvaluation } from './evaluation';
 
 const { findQuestionType } = QuestionTypeResolver.Mutation;
@@ -73,10 +73,11 @@ export default {
       let transaction;
       try {
         transaction = await sequelize.transaction();
-        const [questionType, evaluation, curriculum] = await Promise.all([
+        const [questionType, evaluation, curriculum, course] = await Promise.all([
           findQuestionType(archiveParam, { transaction }),
           findEvaluation(archiveParam, { transaction }),
           findCurriculum(archiveParam, { transaction }),
+          findCourse(archiveParam, { transaction })
         ]);
         const archiveData = {
           name: archiveParam.name,
@@ -85,6 +86,7 @@ export default {
           question_type_id: questionType.get('id'),
           evaluation_id: evaluation.get('id'),
           curriculum_id: curriculum.get('id'),
+          course_id: course.get('id'),
           created_by: get(ctx, 'user.id')
         };
         const alreadyCreated = await Archive.findOne({

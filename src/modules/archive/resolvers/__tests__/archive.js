@@ -3,6 +3,7 @@ import { UserFactory } from 'modules/user/models/factories/user';
 import { QuestionTypeFactory } from 'modules/question/models/factories/questionType';
 import { QuestionFactory } from 'modules/question/models/factories/question';
 import { CurriculumFactory } from 'modules/question/models/factories/curriculum';
+import { CourseFactory } from 'modules/question/models/factories/course';
 import { EvaluationFactory } from 'modules/archive/models/factories/evaluation';
 import { sequelize } from 'models';
 
@@ -21,6 +22,7 @@ describe('test Archive', () => {
       const questionType = await QuestionTypeFactory();
       const evaluations = await EvaluationFactory();
       const curriculum = await CurriculumFactory();
+      const course = await CourseFactory();
       const question1 = await QuestionFactory();
       const question2 = await QuestionFactory();
       const query = `
@@ -32,6 +34,7 @@ describe('test Archive', () => {
             questionType: { id: "${questionType.id}" }
             evaluation: {id: "${evaluations[0].id}" }
             curriculum:{ name:"${curriculum.name}" }
+            course:{ name: "${course.name}" }
             packages:[{
               name:"Package Test"
               questions:[{

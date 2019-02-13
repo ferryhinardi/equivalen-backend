@@ -20,6 +20,7 @@ input ArchiveInput {
   minimumScore: Float
   totalQuestion: Int
   curriculum: CurriculumInput
+  course: CourseInput
   questionType: QuestionTypeInput
   evaluation: EvaluationInput
   packages: [PackageInput]
