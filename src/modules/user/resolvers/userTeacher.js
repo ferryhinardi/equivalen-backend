@@ -1,12 +1,12 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { UserTeacher, Course } from 'models';
+import { UserTeacher } from 'models';
 import userTeacherCourse from './userTeacherCourse';
 
 const { createUserTeacherCourse } = userTeacherCourse.Mutation;
 
 export default {
   UserTeacher: {
-    courses: resolver(Course)
+    courses: resolver(UserTeacher.Course)
   },
   Mutation: {
     createOrUpdateUserTeacher: async (
