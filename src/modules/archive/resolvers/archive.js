@@ -96,7 +96,7 @@ export default {
           throw new Error('Arsip sudah pernah dibuat');
         }
 
-        const Packages = [
+        const packages = [
           ...archiveParam.packages.map(pack => {
             const { questions, ...p } = pack;
             return {
@@ -110,7 +110,7 @@ export default {
 
         const archive = await Archive.create({
           ...archiveData,
-          Packages
+          packages
         }, {
           include: [{
             model: Package,
