@@ -56,33 +56,34 @@ export default {
         }
 
         if (args.questionInfo) {
+          let includeQuestionInfo = [];
+
           if (args.questionInfo.curriculum) {
-            include = include.concat([{
-              model: QuestionInfo,
-              include: [{
-                model: Curriculum,
-                where: args.questionInfo.curriculum,
-              }]
+            includeQuestionInfo = includeQuestionInfo.concat([{
+              model: Curriculum,
+              where: args.questionInfo.curriculum,
+              as: 'question_info_curriculum'
             }]);
           }
           if (args.questionInfo.course) {
-            include = include.concat([{
-              model: QuestionInfo,
-              include: [{
-                model: Course,
-                where: args.questionInfo.course
-              }]
+            includeQuestionInfo = includeQuestionInfo.concat([{
+              model: Course,
+              where: args.questionInfo.course,
+              as: 'question_info_course'
             }]);
           }
           if (args.questionInfo.chapter) {
-            include = include.concat([{
-              model: QuestionInfo,
-              include: [{
+            includeQuestionInfo = includeQuestionInfo.concat([{
                 model: Chapter,
-                where: args.questionInfo.chapter
-              }]
+                where: args.questionInfo.chapter,
+                as: 'question_info_chapter'
             }]);
           }
+
+          include = include.concat([{
+            model: QuestionInfo,
+            include: includeQuestionInfo
+          }]);
         }
 
         if (args.package) {

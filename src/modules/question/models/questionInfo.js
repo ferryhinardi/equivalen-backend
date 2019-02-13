@@ -28,13 +28,16 @@ export default (sequelize, Sequelize) => {
   );
   QuestionInfo.associate = models => {
     QuestionInfo.Curriculum = models.QuestionInfo.belongsTo(models.Curriculum, {
-      foreignKey: 'curriculum_id'
+      foreignKey: 'curriculum_id',
+      as: 'question_info_curriculum'
     });
     QuestionInfo.Course = models.QuestionInfo.belongsTo(models.Course, {
-      foreignKey: 'course_id'
+      foreignKey: 'course_id',
+      as: 'question_info_course'
     });
     QuestionInfo.Chapter = models.QuestionInfo.belongsTo(models.Chapter, {
-      foreignKey: 'chapter_id'
+      foreignKey: 'chapter_id',
+      as: 'question_info_chapter'
     });
     QuestionInfo.Question = models.QuestionInfo.belongsTo(models.Question, {
       foreignKey: 'question_id'
