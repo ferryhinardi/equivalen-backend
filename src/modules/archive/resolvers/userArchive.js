@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { Sequelize, sequelize, User, Archive, UserArchive, Evaluation } from 'models';
+import { Sequelize, sequelize, User, Archive, UserArchive } from 'models';
 
 export default {
   UserArchive: {
@@ -41,11 +41,18 @@ export default {
   Mutation: {
     createUserArchives: (_, { userArchive: userArchiveParam }, { user: owner }) =>
       sequelize.transaction(async (transaction) => {
-        const archiveParam = get(userArchiveParam, 'archive', {});
+        const archiveId = get(userArchiveParam, 'archiveId');
         const usersParam = get(userArchiveParam, 'users', []);
-        const archive = await Archive.findByPk(archiveParam.id,
+        const startTime = get(userArchiveParam, 'startTime');
+        const endTime = get(userArchiveParam, 'endTime');
+        const archive = await Archive.findByPk(archiveId,
           ...(transaction ? { transaction } : {})
         );
+
+        if (!archive) {
+          throw new Error('arsip tidak ditemukan');
+        }
+      
         const users = await User.findAll({
           where: {
             id: {
@@ -54,12 +61,16 @@ export default {
           },
           ...(transaction ? { transaction } : {})
         });
-        const [[userArchive]] = await archive.setUsers(users, { through: { owner_id: owner.id }});
-        const returnValues = await UserArchive.findAll({
-          where: { archive_id: userArchive.archive_id }
-        });
+        const userArchiveData = users.map(user => ({
+          user_id: user.id,
+          archive_id: archive.id,
+          owner_id: owner.id,
+          startTime,
+          endTime,
+        }));
+        const userArchive = await UserArchive.bulkCreate(userArchiveData);
 
-        return returnValues;
+        return userArchive;
       }),
     updateUserArchive: async (_, { userArchive: userArchiveParam }, { user }) =>
       sequelize.transaction(async (transaction) => {

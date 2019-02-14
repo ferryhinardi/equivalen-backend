@@ -24,13 +24,13 @@ describe('test UserArchive', () => {
       const query = `
         mutation {
           createUserArchives(userArchive:{
-            archive: {
-              id: ${archive.id}
-            }
+            archiveId: ${archive.id}
             users: [
               { id: ${userStudent1.id} },
               { id: ${userStudent2.id} },
             ]
+            startTime: "${new Date()}"
+            endTime: "${new Date()}"
           }) {
             archive {
               name

@@ -1,4 +1,0 @@
-type Assignment {
-  id: ID!
-  deadline: Date
-}

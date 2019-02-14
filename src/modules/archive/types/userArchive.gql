@@ -3,6 +3,8 @@ type UserArchive {
   user: User
   owner: User
   archive: Archive
+  startTime: Date
+  endTime: Date
   opened: Boolean
   score: Float
   totalCorrect: Int
@@ -18,8 +20,10 @@ input UserArchiveInput {
 }
 
 input UserTeacherArchiveInput {
-  archive: ArchiveInput!
+  archiveId: ID!
   users: [UserInput!]
+  startTime: Date
+  endTime: Date
 }
 
 input UserStudentArchiveInput {

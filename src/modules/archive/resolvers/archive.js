@@ -23,7 +23,6 @@ export default {
     questionType: resolver(Archive.QuestionType),
     packages: resolver(Archive.Package),
     createdBy: resolver(Archive.CreatedBy),
-    assignment: resolver(Archive.Assignment),
     userArchives: resolver(Archive.UserArchive)
   },
   Query: {

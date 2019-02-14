@@ -34,6 +34,8 @@ export default {
           field: 'id'
         }
       },
+      start_time: Sequelize.DATE,
+      end_time: Sequelize.DATE,
       opened: {
         defaultValue: false,
         type: Sequelize.BOOLEAN

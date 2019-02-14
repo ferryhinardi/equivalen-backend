@@ -7,6 +7,16 @@ export default (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true
       },
+      startTime: {
+        field: 'start_time',
+        allowNull: true,
+        type: Sequelize.DATE
+      },
+      endTime: {
+        field: 'end_time',
+        allowNull: true,
+        type: Sequelize.DATE
+      },
       opened: {
         defaultValue: false,
         type: Sequelize.BOOLEAN

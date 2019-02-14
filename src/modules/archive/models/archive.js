@@ -53,9 +53,6 @@ export default (sequelize, Sequelize) => {
       foreignKey: 'archive_id',
       as: 'packages'
     });
-    Archive.Assignment = models.Archive.hasOne(models.Assignment, {
-      foreignKey: 'archive_id'
-    });
     Archive.CreatedBy = models.Archive.belongsTo(models.User, {
       foreignKey: 'created_by'
     });

@@ -8,7 +8,6 @@ type Archive {
   questionType: QuestionType
   evaluation: Evaluation
   packages: [Package]
-  assignment: Assignment
   userArchives: [UserArchive]
   createdAt: Date
   createdBy: User
