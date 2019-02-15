@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 export default (sequelize, Sequelize) => {
   const Archive = sequelize.define(
     'Archive',
@@ -32,7 +34,30 @@ export default (sequelize, Sequelize) => {
     {
       tableName: 'archives',
       deletedAt: 'deleted_at',
-      paranoid: true
+      paranoid: true,
+      hooks: {
+        afterCreate: archive => {
+          const { Question } = require('models');
+          const packages = get(archive, 'dataValues.packages', []);
+
+          try {
+            packages.forEach(async(pack) => {
+              const { PackageQuestions } = pack;
+
+              PackageQuestions.forEach(async (packQs) => {
+                const { question_id: questionId } = packQs;
+
+                const question = await Question.findByPk(questionId);
+                const currentUsed = question.used + 1;
+
+                await question.update({ used: currentUsed });
+              });
+            });
+          } catch (e) {
+            console.error(e);
+          }
+        },
+      }
     }
   );
 

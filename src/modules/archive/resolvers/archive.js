@@ -6,7 +6,8 @@ import {
   Archive,
   Evaluation,
   Package,
-  PackageQuestion
+  PackageQuestion,
+  Question
 } from 'models';
 import QuestionTypeResolver from 'modules/question/resolvers/questionType';
 import { findCurriculum } from 'modules/question/resolvers/curriculum';

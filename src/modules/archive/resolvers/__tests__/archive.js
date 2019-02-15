@@ -50,6 +50,7 @@ describe('test Archive', () => {
               name
               questions {
                 content
+                used
               }
             }
           }
