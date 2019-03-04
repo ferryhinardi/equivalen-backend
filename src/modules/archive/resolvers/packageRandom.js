@@ -1,5 +1,14 @@
 import resolver from 'modules/shared/libs/graphql-sequelize/resolver';
-import { sequelize, Archive, Question, Package, PackageQuestion, PackageRandom } from 'models';
+import {
+  Sequelize,
+  sequelize,
+  Archive,
+  UserArchive,
+  Question,
+  Package,
+  PackageQuestion,
+  PackageRandom,
+} from 'models';
 import { getRandomNumber } from '../utils/randomize';
 
 export default {
@@ -11,6 +20,20 @@ export default {
   Mutation: {
     generateRandomQuestion: (_, { archiveId }, { user }) =>
       sequelize.transaction(async (transaction) => {
+        const userPackageRandom = await UserArchive.findAll({
+          where: {
+            user_id: user.id,
+            archive_id: archiveId,
+            score: {
+              [Sequelize.Op.eq]: null
+            }
+          }
+        });
+
+        if (userPackageRandom.length) {
+          return userPackageRandom;
+        }
+
         const archive = await Archive.findOne({
           where: { id: archiveId },
           include: [
