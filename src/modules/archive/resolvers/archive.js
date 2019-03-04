@@ -110,17 +110,21 @@ export default {
           })
         ];
 
-        const archive = await Archive.create({
+        console.log({
           ...archiveData,
-          packages
-        }, {
-          include: [{
-            model: Package,
-            as: 'packages',
-            include: [PackageQuestion]
-          }],
-          transaction
-        });
+        }, packages[0].PackageQuestions);
+
+        // const archive = await Archive.create({
+        //   ...archiveData,
+        //   packages
+        // }, {
+        //   include: [{
+        //     model: Package,
+        //     as: 'packages',
+        //     include: [PackageQuestion]
+        //   }],
+        //   transaction
+        // });
 
         await transaction.commit();
         return archive;
