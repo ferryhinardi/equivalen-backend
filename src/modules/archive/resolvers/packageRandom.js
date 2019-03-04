@@ -20,17 +20,26 @@ export default {
   Mutation: {
     generateRandomQuestion: (_, { archiveId }, { user }) =>
       sequelize.transaction(async (transaction) => {
-        const userPackageRandom = await UserArchive.findAll({
+        const userArchive = await UserArchive.findOne({
           where: {
             user_id: user.id,
             archive_id: archiveId,
             score: {
               [Sequelize.Op.eq]: null
             }
-          }
+          },
+          transaction
         });
 
-        if (userPackageRandom.length) {
+        if (userArchive) {
+          const userPackageRandom = await PackageRandom.findAll({
+            where: {
+              user_id: user.id,
+              archive_id: archiveId,
+            },
+            transaction
+          });
+
           return userPackageRandom;
         }
 
