@@ -7,14 +7,14 @@ import { CourseFactory } from 'modules/question/models/factories/course';
 import { EvaluationFactory } from 'modules/archive/models/factories/evaluation';
 import { sequelize } from 'models';
 
-describe('test Archive', () => {
-  beforeAll(() => sequelize.sync({ force: true }));
-  beforeEach(done => {
-    // Before each test we empty the database
-    sequelize.truncate().then(() => {
-      done();
-    });
-  });
+// describe('test Archive', () => {
+//   beforeAll(() => sequelize.sync({ force: true }));
+//   beforeEach(done => {
+//     // Before each test we empty the database
+//     sequelize.truncate().then(() => {
+//       done();
+//     });
+//   });
 
   // describe('mutation create archive', () => {
   //   it('should return 200', async () => {
@@ -73,4 +73,4 @@ describe('test Archive', () => {
       // }
     // })
   // });
-});
+// });
