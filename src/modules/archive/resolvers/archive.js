@@ -114,20 +114,20 @@ export default {
           ...archiveData,
         }, packages[0].PackageQuestions);
 
-        // const archive = await Archive.create({
-        //   ...archiveData,
-        //   packages
-        // }, {
-        //   include: [{
-        //     model: Package,
-        //     as: 'packages',
-        //     include: [PackageQuestion]
-        //   }],
-        //   transaction
-        // });
+        const archive = await Archive.create({
+          ...archiveData,
+          packages
+        }, {
+          include: [{
+            model: Package,
+            as: 'packages',
+            include: [PackageQuestion]
+          }],
+          transaction
+        });
 
         await transaction.commit();
-        return {};
+        return archive;
       } catch (err) {
         await transaction.rollback();
         return err;
