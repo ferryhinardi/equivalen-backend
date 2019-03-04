@@ -110,10 +110,6 @@ export default {
           })
         ];
 
-        console.log({
-          ...archiveData,
-        }, packages[0].PackageQuestions);
-
         const archive = await Archive.create({
           ...archiveData,
           packages
