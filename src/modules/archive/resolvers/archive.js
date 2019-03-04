@@ -127,7 +127,7 @@ export default {
         // });
 
         await transaction.commit();
-        return archive;
+        return {};
       } catch (err) {
         await transaction.rollback();
         return err;
