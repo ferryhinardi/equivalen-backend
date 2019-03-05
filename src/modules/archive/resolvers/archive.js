@@ -87,8 +87,7 @@ export default {
           evaluation_id: evaluation.get('id'),
           curriculum_id: curriculum.get('id'),
           course_id: course.get('id'),
-          created_by: get(ctx, 'user.id'),
-          active: true
+          created_by: get(ctx, 'user.id')
         };
         const alreadyCreated = await Archive.findOne({
           where: archiveData,
