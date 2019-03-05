@@ -4,6 +4,7 @@ type UserAnswer {
   question: Question
   orderNo: Int
   answer: String
+  isDoubt: Boolean
 }
 
 input QuestionAnwserInput {
@@ -13,10 +14,12 @@ input QuestionAnwserInput {
 }
 
 input UserAnswerInput {
+  packageRandomId: ID
   archiveId: ID
   question: QuestionInput
   orderNo: Int
   answer: String
+  isDoubt: Boolean
 }
 
 input UserAnswerBulkInput {

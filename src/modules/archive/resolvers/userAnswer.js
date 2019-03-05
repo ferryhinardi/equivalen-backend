@@ -5,7 +5,8 @@ import {
   UserAnswer,
   Archive,
   UserArchive,
-  Question
+  Question,
+  PackageRandom
 } from 'models';
 import { equals, normalize } from '../utils/correction';
 
@@ -19,6 +20,7 @@ export default {
     saveUserAnswer: (_, { userAnswer: userAnswerParam }, { user }) =>
       sequelize.transaction(async (transaction) => {
         const { archiveId } = userAnswerParam;
+        const packageRandomId = get(userAnswerParam, 'packageRandomId');
         const questionId = get(userAnswerParam, 'question.id');
         const userArchive = await UserArchive.findOne({
           where: { archive_id: archiveId, user_id: user.id },
@@ -59,6 +61,12 @@ export default {
             ...(transaction ? { transaction } : {})
           });
         }
+
+        await PackageRandom.update(
+          { user_answer_id: userAnswer.id },
+          { where: { id: packageRandomId } },
+          transaction
+        );
 
         return userAnswer;
       }),

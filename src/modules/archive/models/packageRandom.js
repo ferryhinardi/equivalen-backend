@@ -37,6 +37,9 @@ export default (sequelize, Sequelize) => {
     PackageRandom.Question = models.PackageRandom.belongsTo(models.Question, {
       foreignKey: 'question_id'
     });
+    PackageRandom.UserAnswer = models.PackageRandom.belongsTo(models.UserAnswer, {
+      foreignKey: 'user_answer_id'
+    });
   };
   return PackageRandom;
 };

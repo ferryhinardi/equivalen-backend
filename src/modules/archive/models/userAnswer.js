@@ -16,6 +16,11 @@ export default (sequelize, Sequelize) => {
         allowNull: true,
         type: Sequelize.STRING
       },
+      isDoubt: {
+        field: 'is_doubt',
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE
@@ -38,6 +43,9 @@ export default (sequelize, Sequelize) => {
     });
     UserAnswer.Question = models.UserAnswer.belongsTo(models.Question, {
       foreignKey: 'question_id'
+    });
+    UserAnswer.PackageRandom = models.UserAnswer.hasOne(models.PackageRandom, {
+      foreignKey: 'user_answer_id'
     });
   };
   return UserAnswer;

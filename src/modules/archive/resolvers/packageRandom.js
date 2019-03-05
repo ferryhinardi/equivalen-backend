@@ -15,7 +15,8 @@ export default {
   PackageRandom: {
     user: resolver(PackageRandom.User),
     package: resolver(PackageRandom.Package),
-    question: resolver(PackageRandom.Question)
+    question: resolver(PackageRandom.Question),
+    userAnswer: resolver(PackageRandom.UserAnswer)
   },
   Mutation: {
     generateRandomQuestion: (_, { archiveId }, { user }) =>
