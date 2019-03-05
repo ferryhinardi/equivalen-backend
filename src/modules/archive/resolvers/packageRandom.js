@@ -30,16 +30,15 @@ export default {
           },
           transaction
         });
+        const userPackageRandom = await PackageRandom.findAll({
+          where: {
+            user_id: user.id,
+            archive_id: archiveId,
+          },
+          transaction
+        });
 
-        if (userArchive) {
-          const userPackageRandom = await PackageRandom.findAll({
-            where: {
-              user_id: user.id,
-              archive_id: archiveId,
-            },
-            transaction
-          });
-
+        if (userArchive && userPackageRandom.length) {
           return userPackageRandom;
         }
 
