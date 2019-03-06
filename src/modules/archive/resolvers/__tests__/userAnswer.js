@@ -169,6 +169,7 @@ describe('test User Answer', () => {
         mutation {
           collectScore(
             archiveId: ${userArchive.archive_id}
+            duration: 1000
           ) {
             score
             totalCorrect

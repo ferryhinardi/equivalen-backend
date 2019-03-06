@@ -33,6 +33,5 @@ extend type Mutation {
   collectScore(
     archiveId: ID
     duration: Int
-    totalDoubt: Int
   ): UserArchive
 }

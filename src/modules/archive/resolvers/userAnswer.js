@@ -8,7 +8,7 @@ import {
   Question,
   PackageRandom
 } from 'models';
-import { equals, normalize } from '../utils/correction';
+import { equals } from '../utils/correction';
 
 export default {
   UserAnswer: {
@@ -115,7 +115,7 @@ export default {
 
         return Promise.all(promises);
       }),
-    collectScore: (_, { archiveId, duration, totalDoubt }, { user }) =>
+    collectScore: (_, { archiveId, duration }, { user }) =>
       sequelize.transaction(async (transaction) => {
         const archive = await Archive.findByPk(archiveId);
         const userAnswer = await UserAnswer.findAll({
@@ -128,10 +128,15 @@ export default {
         let totalCorrect = 0;
         let totalIncorrect = 0;
         let totalUnanswer = 0;
+        let totalDoubt = 0;
 
         Array(totalQuestion).fill().forEach((_, idx) => {
           if (userAnswer[idx]) {
-            const { answer, Question: q } = userAnswer[idx];
+            const { answer, isDoubt, Question: q } = userAnswer[idx];
+
+            if (isDoubt) {
+              totalDoubt += 1;
+            }
 
             if (equals(answer, q.answer)) {
               totalCorrect += 1;

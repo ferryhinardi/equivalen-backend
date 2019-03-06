@@ -38,6 +38,10 @@ export default {
         allowNull: true,
         type: Sequelize.INTEGER
       },
+      is_doubt: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       answer: {
         allowNull: true,
         type: Sequelize.STRING

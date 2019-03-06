@@ -25,11 +25,8 @@ export default (sequelize, Sequelize) => {
     }
   );
   PackageRandom.associate = models => {
-    PackageRandom.User = models.PackageRandom.belongsTo(models.User, {
-      foreignKey: 'user_id'
-    });
-    PackageRandom.Archive = models.PackageRandom.belongsTo(models.Archive, {
-      foreignKey: 'archive_id'
+    PackageRandom.UserArchive = models.PackageRandom.belongsTo(models.UserArchive, {
+      foreignKey: 'user_archive_id'
     });
     PackageRandom.Package = models.PackageRandom.belongsTo(models.Package, {
       foreignKey: 'package_id'

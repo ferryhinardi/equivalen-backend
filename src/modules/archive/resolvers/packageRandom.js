@@ -13,38 +13,33 @@ import { getRandomNumber } from '../utils/randomize';
 
 export default {
   PackageRandom: {
-    user: resolver(PackageRandom.User),
     package: resolver(PackageRandom.Package),
     question: resolver(PackageRandom.Question),
-    userAnswer: resolver(PackageRandom.UserAnswer)
+    userAnswer: resolver(PackageRandom.UserAnswer),
+    userArchive: resolver(PackageRandom.UserArchive)
   },
   Mutation: {
-    generateRandomQuestion: (_, { archiveId }, { user }) =>
+    generateRandomQuestion: (_, { userArchiveId }) =>
       sequelize.transaction(async (transaction) => {
         const userArchive = await UserArchive.findOne({
           where: {
-            user_id: user.id,
-            archive_id: archiveId,
-            score: {
-              [Sequelize.Op.eq]: null
-            }
+            id: userArchiveId
           },
           transaction
         });
         const userPackageRandom = await PackageRandom.findAll({
           where: {
-            user_id: user.id,
-            archive_id: archiveId,
+            user_archive_id: userArchiveId,
           },
           transaction
         });
 
-        if (userArchive && userPackageRandom.length) {
+        if (userArchive.score === null && userPackageRandom.length) {
           return userPackageRandom;
         }
 
         const archive = await Archive.findOne({
-          where: { id: archiveId },
+          where: { id: userArchive.archive_id },
           include: [
             {
               model: Package,
@@ -71,10 +66,9 @@ export default {
         Array(totalQuestion).fill().forEach((_, index) => {
           const randomPackageIndex = getRandomNumber(0, totalPackages - 1);
           const question = {
-            archive_id: archive.id,
+            user_archive_id: userArchive.id,
             package_id: packages[randomPackageIndex].id,
             question_id: packages[randomPackageIndex].questions[index].id,
-            user_id: user.id,
             orderNo: index + 1
           };
           questions.push(question);

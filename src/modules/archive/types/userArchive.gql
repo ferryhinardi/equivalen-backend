@@ -3,6 +3,7 @@ type UserArchive {
   user: User
   owner: User
   archive: Archive
+  packagesRandom: [PackageRandom]
   startTime: Date
   endTime: Date
   opened: Boolean

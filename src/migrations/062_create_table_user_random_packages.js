@@ -7,21 +7,13 @@ export default {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      user_archive_id: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+        allowNull: true,
         references: {
-          model: 'users',
-          field: 'id'
-        }
-      },
-      archive_id: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        allowNull: false,
-        references: {
-          model: 'archives',
+          model: 'user_archives',
           field: 'id'
         }
       },
@@ -40,6 +32,16 @@ export default {
         allowNull: false,
         references: {
           model: 'questions',
+          field: 'id'
+        }
+      },
+      user_answer_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+        allowNull: true,
+        references: {
+          model: 'user_answers',
           field: 'id'
         }
       },

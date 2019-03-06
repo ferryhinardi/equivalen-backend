@@ -74,6 +74,9 @@ export default (sequelize, Sequelize) => {
     UserArchive.Archive = models.UserArchive.belongsTo(models.Archive, {
       foreignKey: 'archive_id'
     });
+    UserArchive.PackageRandom = models.UserArchive.hasMany(models.PackageRandom, {
+      foreignKey: 'user_archive_id'
+    });
   };
   return UserArchive;
 };

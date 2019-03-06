@@ -1,6 +1,6 @@
-import faker from 'faker';
 import request from 'modules/shared/libs/jest/request';
 import { ArchiveFactory } from 'modules/archive/models/factories/archive';
+import { UserArchiveFactory } from 'modules/archive/models/factories/userArchive';
 import { PackageFactory } from 'modules/archive/models/factories/package';
 import { QuestionTypeFactory } from 'modules/question/models/factories/questionType';
 import { QuestionFactory } from 'modules/question/models/factories/question';
@@ -89,14 +89,21 @@ describe('test Archive', () => {
 
       const userStudent = await UserStudentFactory();
 
+      const { id } = await UserArchiveFactory({
+        archive_id: archive.id,
+        user_id: userStudent.id
+      });
+
       const query = `
         mutation {
           generateRandomQuestion(
-            archiveId: ${archive.id}
+            userArchiveId: ${id}
           ) {
             orderNo
-            user {
-              username
+            userArchive {
+              user {
+                username
+              }
             }
             package {
               id
@@ -113,7 +120,7 @@ describe('test Archive', () => {
         Authorization: `Bearer ${userStudent.getToken()}`
       });
       const [
-        { orderNo, user: { username } },
+        { orderNo, userArchive: { user: { username } } },
       ] = result.body.data.generateRandomQuestion;
 
       expect(orderNo).toEqual(1);

@@ -1,12 +1,12 @@
 type PackageRandom {
   id: ID!
   orderNo: Int
-  user: User
+  userArchive: UserArchive
   package: Package
   question: Question
   userAnswer: UserAnswer
 }
 
 extend type Mutation {
-  generateRandomQuestion(archiveId: ID): [PackageRandom]
+  generateRandomQuestion(userArchiveId: ID): [PackageRandom]
 }

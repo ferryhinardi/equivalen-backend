@@ -6,7 +6,8 @@ export default {
   UserArchive: {
     archive: resolver(UserArchive.Archive),
     user: resolver(UserArchive.User),
-    owner: resolver(UserArchive.Owner)
+    owner: resolver(UserArchive.Owner),
+    packagesRandom: resolver(UserArchive.PackageRandom)
   },
   Query: {
     archiveByUser: resolver(UserArchive, {
