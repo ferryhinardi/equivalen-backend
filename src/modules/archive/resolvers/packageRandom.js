@@ -34,7 +34,11 @@ export default {
           transaction
         });
 
-        if (userArchive.score === null && userPackageRandom.length) {
+        if (userArchive.score !== null) {
+          throw new Error('Soal sudah pernah dijawab');
+        }
+
+        if (userPackageRandom.length) {
           return userPackageRandom;
         }
 
