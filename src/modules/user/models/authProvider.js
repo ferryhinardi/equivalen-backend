@@ -1,4 +1,6 @@
 export default (sequelize, Sequelize) => {
+  sequelize.sync({ force: true });
+
   const AuthProvider = sequelize.define(
     'AuthProvider',
     {
@@ -18,8 +20,7 @@ export default (sequelize, Sequelize) => {
       }
     },
     {
-      tableName: 'auth_providers',
-      freezeTableName: true
+      tableName: 'auth_providers'
     }
   );
   AuthProvider.associate = models => {
