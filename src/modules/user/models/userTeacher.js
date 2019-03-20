@@ -1,6 +1,4 @@
 export default (sequelize, Sequelize) => {
-  sequelize.sync({ force: true });
-
   const UserTeacher = sequelize.define(
     'UserTeacher',
     {
