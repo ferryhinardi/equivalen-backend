@@ -11,7 +11,7 @@ export default async function context({ req }) {
     token = headers.authorization.replace('Bearer ', '');
     const { id, phoneNumber } = verify(token);
     if (id) {
-      user = await User.findById(id);
+      user = await User.findByPk(id);
     } else if (phoneNumber) {
       user = await User.findOne({
         where: { phoneNumber }

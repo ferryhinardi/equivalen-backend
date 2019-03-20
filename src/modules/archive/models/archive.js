@@ -47,7 +47,7 @@ export default (sequelize, Sequelize) => {
               PackageQuestions.forEach(async (packQs) => {
                 const { question_id: questionId } = packQs;
 
-                const question = await Question.findById(questionId);
+                const question = await Question.findByPk(questionId);
                 const currentUsed = question.used + 1;
 
                 await question.update({ used: currentUsed });

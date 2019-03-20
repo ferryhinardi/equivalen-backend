@@ -13,14 +13,14 @@ export default {
   UserRelationship: {
     user: resolver(UserRelationship.User),
     target: async (userRelation) => {
-      const targetType = await UserRelationshipType.findById(userRelation.type_id);
+      const targetType = await UserRelationshipType.findByPk(userRelation.type_id);
 
       if (targetType.name === UserRelationshipType.USER) {
-        const userTarget = await User.findById(userRelation.target_id);
+        const userTarget = await User.findByPk(userRelation.target_id);
         return { user: userTarget };
       }
       if (targetType.name === UserRelationshipType.CLASS) {
-        const classTarget = await Classes.findById(userRelation.target_id);
+        const classTarget = await Classes.findByPk(userRelation.target_id);
         return { class: classTarget };
       }
 
@@ -145,7 +145,7 @@ export default {
         });
 
         if (id) {
-          const userRelationById = await UserRelationship.findById(id);
+          const userRelationById = await UserRelationship.findByPk(id);
 
           if (!userRelationById) {
             throw new Error('relasi tidak ditemukan');
@@ -205,7 +205,7 @@ export default {
         });
 
         if (id) {
-          const userRelationById = await UserRelationship.findById(id);
+          const userRelationById = await UserRelationship.findByPk(id);
 
           if (!userRelationById) {
             throw new Error('Relasi tidak ditemukan');

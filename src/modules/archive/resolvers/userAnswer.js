@@ -31,7 +31,7 @@ export default {
           throw new Error('Arship murid tidak ditemukan');
         }
 
-        const question = await Question.findById(questionId);
+        const question = await Question.findByPk(questionId);
 
         if (!question) {
           throw new Error('Soal tidak ditemukan');
@@ -84,7 +84,7 @@ export default {
 
         const answers = get(userAnswers, 'answers', []);
         const promises = answers.map(async ({ question, orderNo, answer }) => {
-          const questionRelated = await Question.findById(question.id);
+          const questionRelated = await Question.findByPk(question.id);
           let userAnswer = await UserAnswer.findOne({
             where: {
               user_id: user.id,
@@ -117,7 +117,7 @@ export default {
       }),
     collectScore: (_, { archiveId, duration }, { user }) =>
       sequelize.transaction(async (transaction) => {
-        const archive = await Archive.findById(archiveId);
+        const archive = await Archive.findByPk(archiveId);
         const userAnswer = await UserAnswer.findAll({
           include: [{ model: Question }],
           where: { archive_id: archiveId, user_id: user.id },

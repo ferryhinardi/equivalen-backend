@@ -46,7 +46,7 @@ export default {
         const usersParam = get(userArchiveParam, 'users', []);
         const startTime = get(userArchiveParam, 'startTime');
         const endTime = get(userArchiveParam, 'endTime');
-        const archive = await Archive.findById(archiveId,
+        const archive = await Archive.findByPk(archiveId,
           ...(transaction ? { transaction } : {})
         );
 

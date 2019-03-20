@@ -45,7 +45,7 @@ export default (sequelize, Sequelize) => {
     const { User, SendGrid } = require('models');
     const templateId = 'd-ada6b752e852480fb2e851826a91ab4d';
     const subject = 'Forgot Password';
-    const { email } = await User.findById(this.user_id);
+    const { email } = await User.findByPk(this.user_id);
     const dynamicTemplateData = {
       email,
       url: this.hashUrl,
