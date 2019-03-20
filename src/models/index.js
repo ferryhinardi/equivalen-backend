@@ -31,8 +31,6 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-console.log('config database', config);
-
 async function transaction(operation) {
   let t = namespace.get('transaction');
   const hasTrans = !!t;

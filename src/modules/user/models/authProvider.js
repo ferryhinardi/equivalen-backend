@@ -18,7 +18,8 @@ export default (sequelize, Sequelize) => {
       }
     },
     {
-      tableName: 'auth_providers'
+      tableName: 'auth_providers',
+      freezeTableName: true
     }
   );
   AuthProvider.associate = models => {
