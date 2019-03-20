@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/jest --maxWorkers=1",
     "start": "npm run build && npm run start:prod",
-    "start:prod": "DEBUG=app* node ./dist/index.js",
+    "start:prod": "npm run-script database:init && DEBUG=app* node ./dist/index.js",
     "start:dev": "npm run-script database:init && nodemon -e js,gql --exec DEBUG=app* babel-node ./src/index.js",
     "build": "npm run build:clean && npm run build:dist",
     "build:clean": "rimraf dist/*",
