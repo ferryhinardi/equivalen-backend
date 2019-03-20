@@ -30,7 +30,7 @@ const opts = {
 if (process.env.NODE_ENV !== 'test') {
   opts.engine = { apiKey: config.ENGINE_API_KEY };
 }
-
+console.log('config', config);
 const server = new ApolloServer(opts);
 const app = express();
 
