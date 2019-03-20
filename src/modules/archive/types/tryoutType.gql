@@ -1,0 +1,8 @@
+type TryoutType {
+  id: ID
+  name: String
+}
+
+extend type Query {
+  tryoutTypes: [TryoutType]
+}
