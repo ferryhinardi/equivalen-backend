@@ -13,7 +13,7 @@ const modelsFile = getFiles(path.join(__dirname, '../modules/**/models/*.js'));
 
 const namespace = cls.createNamespace(NAMESPACE);
 Sequelize.useCLS(namespace);
-console.log('config database', config);
+
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
@@ -30,6 +30,8 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+
+console.log('config database', config);
 
 async function transaction(operation) {
   let t = namespace.get('transaction');
