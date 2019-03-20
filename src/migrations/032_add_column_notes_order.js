@@ -1,5 +1,5 @@
 export default {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface, Sequelize) =>
     queryInterface.addColumn('orders', 'notes', {
       type: Sequelize.STRING,
       allowNull: true,
@@ -10,10 +10,8 @@ export default {
         allowNull: true,
         after: 'notes'
       });
-    });
-  },
-  down: queryInterface => {
+    }),
+  down: queryInterface =>
     queryInterface.removeColumn('orders', 'notes')
-      .then(() => queryInterface.removeColumn('orders', 'created_by'));
-  }
+      .then(() => queryInterface.removeColumn('orders', 'created_by'))
 };
