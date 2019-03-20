@@ -1,5 +1,5 @@
 require('dotenv').config(); // magic
-console.log('process.env', process.env);
+
 module.exports = {
   development: {
     dialect: 'sqlite',
