@@ -47,7 +47,7 @@ export default (sequelize, Sequelize) => {
               PackageQuestions.forEach(async (packQs) => {
                 const { question_id: questionId } = packQs;
 
-                const question = await Question.findByPk(questionId);
+                const question = await Question.findById(questionId);
                 const currentUsed = question.used + 1;
 
                 await question.update({ used: currentUsed });
@@ -73,6 +73,9 @@ export default (sequelize, Sequelize) => {
     });
     Archive.Evaluation = models.Archive.belongsTo(models.Evaluation, {
       foreignKey: 'evaluation_id'
+    });
+    Archive.TryoutType = models.Archive.belongsTo(models.TryoutType, {
+      foreignKey: 'tryout_type_id'
     });
     Archive.Package = models.Archive.hasMany(models.Package, {
       foreignKey: 'archive_id',
