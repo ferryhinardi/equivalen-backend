@@ -257,6 +257,8 @@ export default (sequelize, Sequelize) => {
     return user;
   };
   User.findByAuth = async function findByAuth({ username, password }) {
+    const userAll = await User.findAll();
+    console.log('userAll', userAll);
     const user = await User.findOne({
       where: {
         username
