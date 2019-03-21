@@ -19,7 +19,7 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
-
+console.log('config', config);
 modelsFile.forEach(modelFile => {
   const model = sequelize.import(modelFile);
   db[model.name] = model;
